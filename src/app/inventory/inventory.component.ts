@@ -16,6 +16,7 @@ export class InventoryComponent implements OnInit {
   viewMode = false;
   addMode = false;
   testItem = this.serverService.getTestName();
+  testws = this.serverService.getServers();
   
   servers = [{
     name: 'Test', description: 'Test Desc', qty: '100', notes: 'test notes'
