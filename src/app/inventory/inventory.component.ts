@@ -15,7 +15,8 @@ export class InventoryComponent implements OnInit {
   items: Item[];
   viewMode = false;
   addMode = false;
-
+  testItem = this.serverService.getTestName();
+  
   servers = [{
     name: 'Test', description: 'Test Desc', qty: '100', notes: 'test notes'
   }];
@@ -43,11 +44,9 @@ export class InventoryComponent implements OnInit {
   onGet() {
     this.serverService.getServers()
       .subscribe(
-      (response: Response) => {
-        const data = response.json();
-        console.log(data);
-      },
-      (error) => console.log(error)
+        (servers: any[]) => console.log(servers),
+        // (servers: any[]) => this.servers = servers,
+        (error) => console.log(error)
       );
   }
   onSubmit(form: NgForm) {
