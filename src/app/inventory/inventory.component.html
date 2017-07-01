@@ -1,13 +1,15 @@
-<div class="row">
+<div class="row" align ="right">
   <div class="col-xs-120">
-    <button type="button" class="btn-group btn btn-success" (click)="onAdd()">Add</button>
-    <button type="button" class="btn-group btn btn-primary">Modify</button>
-    <button type="button" class="btn-group btn btn-danger">Delete</button>
-    <button type="button" class="btn-group btn btn-info" (click)="onView()">View</button>
+    <button type="button" class="btn-group btn btn-success" style="width:120px" (click)="onAdd()">Add</button>
+    <button type="button" class="btn-group btn btn-primary" style="width:120px" (click)="onGet()">Get</button>
+    <button type="button" class="btn-group btn btn-primary" style="width:120px">Modify</button>
+    <button type="button" class="btn-group btn btn-danger" style="width:120px">Delete</button>
+    <button type="button" class="btn-group btn btn-info" style="width:120px" (click)="onView()">View</button>
   </div>
 </div>
 <hr>
-<table class="table table-hover table-bordered table-striped" *ngIf = "viewMode">
+<div class="table-responsive">
+<table class="table table-hover table-bordered table-striped" *ngIf="viewMode">
   <thead>
     <tr>
       <th>No</th>
@@ -27,3 +29,4 @@
     </tr>
   </tbody>
 </table>
+</div>

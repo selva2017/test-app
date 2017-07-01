@@ -8,14 +8,14 @@ import { SalesComponent } from './sales/sales.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'employee', component: EmployeeComponent},
+  { path: 'employee', component: EmployeeComponent },
   { path: 'inventory', component: InventoryComponent },
   { path: 'sales', component: SalesComponent }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules })
   ],
   exports: [RouterModule]
 })
