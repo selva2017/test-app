@@ -1,0 +1,24 @@
+<p>Firebase data :{{ testItem | async }}</p>
+<p>Webservice data :{{ testws | async }}</p>
+<div class="table-responsive">
+  <table class="table table-hover table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items; let i = index">
+        <td>{{ i }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.qty }}</td>
+        <td>{{ item.notes }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -5,11 +5,18 @@ import { HomeComponent } from './core/home/home.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { SalesComponent } from './sales/sales.component';
+import { AddInventoryComponent } from './inventory/add-inventory/add-inventory.component';
+import { ModifyInventoryComponent } from './inventory/modify-inventory/modify-inventory.component';
+import { ViewInventoryComponent } from './inventory/view-inventory/view-inventory.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'employee', component: EmployeeComponent },
-  { path: 'inventory', component: InventoryComponent },
+  { path: 'inventory', component: InventoryComponent , children: [
+    { path: 'add', component: AddInventoryComponent },
+     { path: 'modify', component: ModifyInventoryComponent },
+      { path: 'view', component: ViewInventoryComponent }
+  ] },
   { path: 'sales', component: SalesComponent }
 ];
 

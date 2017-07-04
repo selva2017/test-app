@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Response } from '@angular/http';
+import { FormsModule, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Item } from '../shared/item.model';
 import { InventoryService } from '../shared/inventory.service';

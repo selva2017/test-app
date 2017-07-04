@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -11,6 +13,9 @@ import { SalesComponent } from './sales/sales.component';
 import { HomeComponent } from './core/home/home.component';
 import { InventoryService } from './shared/inventory.service';
 import { ServerService } from './shared/server.service';
+import { AddInventoryComponent } from './inventory/add-inventory/add-inventory.component';
+import { ModifyInventoryComponent } from './inventory/modify-inventory/modify-inventory.component';
+import { ViewInventoryComponent } from './inventory/view-inventory/view-inventory.component';
 
 @NgModule({
   declarations: [
@@ -19,12 +24,17 @@ import { ServerService } from './shared/server.service';
     EmployeeComponent,
     InventoryComponent,
     SalesComponent,
-    HomeComponent
+    HomeComponent,
+    AddInventoryComponent,
+    ModifyInventoryComponent,
+    ViewInventoryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [InventoryService, ServerService],
   bootstrap: [AppComponent]
