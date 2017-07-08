@@ -1,0 +1,40 @@
+<p>Firebase data :{{ testItem | async }}</p>
+<p>Webservice data :{{ testws | async}}</p>
+<span>Display....</span>
+  <span *ngFor="let item of testws; let i = index">
+    {{ i | async}}
+    {{ item }} is {{ item }}
+</span>
+<p>Webservice data :{{ product | async }}
+
+</p>
+<!--<p>Webservice data :{{ persons | async }}</p>-->
+<!--<ul>  
+  <li *ngFor="let it of item; let i = index">
+    {{ it[i].id }} is {{ it[i].name }}
+  </li>
+<ul> -->
+
+<!--<div *ngFor="let hero of testws">{{hero}}</div>-->
+<div class="table-responsive">
+  <table class="table table-hover table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items; let i = index">
+        <td><input type="text" value='{{ i }}'></td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.qty }}</td>
+        <td>{{ item.notes }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
