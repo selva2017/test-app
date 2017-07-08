@@ -26,22 +26,25 @@ export class ServerService {
     }
 
     getServers() {
-        // return this.http.get('https://ng-test-app-5ccbf.firebaseio.com/data.json');      
+        // return this.http.get('https://inventory-c9df5.firebaseio.com/Santhosh.json')      
         return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
             .map(
             (response: Response) => {
-                return response.arrayBuffer;
+                const data = response.json();
                 // for(const server of data) {
-                //     server.name = 'FETCHED_' + server.name;
+                //     server.name = 'FETCHED_';
                 // }
-                // return JSON.stringify(data);
-            }
-            )
-            .catch(
-            (error: Response) => {
-                return Observable.throw('Something went wrong');
+                return JSON.stringify(data);
+                // the folowing also works
+                // return data.id + data.name; 
+                // return data.id or data.name; 
             }
             );
+            // .catch(
+            // (error: Response) => {
+            //     return Observable.throw('Something went wrong');
+            // }
+            // );
 
     }
 
@@ -56,12 +59,12 @@ export class ServerService {
 
     getWSData() {
         return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
-            .subscribe(
+            .map(
             (response: Response) => {
-                const product: Product[] = response.json();
-                console.log(product);
-                this.setItem(product);
-                return product;
+                const data = response.json();
+                // console.log(Product);
+                // this.setItem(product);
+                return data;
             }
             );
     }

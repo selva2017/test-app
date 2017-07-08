@@ -17,8 +17,8 @@ export class InventoryComponent implements OnInit {
   viewMode = false;
   addMode = false;
   testItem = this.serverService.getTestName();
-  testws = this.serverService.getServers();
-  
+  // testws = this.serverService.getServers();
+
   servers = [{
     name: 'Test', description: 'Test Desc', qty: '100', notes: 'test notes'
   }];
@@ -29,8 +29,13 @@ export class InventoryComponent implements OnInit {
 
   }
   onView() {
-    this.viewMode = true;
-    this.items = this.inventoryService.getInventory();
+    // this.viewMode = true;
+    // this.items = this.inventoryService.getInventory();
+    // this.serverService.getServers()
+    //   .subscribe(
+    //   (servers: any[]) => console.log(servers),
+    //   (error) => console.log(error)
+    //   );
   }
 
   onAdd() {
@@ -44,12 +49,12 @@ export class InventoryComponent implements OnInit {
   }
 
   onGet() {
-    this.serverService.getServers()
-      .subscribe(
-        (servers: any[]) => console.log(servers),
-        // (servers: any[]) => this.servers = servers,
-        (error) => console.log(error)
-      );
+    // this.serverService.getServers()
+    //   .subscribe(
+    //   (servers: any[]) => console.log(servers),
+    //   // (servers: any[]) => this.servers = servers,
+    //   (error) => console.log(error)
+    //   );
   }
   onSubmit(form: NgForm) {
     const value = form.value;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Response } from '@angular/http';
 
 import { Item } from '../../shared/item.model';
 import { InventoryService } from '../../shared/inventory.service';
@@ -16,17 +17,42 @@ export class ViewInventoryComponent implements OnInit {
   viewMode = false;
   testItem = this.serverService.getTestName();
   testws = this.serverService.getServers();
-  product = this.serverService.getWSData();
 
+  products: Product;
+  // product = this.serverService.getWSData();
+  // servers = [
+  //   {
+  //     id: 100,
+  //     name: 'Testserver'
+  //   }
+  // ];
   constructor(private inventoryService: InventoryService,
     private serverService: ServerService) {
     // this.testws = this.serverService.getServers();
   }
 
   ngOnInit() {
-    console.log('ng init');
+    // console.log('ng init');
     this.viewMode = true;
     this.items = this.inventoryService.getInventory();
     // const a = JSON.stringify(this.testws);
+  }
+
+  onView() {
+    this.viewMode = true;
+    // this.items = this.inventoryService.getInventory();
+    this.serverService.getWSData()
+      .subscribe(
+      // (servers: Product) => console.log(servers.name, servers.id),
+      (servers: Product) => this.products=servers,
+      (error) => console.log(error)
+      );
+      
+      
+      // var res = this.serverService.getServers().map(function(val){
+      //   return [val.id, val.name]
+      // })
+      // console.log("val.id");
+      
   }
 }

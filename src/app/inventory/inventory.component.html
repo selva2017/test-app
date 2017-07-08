@@ -6,6 +6,9 @@
     <button type="button" class="btn-group btn btn-danger" style="width:120px">Delete</button>
     <button type="button" class="btn-group btn btn-info" style="width:120px" routerLink="view">View</button>
   </div>
+    <span *ngFor="let server of servers; let i = index">
+    <!--{{ server.id | async }} is {{ server.name }}-->
+</span>
 </div>
 <hr>
 <div class="table-responsive">
