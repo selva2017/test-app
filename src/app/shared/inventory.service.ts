@@ -3,10 +3,12 @@ import { Http, Response } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
 
 import { Item } from './item.model';
-
+import { Product } from './product.model';
 
 @Injectable()
 export class InventoryService {
+
+
     constructor() {
     }
     inventroyList = new Subject<Item[]>();
@@ -19,6 +21,7 @@ export class InventoryService {
             'Paper', 'Roll', 700, 'Paper Test'
         )
     ];
+
 
     getInventory() {
         return this.items.slice();

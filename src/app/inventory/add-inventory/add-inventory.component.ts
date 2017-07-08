@@ -27,8 +27,8 @@ ngOnInit() {
     );
     this.itemForm.setValue({
       'itemData': {
-        'name': 'Name',
-        'description': 'Enter description'
+        'name': '',
+        'description': ''
       }
     });
   }

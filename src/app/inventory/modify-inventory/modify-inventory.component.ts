@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModifyInventoryComponent implements OnInit {
 
+  editMode = true;
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

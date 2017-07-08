@@ -1,8 +1,9 @@
 <div class="container">
-  <div class="form-group row">
+  <div class="form-group">
     <div class="col-xs-2">
       <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
         <div formGroupName="itemData">
+          <div class="row">
           <div class="form-group">
             <label for="name">Item</label>
             <input type="text" id="name" formControlName="name" class="form-control">
@@ -19,6 +20,7 @@
               *ngIf="!itemForm.get('itemData.description').valid && itemForm.get('itemData.description').touched"
               class="help-block">Please enter a valid description!</span>
           </div>
+        </div>
         </div>
         <span
           *ngIf="!itemForm.valid && itemForm.touched"
