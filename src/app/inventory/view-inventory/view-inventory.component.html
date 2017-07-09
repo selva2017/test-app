@@ -2,15 +2,30 @@
 <p>Webservice data Stringify :{{ testws | async}}</p>
 <button type="button" class="btn-group btn btn-info" style="width:120px" (click)="onView()">View Data</button>
 
-<!--<span>Display Data...</span>-->
+<div class="table-responsive" *ngIf="viewMode">
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products; let i = index">
+        <td>{{product.id}}</td>
+        <td><input type="text" value="{{product.name}}" readonly></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <!--<span *ngFor="let product of products; let i = index">
      {{ product.id }} is {{ product.name }}
 </span>-->
-<p>WS data retrieved - ID :{{ products.id }}</p>
-<p>WS data retrieved - Name :{{ products.name }}</p>
+<!--<p>WS data retrieved - ID :{{ product.id }}</p>
+<p>WS data retrieved - Name :{{ product.name }}</p>-->
 
 <!--<div *ngFor="let hero of testws">{{hero}}</div>-->
-<div class="table-responsive">
+<div class="table-responsive" *ngIf="!viewMode">
   <table class="table table-hover table-bordered table-striped">
     <thead>
       <tr>

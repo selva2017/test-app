@@ -13,5 +13,6 @@ export class ModifyInventoryComponent implements OnInit {
   ngOnInit() {
     
   }
-
+onClear(){}
+onSubmit(){}
 }

@@ -58,7 +58,7 @@ export class ServerService {
     }
 
     getWSData() {
-        return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
+        return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients')
             .map(
             (response: Response) => {
                 const data = response.json();

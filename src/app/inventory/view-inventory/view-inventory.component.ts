@@ -33,7 +33,7 @@ export class ViewInventoryComponent implements OnInit {
 
   ngOnInit() {
     // console.log('ng init');
-    this.viewMode = true;
+    // this.viewMode = true;
     this.items = this.inventoryService.getInventory();
     // const a = JSON.stringify(this.testws);
   }

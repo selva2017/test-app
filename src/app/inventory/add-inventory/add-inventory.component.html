@@ -3,34 +3,37 @@
     <div class="col-xs-2">
       <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
         <div formGroupName="itemData">
-          <div class="row">
-          <div class="form-group">
-            <label for="name">Item</label>
-            <input type="text" id="name" formControlName="name" class="form-control">
-            <span
-              *ngIf="!itemForm.get('itemData.name').valid && itemForm.get('itemData.name').touched"
-              class="help-block">
+          <table class="table table-striped">
+            <thead>
+              <th><label for="name">Item</label></th>
+              <th><label for="description">Description</label></th>
+            </thead>
+            <tbody>
+              <td>
+                <div class="form-group">
+                  <input type="text" id="name" formControlName="name" class="form-control">
+                  <span *ngIf="!itemForm.get('itemData.name').valid && itemForm.get('itemData.name').touched" class="help-block">
               <span *ngIf="itemForm.get('itemData.name').errors['required']">This field is required!</span>
-            </span>
-          </div>
-          <div class="form-group">
-            <label for="description">Description</label>
-            <input type="text" id="description" formControlName="description" class="form-control">
-            <span
-              *ngIf="!itemForm.get('itemData.description').valid && itemForm.get('itemData.description').touched"
-              class="help-block">Please enter a valid description!</span>
-          </div>
+                  </span>
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <input type="text" id="description" formControlName="description" class="form-control">
+                  <span *ngIf="!itemForm.get('itemData.description').valid && itemForm.get('itemData.description').touched" class="help-block">Please enter a valid description!</span>
+                  <span *ngIf="!itemForm.valid && itemForm.touched" class="help-block">Please enter valid data!</span>
+
+                </div>
+              </td>
+            </tbody>
+          </table>
         </div>
-        </div>
-        <span
-          *ngIf="!itemForm.valid && itemForm.touched"
-          class="help-block">Please enter valid data!</span>
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
   </div>
 </div>
-<div class="form-group row">
+<!--<div class="form-group row">
   <div class="col-xs-2">
     <label for="ex1">Name</label>
     <input class="form-control" id="ex1" type="text">
@@ -47,4 +50,4 @@
     <label for="ex2">Notes</label>
     <input class="form-control" id="ex2" type="text">
   </div>
-</div>
+</div>-->

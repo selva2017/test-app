@@ -34,7 +34,7 @@ ngOnInit() {
   }
 
   onSubmit() {
-    console.log(this.itemForm);
+    console.log(this.itemForm.get('itemData.description'));
     this.itemForm.reset();
   }
 }
