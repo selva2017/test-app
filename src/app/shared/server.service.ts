@@ -9,7 +9,7 @@ import { Product } from './product.model';
 
 @Injectable()
 export class ServerService {
-    
+
     itemsChanged = new Subject<Product[]>();
     private products: Product[] = [
         new Product(1, 'tester')
@@ -27,7 +27,8 @@ export class ServerService {
 
     getServers() {
         // return this.http.get('https://inventory-c9df5.firebaseio.com/Santhosh.json')      
-        return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
+        // return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
+        return this.http.get('http://localhost:8080/restws/services/patientservice/patients/123')
             .map(
             (response: Response) => {
                 const data = response.json();
@@ -40,11 +41,11 @@ export class ServerService {
                 // return data.id or data.name; 
             }
             );
-            // .catch(
-            // (error: Response) => {
-            //     return Observable.throw('Something went wrong');
-            // }
-            // );
+        // .catch(
+        // (error: Response) => {
+        //     return Observable.throw('Something went wrong');
+        // }
+        // );
 
     }
 
@@ -59,6 +60,7 @@ export class ServerService {
 
     getWSData() {
         return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients')
+        // return this.http.get('http://localhost:8080/restws/services/patientservice/patients')
             .map(
             (response: Response) => {
                 const data = response.json();
@@ -68,6 +70,20 @@ export class ServerService {
             }
             );
     }
+
+    postWSData(servers: any) {
+        const headers = new Headers({ 'Accept-Type': 'application/json' });
+        return this.http.put('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients'
+            // return this.http.post('http://localhost:8080/restws/services/patientservice/patients/'
+            , servers,
+            { headers: headers })
+        .subscribe(
+        data => console.log("success!", data),
+        error => console.error("couldn't post because", error)
+        );
+        //  this.http.post('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients', JSON.stringify('{"id":"100","name":"Dine"}'), {headers: headers});
+    }
+
     setItem(product: Product[]) {
         // console.log(this.products);
         this.products = product;
