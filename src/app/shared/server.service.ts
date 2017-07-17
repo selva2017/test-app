@@ -60,7 +60,7 @@ export class ServerService {
 
     getWSData() {
         return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients')
-        // return this.http.get('http://localhost:8080/restws/services/patientservice/patients')
+            // return this.http.get('http://localhost:8080/restws/services/patientservice/patients')
             .map(
             (response: Response) => {
                 const data = response.json();
@@ -71,16 +71,31 @@ export class ServerService {
             );
     }
 
-    postWSData(servers: any) {
-        const headers = new Headers({ 'Accept-Type': 'application/json' });
-        return this.http.put('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients'
-            // return this.http.post('http://localhost:8080/restws/services/patientservice/patients/'
-            , servers,
-            { headers: headers })
-        .subscribe(
-        data => console.log("success!", data),
-        error => console.error("couldn't post because", error)
-        );
+    postWSData() {
+        // Working example
+        var json = JSON.stringify({ id: 101, name: 'My new test' });
+        var params = 'json = ' + json;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.post('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients',
+            json, {
+                headers: headers
+            })
+            .map(res => res.json());
+
+        // var json = JSON.stringify(userdata);
+        //         var params = 'json = ' + json;
+        // console.log(params);
+
+        // const headers = new Headers({ 'Accept-Type': 'application/json' });
+        // return this.http.put('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients'
+        //     // return this.http.post('http://localhost:8080/restws/services/patientservice/patients/'
+        //     , servers,
+        //     { headers: headers })
+        // .subscribe(
+        // data => console.log("success!", data),
+        // error => console.error("couldn't post because", error)
+        // );
         //  this.http.post('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients', JSON.stringify('{"id":"100","name":"Dine"}'), {headers: headers});
     }
 

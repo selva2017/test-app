@@ -18,6 +18,7 @@ export class AddInventoryComponent implements OnInit {
 
   id: Number;
   name: String;
+  postdata: String;
 
   constructor(private serverService: ServerService) { }
 
@@ -43,14 +44,24 @@ export class AddInventoryComponent implements OnInit {
   }
 
   onSubmit() {
-    let formData = this.itemForm.getRawValue();
-    let serializedForm = JSON.stringify(formData);
+    //Working example
+    this.serverService.postWSData()
+      .subscribe(
+      data => this.postdata = JSON.stringify(data),
+      error => alert(error),
+      () => console.log('finished')
+      );
+
+    // this.serverService.postWSData(this.itemForm.getRawValue());
+
+    // let formData = this.itemForm.getRawValue();
+    // let serializedForm = JSON.stringify(formData);
     // console.log(serializedForm);
-    this.serverService.postWSData(serializedForm);
+    // this.serverService.postWSData(serializedForm);
 
 
-// let obj = { "id":30, "name":"John"};
-// this.serverService.postWSData(JSON.stringify(obj));
+    // let obj = { "id":30, "name":"John"};
+    // this.serverService.postWSData(JSON.stringify(obj));
 
     // this.products.id = this.itemForm.get('itemData.id').value;
     // this.products.name = this.itemForm.get('itemData.name').value;
