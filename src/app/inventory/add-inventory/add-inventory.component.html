@@ -1,5 +1,32 @@
-<div class="container">
-  <div class="form-group">
+<!-- Template driven forms` -->
+<!-- <div class="container">
+  <form (ngSubmit)="onSubmit()" #f="ngForm">
+    <div class="form-group" ngModelGroup="itemData" #itemData="ngModelGroup">
+    <div class="form-control" class="col-xs-2">
+      <label for="id">ID</label>
+      <input type="text" required [(ngModel)]="id" name="id">
+       <div [hidden]="id.valid || id.pristine" class="alert alert-danger">
+        Id is required
+      </div> 
+    </div>
+
+    <div class="form-control" class="col-xs-5">
+      <label for="name">Item</label>
+      <input type="text" required [(ngModel)]="name" name="name">
+       <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+        Name is required
+      </div> 
+    </div>
+    </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="cancel" class="btn btn-dangers">Cancel</button>
+      <p>{{id}} and {{name}}</p>
+  </form>
+</div> -->
+
+<!-- reactive start -->
+ <div class="container">
+  
     <div class="col-xs-5">
       <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
         <div formGroupName="itemData">
@@ -12,34 +39,36 @@
               <td>
                 <div class="form-group">
                   <input type="text" id="id" formControlName="id" class="form-control">
-                  <span *ngIf="!itemForm.get('itemData.id').valid && itemForm.get('itemData.id').touched" class="help-block">
+                   <span *ngIf="!itemForm.get('itemData.id').valid && itemForm.get('itemData.id').touched" class="help-block">
               <span *ngIf="itemForm.get('itemData.id').errors['required']">This field is required!</span>
-                  </span>
+                  </span> 
                 </div>
               </td>
               <td>
                 <div class="form-group">
                   <input type="text" id="name" formControlName="name" class="form-control">
-                  <span *ngIf="!itemForm.get('itemData.name').valid && itemForm.get('itemData.name').touched" class="help-block">Please enter a valid name!</span>
-                  <span *ngIf="!itemForm.valid && itemForm.touched" class="help-block">Please enter valid data!</span>
+                   <span *ngIf="!itemForm.get('itemData.name').valid && itemForm.get('itemData.name').touched" class="help-block">Please enter a valid name!</span>
+                  <span *ngIf="!itemForm.valid && itemForm.touched" class="help-block">Please enter valid data!</span> 
 
                 </div>
               </td>
             </tbody>
           </table>
         </div>
-        <button class="btn btn-primary" type="submit" (click)="onSubmit()">Submit</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
-  </div>
+
 </div>
-<div *ngIf="addMode">
-  <!--<p>{{itemForm.get('itemData.name').value}}</p>
+<!-- <div *ngIf="addMode"> 
+  </div> -->
+<!-- reactive end -->
+<!--<p>{{itemForm.get('itemData.name').value}}</p>
    <p>{{itemForm.get('itemData.id').value}}</p>-->
-  <!--<p>
+<!--<p>
     {{id}} and {{ name}}
   </p>-->
-</div>
+
 <!--<div class="form-group row">
   <div class="col-xs-2">
     <label for="ex1">Name</label>

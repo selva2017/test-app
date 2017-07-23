@@ -71,9 +71,34 @@ export class ServerService {
             );
     }
 
-    postWSData() {
-        // Working example
-        var json = JSON.stringify({ id: 101, name: 'My new test' });
+    getOneWSData(id: string) {
+        return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/', { params: { search: id } })
+            // return this.http.get('http://localhost:8080/restws/services/patientservice/patients')
+            .map(
+            (response: Response) => {
+                const data = response.json();
+                // console.log(Product);
+                // this.setItem(product);
+                return data;
+            }
+            );
+    }
+
+    postWSData(product) {
+        // Working example---------Hardcode data
+        // var json = JSON.stringify({ id: 101, name: 'YYYY' });
+        // var params = 'json = ' + json;
+        // var headers = new Headers();
+        // headers.append('Content-Type', 'application/json');
+        // return this.http.post('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients',
+        //     json, {
+        //         headers: headers
+        //     })
+        //     .map(res => res.json());
+        //--------end
+
+        // Working example---------Form data
+        var json = JSON.stringify(product);
         var params = 'json = ' + json;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -82,6 +107,8 @@ export class ServerService {
                 headers: headers
             })
             .map(res => res.json());
+        //--------end
+
 
         // var json = JSON.stringify(userdata);
         //         var params = 'json = ' + json;

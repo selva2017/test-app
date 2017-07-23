@@ -16,8 +16,8 @@ export class AddInventoryComponent implements OnInit {
   addMode = false;
   prod: any;
 
-  id: Number;
-  name: String;
+  id = 0;
+  name = '';
   postdata: String;
 
   constructor(private serverService: ServerService) { }
@@ -29,12 +29,13 @@ export class AddInventoryComponent implements OnInit {
         'name': new FormControl(null, [Validators.required])
       }),
     });
+
     // this.itemForm.valueChanges.subscribe(
     //   (value) => console.log(value)
     // );
-    this.itemForm.statusChanges.subscribe(
-      (status) => console.log(status)
-    );
+    // this.itemForm.statusChanges.subscribe(
+    //   (status) => console.log(status)
+    // );
     // this.itemForm.setValue({
     //   'itemData': {
     //     'id': '',
@@ -44,13 +45,41 @@ export class AddInventoryComponent implements OnInit {
   }
 
   onSubmit() {
-    //Working example
-    this.serverService.postWSData()
+
+    //Working example---------------
+    // this.serverService.postWSData()
+    //   .subscribe(
+    //   data => this.postdata = JSON.stringify(data),
+    //   error => alert(error),
+    //   () => console.log('finished')
+    //   );
+    //------------------------end
+
+    //Working example-----------Form data
+    let data = this.itemForm.get('itemData').value;
+    this.serverService.postWSData(data)
       .subscribe(
       data => this.postdata = JSON.stringify(data),
       error => alert(error),
       () => console.log('finished')
       );
+    //--------end
+
+    // console.log(this.itemForm.get('itemData').value);
+    // console.log(this.itemForm.get('itemData.id').value);
+    // console.log(this.itemForm.get('itemData.name').value);
+    // console.log(JSON.stringify(this.itemForm.get('itemData').value));
+
+    // let data = this.itemForm.get('itemData').value  ;
+    // let data = JSON.stringify(this.itemForm.get('itemData').value);
+    // this.serverService.postWSData(data);
+    // this.postdata = this.itemForm.value.itemData.id;
+    // console.log(this.postdata);
+    // this.products.id = this.id;
+    // this.products.name = this.name;
+
+    //     				var id = parseFloat((<HTMLInputElement>document.getElementById("id")).value);
+    // var name = (<HTMLInputElement>document.getElementById("name")).value; 
 
     // this.serverService.postWSData(this.itemForm.getRawValue());
 
