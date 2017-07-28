@@ -42,10 +42,10 @@ export class ViewInventoryComponent implements OnInit {
     this.viewMode = true;
     // this.items = this.inventoryService.getInventory();
 
-    // this.serverService.getWSData()
+    this.serverService.getWSData()
 
-     let id = '130';
-    this.serverService.getOneWSData(id)
+    //  let id = '130';
+    // this.serverService.getOneWSData(id)
       .subscribe(
       // (servers: Product) => console.log(servers.name, servers.id),
       (servers: Product) => this.products=servers,

@@ -27,8 +27,8 @@ export class ServerService {
 
     getServers() {
         // return this.http.get('https://inventory-c9df5.firebaseio.com/Santhosh.json')      
-        // return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
-        return this.http.get('http://localhost:8080/restws/services/patientservice/patients/123')
+        return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
+        // return this.http.get('http://localhost:8080/restws/services/patientservice/patients/123')
             .map(
             (response: Response) => {
                 const data = response.json();
@@ -99,7 +99,6 @@ export class ServerService {
 
         // Working example---------Form data
         var json = JSON.stringify(product);
-        var params = 'json = ' + json;
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         return this.http.post('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients',

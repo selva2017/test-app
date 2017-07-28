@@ -16,6 +16,8 @@ import { ServerService } from './shared/server.service';
 import { AddInventoryComponent } from './inventory/add-inventory/add-inventory.component';
 import { ModifyInventoryComponent } from './inventory/modify-inventory/modify-inventory.component';
 import { ViewInventoryComponent } from './inventory/view-inventory/view-inventory.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -27,14 +29,16 @@ import { ViewInventoryComponent } from './inventory/view-inventory/view-inventor
     HomeComponent,
     AddInventoryComponent,
     ModifyInventoryComponent,
-    ViewInventoryComponent
+    ViewInventoryComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Ng2SmartTableModule
   ],
   providers: [InventoryService, ServerService],
   bootstrap: [AppComponent]
