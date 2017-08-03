@@ -9,6 +9,7 @@ import { Product } from './product.model';
 
 @Injectable()
 export class ServerService {
+    startedEditing = new Subject<number>();
 
     itemsChanged = new Subject<Product[]>();
     private products: Product[] = [
@@ -28,7 +29,7 @@ export class ServerService {
     getServers() {
         // return this.http.get('https://inventory-c9df5.firebaseio.com/Santhosh.json')      
         return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
-        // return this.http.get('http://localhost:8080/restws/services/patientservice/patients/123')
+            // return this.http.get('http://localhost:8080/restws/services/patientservice/patients/123')
             .map(
             (response: Response) => {
                 const data = response.json();

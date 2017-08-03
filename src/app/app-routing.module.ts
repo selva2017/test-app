@@ -8,6 +8,7 @@ import { SalesComponent } from './sales/sales.component';
 import { AddInventoryComponent } from './inventory/add-inventory/add-inventory.component';
 import { ModifyInventoryComponent } from './inventory/modify-inventory/modify-inventory.component';
 import { ViewInventoryComponent } from './inventory/view-inventory/view-inventory.component';
+import { EditInventoryComponent } from './inventory/edit-inventory/edit-inventory.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ const appRoutes: Routes = [
   { path: 'inventory', component: InventoryComponent , children: [
     { path: 'add', component: AddInventoryComponent },
      { path: 'modify', component: ModifyInventoryComponent },
-      { path: 'view', component: ViewInventoryComponent }
+      { path: 'view', component: ViewInventoryComponent },
+      { path: 'edit', component: EditInventoryComponent }
   ] },
   { path: 'sales', component: SalesComponent }
 ];

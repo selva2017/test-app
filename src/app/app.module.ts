@@ -18,6 +18,7 @@ import { ModifyInventoryComponent } from './inventory/modify-inventory/modify-in
 import { ViewInventoryComponent } from './inventory/view-inventory/view-inventory.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AboutComponent } from './about/about.component';
+import { EditInventoryComponent } from './inventory/edit-inventory/edit-inventory.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AboutComponent } from './about/about.component';
     AddInventoryComponent,
     ModifyInventoryComponent,
     ViewInventoryComponent,
-    AboutComponent
+    AboutComponent,
+    EditInventoryComponent
   ],
   imports: [
     BrowserModule,
