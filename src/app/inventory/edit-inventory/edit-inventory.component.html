@@ -3,8 +3,6 @@
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="row">
         <div class="col-xs-10">
-          <!--<app-shopping-edit
-    (ingredientAdded)="onIngredientAdded($event)"></app-shopping-edit>-->
           <hr>
           <ul class="list-group">
             <a class="list-group-item" style="cursor: pointer" *ngFor="let product of products; let i = index" (click)="onEditItem(i)">
@@ -29,7 +27,7 @@
               {{ editMode ? 'Update' : 'Add'}}
             </button>
           <button class="btn btn-danger" type="button" (click)="onDelete()" *ngIf="editMode">Delete</button>
-          <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
+          <button class="btn btn-primary" type="button">Clear</button>
         </div>
       </div>
     </form>

@@ -50,25 +50,18 @@ export class EditInventoryComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  updateItem(index: number, newProduct: Product) {
-    this.products[index] = newProduct;
-    this.productsChanged.next(this.products);
-  }
-  onUpdate(form: NgForm) {
+
+  onSubmit(form: NgForm) {
     const value = form.value;
     const newProduct = new Product(value.id, value.name);
     if (this.editMode) {
       this.updateItem(this.editedItemIndex, newProduct);
     }
+    this.editMode = false;
+    form.reset();
   }
-    onSubmit(form: NgForm){
-    const value = form.value;
-   const newProduct = new Product(value.id, value.name);
-    if (this.editMode) {
-      this.updateItem(this.editedItemIndex, newProduct);
+  updateItem(index: number, newProduct: Product) {
+    this.products[index] = newProduct;
+    this.productsChanged.next(this.products);
   }
-  this.editMode=false;
-  form.reset();
-    // this.ingredientAdded.emit(newIngredient);
-}
 }
