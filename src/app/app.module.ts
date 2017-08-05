@@ -4,6 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { ChartModule } from 'angular2-highcharts';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -19,6 +21,15 @@ import { ViewInventoryComponent } from './inventory/view-inventory/view-inventor
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AboutComponent } from './about/about.component';
 import { EditInventoryComponent } from './inventory/edit-inventory/edit-inventory.component';
+import { SimpleChartExampleComponent } from './charts/simple-chart-example/simple-chart-example.component';
+
+export function highchartsFactory() {
+  const hc = require('highcharts/highstock');
+  const dd = require('highcharts/modules/exporting');
+  dd(hc);
+  return hc;
+}
+declare var require : any;
 
 @NgModule({
   declarations: [
@@ -32,17 +43,23 @@ import { EditInventoryComponent } from './inventory/edit-inventory/edit-inventor
     ModifyInventoryComponent,
     ViewInventoryComponent,
     AboutComponent,
-    EditInventoryComponent
+    EditInventoryComponent,
+    SimpleChartExampleComponent
   ],
   imports: [
     BrowserModule,
+    ChartModule,//.forRoot(require('highcharts')),
     AppRoutingModule,
     HttpModule,
     ReactiveFormsModule,
     FormsModule,
     Ng2SmartTableModule
   ],
-  providers: [InventoryService, ServerService],
+  providers: [InventoryService, ServerService,
+    {
+      provide: HighchartsStatic,
+      useFactory: highchartsFactory
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

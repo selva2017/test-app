@@ -9,6 +9,7 @@ import { AddInventoryComponent } from './inventory/add-inventory/add-inventory.c
 import { ModifyInventoryComponent } from './inventory/modify-inventory/modify-inventory.component';
 import { ViewInventoryComponent } from './inventory/view-inventory/view-inventory.component';
 import { EditInventoryComponent } from './inventory/edit-inventory/edit-inventory.component';
+import { SimpleChartExampleComponent } from './charts/simple-chart-example/simple-chart-example.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
       { path: 'view', component: ViewInventoryComponent },
       { path: 'edit', component: EditInventoryComponent }
   ] },
+  { path: 'graphs', component: SimpleChartExampleComponent},
   { path: 'sales', component: SalesComponent }
 ];
 
