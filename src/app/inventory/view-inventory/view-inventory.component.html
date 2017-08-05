@@ -1,6 +1,7 @@
 <p>Firebase data :{{ testItem | async }}</p>
 <p>Webservice data Stringify :{{ testws | async}}</p>
 <button type="button" class="btn-group btn btn-info" style="width:120px" (click)="onView()">View Data</button>
+<button type="button" class="btn-group btn btn-info" style="width:120px" (click)="onUpdate()">Update Data</button>
 
 <div class="table-responsive" *ngIf="viewMode">
   <table class="table table-bordered table-striped">

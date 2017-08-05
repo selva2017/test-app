@@ -44,19 +44,28 @@ export class ViewInventoryComponent implements OnInit {
 
     this.serverService.getWSData()
 
-    //  let id = '130';
-    // this.serverService.getOneWSData(id)
+      //  let id = '130';
+      // this.serverService.getOneWSData(id)
       .subscribe(
       // (servers: Product) => console.log(servers.name, servers.id),
-      (servers: Product) => this.products=servers,
+      (servers: Product) => this.products = servers,
       (error) => console.log(error)
       );
-      
-      
-      // var res = this.serverService.getServers().map(function(val){
-      //   return [val.id, val.name]
-      // })
-      // console.log("val.id");
-      
+
+
+    // var res = this.serverService.getServers().map(function(val){
+    //   return [val.id, val.name]
+    // })
+    // console.log("val.id");
+
+  }
+  onUpdate() {
+    this.viewMode = true;
+    this.serverService.putData(123)
+      .subscribe(
+      (servers: Product) => this.products = servers,
+      (error) => console.log(error)
+      );
+
   }
 }

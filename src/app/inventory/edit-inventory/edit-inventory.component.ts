@@ -63,5 +63,14 @@ export class EditInventoryComponent implements OnInit, OnDestroy {
   updateItem(index: number, newProduct: Product) {
     this.products[index] = newProduct;
     this.productsChanged.next(this.products);
+
+    // Send the new product to the service to update data
+    this.serverService.putData(newProduct)
+      .subscribe(
+      (servers: Product) => this.products = servers,
+      (error) => console.log(error)
+      );
+
+
   }
 }

@@ -126,6 +126,32 @@ export class ServerService {
         //  this.http.post('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients', JSON.stringify('{"id":"100","name":"Dine"}'), {headers: headers});
     }
 
+    putData(product) {
+        // Working example---------Hardcode data
+        // let id = '123';
+        // var json = JSON.stringify({ id: 124, name: 'Ashok' });
+        console.log("inside putdata")
+        var json = JSON.stringify(product);
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        return this.http.put('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients',
+            json, {
+                headers: headers
+            })
+            .map(res => res.json());
+        //--------end
+
+        // Working example---------Form data
+        // var json = JSON.stringify(product);
+        // var headers = new Headers();
+        // headers.append('Content-Type', 'application/json');
+        // return this.http.put('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients',
+        //     json, {
+        //         headers: headers
+        //     })
+        //     .map(res => res.json());
+        //--------end
+    }
     setItem(product: Product[]) {
         // console.log(this.products);
         this.products = product;
