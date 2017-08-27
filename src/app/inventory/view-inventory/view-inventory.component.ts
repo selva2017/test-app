@@ -47,7 +47,7 @@ export class ViewInventoryComponent implements OnInit {
       //  let id = '130';
       // this.serverService.getOneWSData(id)
       .subscribe(
-      // (servers: Product) => console.log(servers.name, servers.id),
+      // (servers: Product) => console.log(servers.id),
       (servers: Product) => this.products = servers,
       (error) => console.log(error)
       );

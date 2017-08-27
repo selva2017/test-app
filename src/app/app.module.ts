@@ -22,6 +22,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AboutComponent } from './about/about.component';
 import { EditInventoryComponent } from './inventory/edit-inventory/edit-inventory.component';
 import { SimpleChartExampleComponent } from './charts/simple-chart-example/simple-chart-example.component';
+import { TestComponent } from './test/test.component';
 
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
@@ -44,7 +45,8 @@ declare var require : any;
     ViewInventoryComponent,
     AboutComponent,
     EditInventoryComponent,
-    SimpleChartExampleComponent
+    SimpleChartExampleComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

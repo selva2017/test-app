@@ -13,7 +13,7 @@ export class ServerService {
 
     itemsChanged = new Subject<Product[]>();
     private products: Product[] = [
-        new Product(1, 'tester')
+        // new Product(1, 'tester')
     ];
 
     constructor(private http: Http, private inventoryService: InventoryService) { }
@@ -28,8 +28,8 @@ export class ServerService {
 
     getServers() {
         // return this.http.get('https://inventory-c9df5.firebaseio.com/Santhosh.json')      
-        return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
-            // return this.http.get('http://localhost:8080/restws/services/patientservice/patients/123')
+        // return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/123')
+        return this.http.get('http://localhost:8080/restws/services/patientservice/patients/')
             .map(
             (response: Response) => {
                 const data = response.json();
@@ -60,8 +60,9 @@ export class ServerService {
     }
 
     getWSData() {
-        return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients')
-            // return this.http.get('http://localhost:8080/restws/services/patientservice/patients')
+        // return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients')
+        // return this.http.get('http://localhost:8080/restws/services/patientservice/patients')
+        return this.http.get('http://localhost:8080/restws/services/productservice/products/')
             .map(
             (response: Response) => {
                 const data = response.json();
@@ -73,8 +74,8 @@ export class ServerService {
     }
 
     getOneWSData(id: string) {
-        return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/', { params: { search: id } })
-            // return this.http.get('http://localhost:8080/restws/services/patientservice/patients')
+        // return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients/', { params: { search: id } })
+        return this.http.get('http://localhost:8080/restws/services/patientservice/patients')
             .map(
             (response: Response) => {
                 const data = response.json();
@@ -99,10 +100,16 @@ export class ServerService {
         //--------end
 
         // Working example---------Form data
-        var json = JSON.stringify(product);
+        var json = JSON.stringify([product]);
+        console.log(json);
+        // var json = [
+        //     { "productCode": "810", "productName": "810swewe", "productQuantity": "1", "productPrice": "11", "supplierId": "1" }
+        // ]
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients',
+        // return this.http.post('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients',
+        // return this.http.post('http://localhost:8080/restws/services/patientservice/patients',
+        return this.http.post('http://localhost:8080/restws/services/productservice/products',
             json, {
                 headers: headers
             })
@@ -134,7 +141,8 @@ export class ServerService {
         var json = JSON.stringify(product);
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        return this.http.put('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients',
+        // return this.http.put('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients',
+        return this.http.put('http://localhost:8080/restws/services/patientservice/patients',
             json, {
                 headers: headers
             })
@@ -151,6 +159,21 @@ export class ServerService {
         //     })
         //     .map(res => res.json());
         //--------end
+    }
+
+    getSupplierData() {
+        // return this.http.get('http://lowcost-env.nc9myxcv3i.us-west-2.elasticbeanstalk.com/services/patientservice/patients')
+        // return this.http.get('http://localhost:8080/restws/services/patientservice/patients')
+        return this.http.get('http://localhost:8080/restws/services/supplierservice/suppliers/')
+            .map(
+            (response: Response) => {
+                const data = response.json();
+                // console.log(Product);
+                // this.setItem(product);
+                // return JSON.stringify(data);
+                return data;
+            }
+            );
     }
     setItem(product: Product[]) {
         // console.log(this.products);

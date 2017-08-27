@@ -9,46 +9,70 @@ import { Product } from '../../shared/product.model';
   styleUrls: ['./modify-inventory.component.css']
 })
 export class ModifyInventoryComponent implements OnInit {
- settings = {
-  columns: {
-    id: {
-      title: 'ID'
-    },
-    name: {
-      title: 'Name'
+  settings = {
+    columns: {
+      productId: {
+        title: 'ID'
+      },
+      productCode: {
+        title: 'Code'
+      },
+      productName: {
+        title: 'Name'
+      },
+      productQuantity: {
+        title: 'Quantity'
+      },
+      productPrice: {
+        title: 'Price'
+      },
+      supplierId: {
+        title: 'SCode'
+      },
+      supplierName: {
+        title: 'Supplier'
+      },
+      supplierPhone: {
+        title: 'Phone'
+      }
+      // ,
+      // username: {
+      //   title: 'User Name'
+      // },
+      // email: {
+      //   title: 'Email'
+      // }
     }
-    // ,
-    // username: {
-    //   title: 'User Name'
-    // },
-    // email: {
-    //   title: 'Email'
-    // }
-  }
-};
+  };
 
-data=[];
-data1 = [
-  {
-    id: 1,
-    name: "Leanne Graham",
-    // username: "Bret",
-    // email: "Sincere@april.biz"
-  },
-  {
-    id: 2,
-    name: "Ervin Howell",
-    // username: "Antonette",
-    // email: "Shanna@melissa.tv"
-  },
-    
-  {
-    id: 11,
-    name: "Nicholas DuBuque",
-    // username: "Nicholas.Stanton",
-    // email: "Rey.Padberg@rosamond.biz"
-  }
-];
+  data = [];
+  data1 = [
+    {
+      productId: "1",
+      productCode: "p3",
+      productName: "p3_name",
+      productQuantity: "10",
+      productPrice: "10.00",
+      supplierId: "2",
+      supplierName: "selva",
+      supplierPhone: "61458565"
+      // username: "Bret",
+      // email: "Sincere@april.biz"
+    },
+    {
+      id: 2,
+      name: "Ervin Howell",
+      // username: "Antonette",
+      // email: "Shanna@melissa.tv"
+    },
+
+    {
+      id: 11,
+      name: "Nicholas DuBuque",
+      // username: "Nicholas.Stanton",
+      // email: "Rey.Padberg@rosamond.biz"
+    }
+  ];
   editMode = true;
   constructor(private serverService: ServerService) { }
   products: Product;
@@ -59,7 +83,7 @@ data1 = [
       (servers: Product) => this.products = servers,
       (error) => console.log(error)
       );
-}
+  }
   onClear() { }
   onSubmit() { }
 }

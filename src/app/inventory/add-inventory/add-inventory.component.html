@@ -1,89 +1,74 @@
-<!-- Template driven forms` -->
-<!-- <div class="container">
-  <form (ngSubmit)="onSubmit()" #f="ngForm">
-    <div class="form-group" ngModelGroup="itemData" #itemData="ngModelGroup">
-    <div class="form-control" class="col-xs-2">
-      <label for="id">ID</label>
-      <input type="text" required [(ngModel)]="id" name="id">
-       <div [hidden]="id.valid || id.pristine" class="alert alert-danger">
-        Id is required
-      </div> 
-    </div>
+<h1>Add Inventory</h1>
+<div class="container">
+  <section class="container">
+    <div class="container-page">
+      <form (ngSubmit)="onSubmit()" #itemForm="ngForm" >
+        <div class="col-md-6">
+          <h3 class="dark-grey">Products</h3>
 
-    <div class="form-control" class="col-xs-5">
-      <label for="name">Item</label>
-      <input type="text" required [(ngModel)]="name" name="name">
-       <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-        Name is required
-      </div> 
-    </div>
-    </div>
-      <button type="submit" class="btn btn-success">Submit</button>
-      <button type="cancel" class="btn btn-dangers">Cancel</button>
-      <p>{{id}} and {{name}}</p>
-  </form>
-</div> -->
-
-<!-- reactive start -->
- <div class="container">
-  
-    <div class="col-xs-5">
-      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
-        <div formGroupName="itemData">
-          <table class="table table-striped">
-            <thead>
-              <th><label for="id">ID</label></th>
-              <th><label for="name">Name</label></th>
-            </thead>
-            <tbody>
-              <td>
-                <div class="form-group">
-                  <input type="text" id="id" formControlName="id" class="form-control">
-                   <span *ngIf="!itemForm.get('itemData.id').valid && itemForm.get('itemData.id').touched" class="help-block">
-              <span *ngIf="itemForm.get('itemData.id').errors['required']">This field is required!</span>
-                  </span> 
-                </div>
-              </td>
-              <td>
-                <div class="form-group">
-                  <input type="text" id="name" formControlName="name" class="form-control">
-                   <span *ngIf="!itemForm.get('itemData.name').valid && itemForm.get('itemData.name').touched" class="help-block">Please enter a valid name!</span>
-                  <span *ngIf="!itemForm.valid && itemForm.touched" class="help-block">Please enter valid data!</span> 
-
-                </div>
-              </td>
-            </tbody>
-          </table>
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <label for="id">ID</label>
+              <input type="text" name="productId" [(ngModel)]="product.productId" class="form-control">
+              <!-- <input type="text" id="productId" class="form-control"> -->
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="name">Code</label>
+              <input type="text" name="productCode" [(ngModel)]="product.productCode" class="form-control">
+              <!-- <input type="text" id="productCode" formControlName="productCode" class="form-control"> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-12">
+              <label for="productName">Name</label>
+              <input type="text" name="productName" [(ngModel)]="product.productName" class="form-control">
+              <!-- <input type="text" id="productName" formControlName="productName" class="form-control"> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <label for="productQuantity">Quantity</label>
+              <input type="text" name="productQuantity" [(ngModel)]="product.productQuantity" class="form-control">
+              <!-- <input type="text" id="productQuantity" formControlName="productQuantity" class="form-control"> -->
+            </div>
+            <div class="form-group col-lg-6">
+              <label for="productPrice">Price</label>
+              <input type="text" name="productPrice" [(ngModel)]="product.productPrice" class="form-control">
+              <!-- <input type="text" id="productPrice" formControlName="productPrice" class="form-control"> -->
+            </div>
+          </div>
         </div>
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="container">
+          <div class="col-md-6">
+            <h3 class="dark-grey">Supplier</h3>
+            <div class="form-group" class="row">
+              <label for="name">Name</label>
+              <!-- <select type="text" [(ngModel)]="index" (ngModelChange)="selectsupplier()" name="index" class="col-lg-12">
+                     <option *ngFor="let supplier of suppliers" [ngValue]="supplier.supplierID">{{supplier.name}}</option> -->
+              <select type="number" [(ngModel)]="index" (ngModelChange)="selectsupplier()" name="index" class="form-group col-lg-12" class="form-control">
+                     <option *ngFor="let supplier of suppliers" [ngValue]="supplier.supplierID">{{supplier.name}}</option>
+                     </select>
+            </div>
+            <div class="row">
+              <div class="form-group col-lg-6">
+                <label for="id">ID</label>
+                <!-- <input type="text" id="id" name="id" value="{{model.supplierID}}"> -->
+                <input type="text" id="id" name="supplierID" value="{{model.supplierID}}" class="form-control" readonly>
+              </div>
+              <div class="form-group col-lg-6">
+                <label for="phone">Phone</label>
+                <!-- <input type="text" id="phone" name="phone" value="{{model.phone}}"> -->
+                <input type="text" id="phone" name="phone" value="{{model.phone}}" class="form-control" readonly>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
-
+  </section>
 </div>
-<!-- <div *ngIf="addMode"> 
-  </div> -->
-<!-- reactive end -->
-<!--<p>{{itemForm.get('itemData.name').value}}</p>
-   <p>{{itemForm.get('itemData.id').value}}</p>-->
-<!--<p>
-    {{id}} and {{ name}}
-  </p>-->
-
-<!--<div class="form-group row">
-  <div class="col-xs-2">
-    <label for="ex1">Name</label>
-    <input class="form-control" id="ex1" type="text">
-  </div>
-  <div class="col-xs-3">
-    <label for="ex2">Description</label>
-    <input class="form-control" id="ex2" type="text">
-  </div>
-  <div class="col-xs-1">
-    <label for="ex3">Quantity</label>
-    <input class="form-control" id="ex3" type="text">
-  </div>
-  <div class="col-xs-3">
-    <label for="ex2">Notes</label>
-    <input class="form-control" id="ex2" type="text">
-  </div>
-</div>-->

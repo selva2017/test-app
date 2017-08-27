@@ -5,3 +5,15 @@
 input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
+
+.card {
+  background: #44464c;
+  margin-bottom: 30px;
+  min-height: 160px;
+}
+
+.photo {
+  float: left;
+  margin-right: 30px;
+}
+

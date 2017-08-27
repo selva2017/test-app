@@ -10,6 +10,7 @@ import { ModifyInventoryComponent } from './inventory/modify-inventory/modify-in
 import { ViewInventoryComponent } from './inventory/view-inventory/view-inventory.component';
 import { EditInventoryComponent } from './inventory/edit-inventory/edit-inventory.component';
 import { SimpleChartExampleComponent } from './charts/simple-chart-example/simple-chart-example.component';
+import { TestComponent } from './test/test.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
       { path: 'edit', component: EditInventoryComponent }
   ] },
   { path: 'graphs', component: SimpleChartExampleComponent},
+  { path: 'test', component: TestComponent},
   { path: 'sales', component: SalesComponent }
 ];
 

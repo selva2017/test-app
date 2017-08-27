@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 
 import { ServerService } from '../../shared/server.service';
-import { Product } from '../../shared/product.model';
+import { ProductView } from '../../shared/product-view.interface';
 
 @Component({
   selector: 'app-edit-inventory',
@@ -13,20 +13,20 @@ import { Product } from '../../shared/product.model';
 })
 export class EditInventoryComponent implements OnInit, OnDestroy {
   @ViewChild('f') slForm: NgForm;
-  products: Product;
+  products: ProductView;
   subscription: Subscription;
   editMode = false;
   editedItemIndex: number;
-  editedItem: Product;
+  editedItem: ProductView;
 
-  productsChanged = new Subject<Product>();
+  productsChanged = new Subject<ProductView>();
 
   constructor(private serverService: ServerService) { }
 
   ngOnInit() {
     this.serverService.getWSData()
       .subscribe(
-      (servers: Product) => this.products = servers,
+      (servers: ProductView) => this.products = servers,
       (error) => console.log(error)
       );
 
@@ -37,8 +37,10 @@ export class EditInventoryComponent implements OnInit, OnDestroy {
         this.editMode = true;
         this.editedItem = this.products[index];
         this.slForm.setValue({
-          name: this.editedItem.name,
-          id: this.editedItem.id
+          // productId: this.editedItem.productId,
+          productName: this.editedItem.productName,
+          productQuantity: this.editedItem.productQuantity,
+          productPrice: this.editedItem.productPrice
         })
       }
       );
@@ -53,21 +55,24 @@ export class EditInventoryComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    const newProduct = new Product(value.id, value.name);
+    // only name qty and amount will be fetched from form.... what to do for the other fields?? pass product.field?
+    const newProduct = new ProductView(value.productId, value.productCode, value.productName, value.productQuantity,
+      value.productPrice, value.supplierId, value.supplierName, value.supplierPhone);
+    console.log(newProduct);
     if (this.editMode) {
       this.updateItem(this.editedItemIndex, newProduct);
     }
     this.editMode = false;
     form.reset();
   }
-  updateItem(index: number, newProduct: Product) {
+  updateItem(index: number, newProduct: ProductView) {
     this.products[index] = newProduct;
     this.productsChanged.next(this.products);
 
     // Send the new product to the service to update data
     this.serverService.putData(newProduct)
       .subscribe(
-      (servers: Product) => this.products = servers,
+      (servers: ProductView) => this.products = servers,
       (error) => console.log(error)
       );
 

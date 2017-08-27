@@ -3,7 +3,7 @@
 <button type="button" class="btn-group btn btn-info" style="width:120px" (click)="onView()">View Data</button>
 <button type="button" class="btn-group btn btn-info" style="width:120px" (click)="onUpdate()">Update Data</button>
 
-<div class="table-responsive" *ngIf="viewMode">
+<!-- <div class="table-responsive" *ngIf="viewMode">
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
@@ -18,10 +18,12 @@
       </tr>
     </tbody>
   </table>
-</div>
-<!--<span *ngFor="let product of products; let i = index">
-     {{ product.id }} is {{ product.name }}
-</span>-->
+</div> -->
+<span *ngFor="let product of products; let i = index">
+  <hr>
+     {{ product.productId }} ,{{ product.productCode }} ,{{ product.productName }} ,{{ product.productQuantity }} ,
+     {{ product.productPrice }} ,{{ product.supplierName }} ,{{ product.supplierPhone }} 
+</span>
 <!--<p>WS data retrieved - ID :{{ product.id }}</p>
 <p>WS data retrieved - Name :{{ product.name }}</p>-->
 

@@ -6,7 +6,8 @@
           <hr>
           <ul class="list-group">
             <a class="list-group-item" style="cursor: pointer" *ngFor="let product of products; let i = index" (click)="onEditItem(i)">
-        {{ product.name}} ({{ product.id }})
+             {{ product.productId }} ,{{ product.productCode }} ,{{ product.productName }} ,{{ product.productQuantity }} ,
+     {{ product.productPrice }} ,{{ product.supplierName }} ,{{ product.supplierPhone }} 
         </a>
           </ul>
         </div>
@@ -14,11 +15,15 @@
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>
-          <input type="text" id="name" class="form-control" name="name" ngModel required>
+          <input type="text" id="productName" class="form-control" name="productName" ngModel required>
+        </div>
+        <div class="col-sm-2 form-group">
+          <label for="quantity">Quantity</label>
+          <input type="text" id="productQuantity" class="form-control" name="productQuantity" ngModel required>
         </div>
         <div class="col-sm-2 form-group">
           <label for="amount">Amount</label>
-          <input type="number" id="id" class="form-control" name="id" ngModel required pattern="^[1-9]+[0-9]*$">
+          <input type="text" id="productPrice" class="form-control" name="productPrice" ngModel required>
         </div>
       </div>
       <div class="row">

@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { ServerService } from '../../shared/server.service';
 
 import { Product } from '../../shared/product.model';
-import { ProductAdd } from '../../shared/product-add.interface';
 import { Supplier } from '../../shared/supplier.model';
 
 @Component({
@@ -14,29 +13,7 @@ import { Supplier } from '../../shared/supplier.model';
 })
 export class AddInventoryComponent implements OnInit {
   itemForm: FormGroup;
-  // product: Product;
-
-  product: Product = {
-    productId: '',
-    productCode: '',
-    productName: '',
-    productQuantity: '',
-    productPrice: ''
-  };
-  // supplier: Supplier = {
-  //   supplierID: '',
-  //   name: '',
-  //   phone: ''
-  // };
-  productAdd: ProductAdd = {
-    productId: '',
-    productCode: '',
-    productName: '',
-    productQuantity: '',
-    productPrice: '',
-    supplierId: ''
-  };
-
+  products: Product;
   addMode = false;
   prod: any;
 
@@ -53,14 +30,14 @@ export class AddInventoryComponent implements OnInit {
   ngOnInit() {
     this.itemForm = new FormGroup({
       'itemData': new FormGroup({
-        //     // 'productId': new FormControl(null, [Validators.required]),
-        //     'productCode': new FormControl(null, [Validators.required]),
-        //     'productName': new FormControl(null, [Validators.required]),
-        //     'productQuantity': new FormControl(null, [Validators.required]),
-        //     'productPrice': new FormControl(null, [Validators.required]),
+        // 'productId': new FormControl(null, [Validators.required]),
+        'productCode': new FormControl(null, [Validators.required]),
+        'productName': new FormControl(null, [Validators.required]),
+        'productQuantity': new FormControl(null, [Validators.required]),
+        'productPrice': new FormControl(null, [Validators.required]),
         'supplierID': new FormControl(null, [Validators.required]),
-        'name': new FormControl(null, [Validators.required]),
-        'phone': new FormControl(null, [Validators.required])
+        'suppliername': new FormControl(null, [Validators.required]),
+        'supplierphone': new FormControl(null, [Validators.required])
       }),
     });
 
@@ -92,13 +69,6 @@ export class AddInventoryComponent implements OnInit {
   }
   onSubmit() {
 
-    this.productAdd.productId = this.product.productId;
-    this.productAdd.productCode = this.product.productCode;
-    this.productAdd.productName = this.product.productName;
-    this.productAdd.productQuantity = this.product.productQuantity;
-    this.productAdd.productPrice = this.product.productPrice;
-    this.productAdd.supplierId = this.model.supplierID;
-  
     //Working example---------------
     // this.serverService.postWSData()
     //   .subscribe(
@@ -110,7 +80,7 @@ export class AddInventoryComponent implements OnInit {
 
     //Working example-----------Form data
     let data = this.itemForm.get('itemData').value;
-    this.serverService.postWSData(this.productAdd)
+    this.serverService.postWSData(data)
       .subscribe(
       data => this.postdata = JSON.stringify(data),
       error => alert(error),
