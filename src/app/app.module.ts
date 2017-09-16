@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ChartModule } from 'angular2-highcharts';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
+import { DataTableModule } from 'angular-4-data-table';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -55,7 +56,8 @@ declare var require : any;
     HttpModule,
     ReactiveFormsModule,
     FormsModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    DataTableModule
   ],
   providers: [InventoryService, ServerService,
     {
