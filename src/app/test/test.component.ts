@@ -19,7 +19,7 @@ export class TestComponent implements OnInit, OnDestroy {
   itemCount: number;
 
   constructor(private productService: ServerService) {
-    this.subscription = this.productService.getSupplierData()
+    this.subscription = this.productService.getTallyData()
       .subscribe(products => {
         // console.log(products);
         this.products = products;
@@ -45,7 +45,7 @@ export class TestComponent implements OnInit, OnDestroy {
 
   filter(query: string) {
     let filteredProducts = (query) ?
-      this.products.filter(p => p.name.toLowerCase().includes(query.toLowerCase())) :
+      this.products.filter(p => p.reportKey.toLowerCase().includes(query.toLowerCase())) :
       this.products;
 
     this.initializeTable(filteredProducts);

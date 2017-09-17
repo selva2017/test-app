@@ -4,9 +4,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { ChartModule } from 'angular2-highcharts';
+// import { ChartModule } from 'angular2-highcharts';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { DataTableModule } from 'angular-4-data-table';
+import { ChartModule } from 'angular2-chartjs';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -24,6 +25,9 @@ import { AboutComponent } from './about/about.component';
 import { EditInventoryComponent } from './inventory/edit-inventory/edit-inventory.component';
 import { SimpleChartExampleComponent } from './charts/simple-chart-example/simple-chart-example.component';
 import { TestComponent } from './test/test.component';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { GoogleChartComponent } from './charts/google-chart/google-chart.component';
+import { Ang2ChartjsComponent } from './charts/ang2-chartjs/ang2-chartjs.component';
 
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
@@ -47,7 +51,9 @@ declare var require : any;
     AboutComponent,
     EditInventoryComponent,
     SimpleChartExampleComponent,
-    TestComponent
+    TestComponent,
+    GoogleChartComponent,
+    Ang2ChartjsComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,8 @@ declare var require : any;
     ReactiveFormsModule,
     FormsModule,
     Ng2SmartTableModule,
-    DataTableModule
+    DataTableModule,
+    Ng2GoogleChartsModule
   ],
   providers: [InventoryService, ServerService,
     {
