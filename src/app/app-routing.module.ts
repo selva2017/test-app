@@ -11,11 +11,16 @@ import { ViewInventoryComponent } from './inventory/view-inventory/view-inventor
 import { EditInventoryComponent } from './inventory/edit-inventory/edit-inventory.component';
 import { SimpleChartExampleComponent } from './charts/simple-chart-example/simple-chart-example.component';
 import { TestComponent } from './test/test.component';
+import { GoogleChartComponent } from './charts/google-chart/google-chart.component';
+import { Ang2ChartjsComponent } from './charts/ang2-chartjs/ang2-chartjs.component';
+import { AboutComponent } from './about/about.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'employee', component: EmployeeComponent },
-  { path: 'inventory', component: InventoryComponent , children: [
+  { path: 'googlechart', component: GoogleChartComponent },
+  { path: 'ngchart', component: Ang2ChartjsComponent },
+    { path: 'inventory', component: InventoryComponent , children: [
     { path: 'add', component: AddInventoryComponent },
      { path: 'modify', component: ModifyInventoryComponent },
       { path: 'view', component: ViewInventoryComponent },
@@ -23,7 +28,8 @@ const appRoutes: Routes = [
   ] },
   { path: 'graphs', component: SimpleChartExampleComponent},
   { path: 'test', component: TestComponent},
-  { path: 'sales', component: SalesComponent }
+  { path: 'sales', component: SalesComponent },
+  { path: 'about', component: AboutComponent }
 ];
 
 @NgModule({
