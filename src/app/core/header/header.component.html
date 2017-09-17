@@ -1,23 +1,30 @@
-<nav class="navbar navbar-inverse bg-light">
-  <div class="container-fluid" style="cursor: pointer;">
-    <div class="navbar-header">
-      <a routerLink="/" class="navbar-brand">Main page</a>
-    </div>
-
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-        <li routerLinkActive="active"> <a routerLink="sales">Sales</a></li>
-        <li routerLinkActive="active"> <a routerLink="inventory">Inventory</a></li>
-        <li routerLinkActive="active"> <a routerLink="employee">Employees</a></li>
-        <li routerLinkActive="active"> <a routerLink="graphs">Graphs</a></li>
-        <li routerLinkActive="active"> <a href="">Purchase</a></li>
-        <li routerLinkActive="active"> <a href="">Finance</a></li>
-        <li routerLinkActive="active"> <a href="">Production</a></li>
-        <li routerLinkActive="active"> <a href="">Payroll</a></li>
-        <li routerLinkActive="active"> <a href="">Reports</a></li>
-        <li routerLinkActive="active"> <a href="">Bank</a></li>
-        <li routerLinkActive="active"> <a routerLink="test">Test</a></li>
-      </ul>
+<div class="header">
+  <div class="top-header">
+      <!-- <div class="container"> -->
+    <div class="container-fluid" style="cursor: pointer;">
+      <!-- <nav class="navbar navbar-expand-lg navbar-light bg-faded"> -->
+          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <!-- <nav class="navbar navbar-expand-sm navbar-light bg-primary"> -->
+        <!-- <nav class="navbar navbar-expand-sm navbar-dark" style="background: coral;"> -->
+        <a class="navbar-brand" href="#">Main page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+          aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" routerLinkActive="active" routerLink="sales">Sales <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" routerLinkActive="active" routerLink="inventory">Inventory </a>
+            <a class="nav-item nav-link active" routerLinkActive="active" routerLink="employee">Employees </a>
+            <a class="nav-item nav-link active" routerLinkActive="active" routerLink="ngchart">Ang Chart </a>
+            <a class="nav-item nav-link active" routerLinkActive="active" routerLink="googlechart">Google Chart </a>
+            <a class="nav-item nav-link active" routerLinkActive="active" routerLink="graphs">Graphs </a>
+            <a class="nav-item nav-link active" routerLinkActive="active" routerLink="test">Test </a>
+            <a class="nav-item nav-link active" routerLinkActive="active" routerLink="about">ng2 Smart table </a>
+            <a class="nav-item nav-link disabled" routerLink="test">Disabled</a>
+          </div>
+        </div>
+      </nav>
     </div>
   </div>
-</nav>
+</div>

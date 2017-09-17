@@ -1,6 +1,10 @@
 
 export interface Prod {
-    supplierID: string;
-    name: string;
-    phone: string;
+    tallySummaryIid: string;
+    reportName: string;
+    reportKey: string;
+    reportValue1: string;
+    reportValue2: string;
+    createdTime: string;
+  
   }
