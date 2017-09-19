@@ -6,5 +6,5 @@ export interface Prod {
     reportValue1: string;
     reportValue2: string;
     createdTime: string;
-  
+    checkFlag: string;
   }

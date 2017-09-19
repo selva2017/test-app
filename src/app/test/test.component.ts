@@ -4,6 +4,7 @@ import { Prod } from './../shared/prod';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ServerService } from '../shared/server.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test',
@@ -18,7 +19,8 @@ export class TestComponent implements OnInit, OnDestroy {
   items: Prod[] = [];
   itemCount: number;
 
-  constructor(private productService: ServerService) {
+  constructor(private productService: ServerService,
+    private router: Router ) {
     this.subscription = this.productService.getTallyData()
       .subscribe(products => {
         // console.log(products);
@@ -58,7 +60,31 @@ export class TestComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  onClick(supplierID) {
-    alert(supplierID);
+  onClick(key: string) {
+    //Need to have the service updated for just passign Flag and report ID
+    // let product_update = '';
+    // this.productService.putTallyData(product_update)
+    //   .subscribe(
+    //   (servers: Prod) => console.log(servers),
+    //   (error) => console.log(error)
+    //   );
+
+    //start---- Get the clicked key and identify the row in array
+    let num = 0;
+    let row;
+    for (num = 0; num <= this.products.length; num++) {
+      if (this.products[num].tallySummaryIid == key)
+        break;
+    }
+    let product_update = this.products[num];
+    // product_update.checkFlag = "1";
+    this.productService.putTallyData(product_update)
+      .subscribe(
+      (servers: Prod) => console.log(servers),
+      (error) => console.log(error)
+      );
+      location.reload();
+      this.router.navigate(['/test']);
+    //---end
   }
 }
