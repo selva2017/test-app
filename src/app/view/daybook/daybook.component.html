@@ -26,8 +26,7 @@
           <!-- <td><a (click)="onClick(product)">View</a></td> -->
           <td>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" (click)="onClick(product)">
-    View
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClick(product)">View
   </button>
 
             <!-- Modal -->
@@ -41,31 +40,35 @@
           </button>
                   </div>
                   <div class="modal-body">
-                      <div class="row">
-                          <div class="col-md-4">Summary ID :</div>
-                          <div class="col-md-8 col-md-offset-8">{{product_row.tallySummaryIid}} </div>
-                      </div>
-                          <div class="row">
-                          <div class="col-md-4">Report Name :</div>
-                          <div class="col-md-8 col-md-offset-8">{{product_row.reportName}} </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-4">Report Key :</div>
-                          <div class="col-md-8 col-md-offset-8">{{product_row.reportKey}} </div>
-                        </div>
-                        <div class="row"><div class="col-md-4">Report Value1 : </div>
-                          <div class="col-md-8 col-md-offset-8">{{product_row.reportValue1}} </div>
-                        </div>
-                        <div class="row"><div class="col-md-4">Report Value2 :</div>
-                          <div class="col-md-8 col-md-offset-8">{{product_row.reportValue2}} </div>
-                        </div>
-                        <div class="row"><div class="col-md-4">Created Time :</div>
-                          <div class="col-md-8 col-md-offset-8">{{product_row.createdTime}} </div>
-                        </div>
-                        <div class="row"><div class="col-md-4">Flag :</div>
-                          <div class="col-md-8 col-md-offset-8">{{product_row.checkFlag}} </div>
-                      </div>
-                      
+                    <div class="row">
+                      <div class="col-md-4">Summary ID :</div>
+                      <div class="col-md-8 col-md-offset-8">{{product_row.tallySummaryIid}} </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">Report Name :</div>
+                      <div class="col-md-8 col-md-offset-8">{{product_row.reportName}} </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">Report Key :</div>
+                      <div class="col-md-8 col-md-offset-8">{{product_row.reportKey}} </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">Report Value1 : </div>
+                      <div class="col-md-8 col-md-offset-8">{{product_row.reportValue1}} </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">Report Value2 :</div>
+                      <div class="col-md-8 col-md-offset-8">{{product_row.reportValue2}} </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">Created Time :</div>
+                      <div class="col-md-8 col-md-offset-8">{{product_row.createdTime}} </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">Flag :</div>
+                      <div class="col-md-8 col-md-offset-8">{{product_row.checkFlag}} </div>
+                    </div>
+
                     <!-- <p>
                       "Summary ID :   " {{product_row.tallySummaryIid}} <br/>
                       "Report Name :  " {{product_row.reportName}}<br/>
