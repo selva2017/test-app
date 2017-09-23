@@ -83,8 +83,8 @@ export class TestComponent implements OnInit, OnDestroy {
       (servers: Prod) => console.log(servers),
       (error) => console.log(error)
       );
-      location.reload();
-      this.router.navigate(['/test']);
+      // location.reload();
+      // this.router.navigate(['/test']);
     //---end
   }
 }

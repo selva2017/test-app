@@ -1,3 +1,4 @@
+import { DaybookComponent } from './view/daybook/daybook.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
@@ -27,6 +28,7 @@ const appRoutes: Routes = [
       { path: 'edit', component: EditInventoryComponent }
   ] },
   { path: 'graphs', component: SimpleChartExampleComponent},
+  { path: 'daybook', component: DaybookComponent},
   { path: 'test', component: TestComponent},
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }

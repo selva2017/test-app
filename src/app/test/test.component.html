@@ -1,15 +1,12 @@
 <hr>
 <p>
-    <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
-  </p>
-  <p>
-    <input 
-      #query
-      (keyup)="filter(query.value)"
-      type="text" class="form-control" placeholder="Search...">
-  </p>
-  
-  <!-- <data-table
+  <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
+</p>
+<p>
+  <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
+</p>
+
+<!-- <data-table
     [items]="items"
     [itemCount]="itemCount"
     [limit]="5"
@@ -49,67 +46,40 @@
   
   </data-table>
    -->
-  <!-- added for tally trial report -->
-  <data-table
-  [items]="items"
-  [itemCount]="itemCount"
-  [limit]="5"
-  (reload)="reloadItems($event)">
-  <data-table-column
-    [property]="'tallySummaryIid'"  
-    [header]="'ID'"
-    [sortable]="true"
-  >
+<!-- added for tally trial report -->
+<data-table [items]="items" [itemCount]="itemCount" [limit]="5" (reload)="reloadItems($event)">
+  <data-table-column [property]="'tallySummaryIid'" [header]="'ID'" [sortable]="true"  [width]="50" [resizable]="true">
   </data-table-column>
-  <data-table-column
-  [property]="'reportName'"  
-  [header]="'Report name'"
-  [sortable]="true"
-  [resizable]="true"
->
-</data-table-column>    
-  <data-table-column
-    [property]="'reportKey'"  
-    [header]="'Report Type'"
-    [sortable]="true"
-    [resizable]="true"
-  >
+  <data-table-column [property]="'reportName'" [header]="'Report name'" [sortable]="true" [width]="300" [resizable]="true">
   </data-table-column>
-<data-table-column
-    [property]="'reportValue1'"  
-    [header]="'Debit'"
-    [sortable]="true"
-    [resizable]="true"
-  >
+  <data-table-column [property]="'reportKey'" [header]="'Report Type'" [sortable]="true" [resizable]="true">
   </data-table-column>
-<data-table-column
-    [property]="'reportValue2'"  
-    [header]="'Credit'"
-    [sortable]="true"
-    [resizable]="true"
-  >
+  <data-table-column [property]="'reportValue1'" [header]="'Debit'" [sortable]="true" [resizable]="true">
   </data-table-column>
-<data-table-column
-    [property]="'createdTime'"  
-    [header]="'Report Date'"
-    [sortable]="true"
-    [resizable]="true"
-  >
+  <data-table-column [property]="'reportValue2'" [header]="'Credit'" [sortable]="true" [resizable]="true">
   </data-table-column>
-<!-- <data-table-column
+  <data-table-column [property]="'createdTime'" [header]="'Report Date'" [sortable]="true" [resizable]="true">
+  </data-table-column>
+  <!-- <data-table-column
     [property]="'check_flag'"  
     [header]="'Flag'"
     [sortable]="true"
     [resizable]="true"
   >
   </data-table-column> -->
-  <data-table-column
-    [property]="'tallySummaryIid'"  
-    [property]="'$key'"  
-  >
+  <data-table-column [property]="'tallySummaryIid'" [property]="'$key'" [width]="75">
     <ng-template #dataTableCell let-item="item">
       <!-- <button (click)="onClick([item.createdTime,item.tallySummaryIid])">Complete</button> -->
-      <button (click)="onClick(item.tallySummaryIid)">Complete</button>
+      <!-- <button (click)="onClick(item.tallySummaryIid)">Complete</button> -->
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="close" (click)="onClick(item.tallySummaryIid)">
+    <span aria-hidden="true">&times;</span>
+       </button>
+      
+      </div>
+      <!-- <div class="alert alert-success alert-dismissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      </div> -->
     </ng-template>
   </data-table-column>
-</data-table> 
+</data-table>

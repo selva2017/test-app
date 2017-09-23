@@ -1,0 +1,90 @@
+<div>
+
+  <table class="table table-responsive table-hover table-sm">
+    <thead>
+      <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <!-- <th>Header 3</th> -->
+        <th>Header 4</th>
+        <!-- <th>Header 5</th> -->
+        <!-- <th>Header 6</th> -->
+        <th>Header 7</th>
+        <th>Header 7</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="col-xs-12">
+        <tr *ngFor="let product of products; let i = index">
+          <td>{{product.tallySummaryIid}}</td>
+          <!-- <td>{{product.reportName}}</td> -->
+          <td>{{product.reportKey}}</td>
+          <td>{{product.reportValue1}}</td>
+          <!-- <td>{{product.reportValue2}}</td> -->
+          <!-- <td>{{product.createdTime}}</td> -->
+          <td>{{product.checkFlag}}</td>
+          <!-- <td><a (click)="onClick(product)">View</a></td> -->
+          <td>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" (click)="onClick(product)">
+    View
+  </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Day Book Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                          <div class="col-md-4">Summary ID :</div>
+                          <div class="col-md-8 col-md-offset-8">{{product_row.tallySummaryIid}} </div>
+                      </div>
+                          <div class="row">
+                          <div class="col-md-4">Report Name :</div>
+                          <div class="col-md-8 col-md-offset-8">{{product_row.reportName}} </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">Report Key :</div>
+                          <div class="col-md-8 col-md-offset-8">{{product_row.reportKey}} </div>
+                        </div>
+                        <div class="row"><div class="col-md-4">Report Value1 : </div>
+                          <div class="col-md-8 col-md-offset-8">{{product_row.reportValue1}} </div>
+                        </div>
+                        <div class="row"><div class="col-md-4">Report Value2 :</div>
+                          <div class="col-md-8 col-md-offset-8">{{product_row.reportValue2}} </div>
+                        </div>
+                        <div class="row"><div class="col-md-4">Created Time :</div>
+                          <div class="col-md-8 col-md-offset-8">{{product_row.createdTime}} </div>
+                        </div>
+                        <div class="row"><div class="col-md-4">Flag :</div>
+                          <div class="col-md-8 col-md-offset-8">{{product_row.checkFlag}} </div>
+                      </div>
+                      
+                    <!-- <p>
+                      "Summary ID :   " {{product_row.tallySummaryIid}} <br/>
+                      "Report Name :  " {{product_row.reportName}}<br/>
+                      "Report Key  :  " {{product_row.reportKey}}<br/>
+                      "Report Value1 :" {{product_row.reportValue1}}<br/>
+                      "Report Value2 :" {{product_row.reportValue2}}<br/>
+                      "Created time : " {{product_row.createdTime}}<br/>
+                      "Flag :         " {{product_row.checkFlag}}<br/>
+
+                    </p> -->
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
