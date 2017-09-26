@@ -20,15 +20,17 @@ export class TestComponent implements OnInit, OnDestroy {
   itemCount: number;
 
   constructor(private productService: ServerService,
-    private router: Router ) {
+    private router: Router) {
+  }
+  refreshList() {
     this.subscription = this.productService.getTallyData()
       .subscribe(products => {
         // console.log(products);
         this.products = products;
         this.initializeTable(products);
       });
-  }
 
+  }
   private initializeTable(products: Prod[]) {
     // console.log(products);
     this.tableResource = new DataTableResource(products);
@@ -58,6 +60,7 @@ export class TestComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.refreshList();
   }
 
   onClick(key: string) {
@@ -80,11 +83,15 @@ export class TestComponent implements OnInit, OnDestroy {
     // product_update.checkFlag = "1";
     this.productService.putTallyData(product_update)
       .subscribe(
-      (servers: Prod) => console.log(servers),
+        (success) => {
+          // console.log("success");
+          this.refreshList();
+        },
+      // (servers: Prod) => console.log(servers),
       (error) => console.log(error)
       );
-      // location.reload();
-      // this.router.navigate(['/test']);
+    // location.reload();
+    // this.router.navigate(['/test']);
     //---end
   }
 }

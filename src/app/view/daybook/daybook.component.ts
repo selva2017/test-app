@@ -1,9 +1,8 @@
-import { Product } from './../../shared/product.model';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Prod } from './../../shared/prod';
 import { ServerService } from './../../shared/server.service';
+import { Daybook } from './../../shared/daybook';
 
 @Component({
   selector: 'app-daybook',
@@ -13,20 +12,36 @@ import { ServerService } from './../../shared/server.service';
 export class DaybookComponent implements OnInit {
 
   subscription: Subscription;
-  products: Prod[];
-  product_row: Prod[]=[];
+  dayBook: Daybook[];
+  dayBook_row: Daybook[] = [];
 
   constructor(private serverService: ServerService) {
-    this.subscription = this.serverService.getTallyData().
-      subscribe(products => {
-        this.products = products;
-      })
+
   }
 
   ngOnInit() {
+    this.refreshList();
   }
-  onClick(row) {
-this.product_row=row;
-
+  onClickView(record) {
+    this.dayBook_row = record;
+  }
+  onClickReviewed(key) {
+    console.log("Modal clicked..." + key)
+    this.serverService.updateTallyDaybook(key)
+      .subscribe(
+      // (res: Daybook) => console.log(res),
+      (success) => {
+        console.log("success");
+        // this.refreshList();
+      },
+      (error) => console.log(error)
+      );
+  }
+  refreshList() {
+    this.subscription = this.serverService.getTallyDaybook().
+      subscribe(list => {
+        this.dayBook = list;
+        console.log(this.dayBook);
+      })
   }
 }

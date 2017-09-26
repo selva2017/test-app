@@ -3,31 +3,40 @@
   <table class="table table-responsive table-hover table-sm">
     <thead>
       <tr>
-        <th>Header 1</th>
-        <th>Header 2</th>
-        <!-- <th>Header 3</th> -->
-        <th>Header 4</th>
-        <!-- <th>Header 5</th> -->
-        <!-- <th>Header 6</th> -->
-        <th>Header 7</th>
-        <th>Header 7</th>
+        <th>No</th>
+        <th>Date</th>
+        <th>Particulars</th>
+        <th>Vch Type</th>
+        <th>Vch No</th>
+        <th>Credit/Debit(-)</th>
+        <!-- <th>Credit Amount / Outwards Qty</th> -->
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <tr class="col-xs-12">
-        <tr *ngFor="let product of products; let i = index">
-          <td>{{product.tallySummaryIid}}</td>
-          <!-- <td>{{product.reportName}}</td> -->
-          <td>{{product.reportKey}}</td>
-          <td>{{product.reportValue1}}</td>
-          <!-- <td>{{product.reportValue2}}</td> -->
-          <!-- <td>{{product.createdTime}}</td> -->
-          <td>{{product.checkFlag}}</td>
-          <!-- <td><a (click)="onClick(product)">View</a></td> -->
+        <tr *ngFor="let row of dayBook; let i = index">
+          <td>{{i+1}}</td>
+          <td>{{row.voucherDate}}</td>
+          <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
+          <td>{{row.voucherType}}</td>
+          <td>{{row.voucherNumber}}</td>
+          <td>
+            <!-- <div *ngFor="let ledger of row.ledgerEntryVOs"> -->
+            <!-- {{ledger.amount}} -->
+            {{row.ledgerEntryVOs[0].amount}}
+            <!-- </div> -->
+          </td>
+          <!-- <td> -->
+          <!-- <div *ngFor="let inventory of row.inventoryEntryVOs"> -->
+          <!-- {{row.inventoryEntryVOs[0].amount}} -->
+          <!-- {{row.inventoryEntryVOs[0].amount}} -->
+          <!-- </div> -->
+          <!-- </td> -->
           <td>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClick(product)">View
-  </button>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row)">View
+      </button>
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -36,52 +45,96 @@
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Day Book Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+                <span aria-hidden="true">&times;</span>
+              </button>
                   </div>
                   <div class="modal-body">
-                    <div class="row">
-                      <div class="col-md-4">Summary ID :</div>
-                      <div class="col-md-8 col-md-offset-8">{{product_row.tallySummaryIid}} </div>
+
+                    <h5>Master Details</h5>
+                    <table class="w-100 p-3">
+                      <tr>
+                        <td>Voucher Date:</td>
+                        <td>{{dayBook_row.voucherDate}} </td>
+                      </tr>
+                      <tr>
+                        <td>Ledger Name:</td>
+                        <td>{{dayBook_row.partyLedgerName}} </td>
+                      </tr>
+                      <tr>
+                        <td>Voucher Type:</td>
+                        <td>{{dayBook_row.voucherType}} </td>
+                      </tr>
+                      <tr>
+                        <td>Voucher Number:</td>
+                        <td>{{dayBook_row.voucherNumber}} </td>
+                      </tr>
+                      <tr>
+                        <td>Voucher Key:</td>
+                        <td>{{dayBook_row.voucherKey}} </td>
+                      </tr>
+                    </table>
+                    <hr class="style2">
+                    <h5>Ledger Details</h5>
+                    <div *ngFor="let ledger of dayBook_row.ledgerEntryVOs">
+                      <table class="w-100 p-3">
+                        <tr>
+                          <td>Ledger Name:</td>
+                          <td>{{ledger.ledgerName}} </td>
+                        </tr>
+                        <tr>
+                          <td>Amount:</td>
+                          <td>{{ledger.amount}} </td>
+                        </tr>
+                        <tr>
+                          <td>Voucher Key:</td>
+                          <td>{{ledger.voucherKey}} </td>
+                        </tr>
+                        <!-- <tr>
+                            <td>ID:</td>
+                            <td>{{ledger.id}} </td>
+                          </tr> -->
+                      </table>
+                      <hr class="style2">
                     </div>
-                    <div class="row">
-                      <div class="col-md-4">Report Name :</div>
-                      <div class="col-md-8 col-md-offset-8">{{product_row.reportName}} </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">Report Key :</div>
-                      <div class="col-md-8 col-md-offset-8">{{product_row.reportKey}} </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">Report Value1 : </div>
-                      <div class="col-md-8 col-md-offset-8">{{product_row.reportValue1}} </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">Report Value2 :</div>
-                      <div class="col-md-8 col-md-offset-8">{{product_row.reportValue2}} </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">Created Time :</div>
-                      <div class="col-md-8 col-md-offset-8">{{product_row.createdTime}} </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4">Flag :</div>
-                      <div class="col-md-8 col-md-offset-8">{{product_row.checkFlag}} </div>
+                    <h5>Inventory Details</h5>
+                    <div *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
+                      <table class="w-100 p-3">
+                        <!-- <tr>
+                            <td>Voucher Key:</td>
+                            <td>{{inventory.voucherKey}} </td>
+                          </tr> -->
+                        <!-- <tr>
+                          <td>Ledger Name:</td>
+                          <td>{{inventory.ledgerName}} </td>
+                        </tr> -->
+                        <tr>
+                          <td>Stock Item Name:</td>
+                          <td>{{inventory.stockItemName}} </td>
+                        </tr>
+                        <tr>
+                          <td>Rate:</td>
+                          <td>{{inventory.rate}} </td>
+                        </tr>
+                        <tr>
+                          <td>Amount:</td>
+                          <td>{{inventory.amount}} </td>
+                        </tr>
+                        <tr>
+                          <td>Billed Quantity:</td>
+                          <td>{{inventory.billedQuantity}} </td>
+                        </tr>
+                        <!-- <tr> -->
+                        <!-- <td>ID:</td>
+                            <td>{{inventory.id}} </td>
+                          </tr> -->
+                      </table>
+                      <hr class="style2">
                     </div>
 
-                    <!-- <p>
-                      "Summary ID :   " {{product_row.tallySummaryIid}} <br/>
-                      "Report Name :  " {{product_row.reportName}}<br/>
-                      "Report Key  :  " {{product_row.reportKey}}<br/>
-                      "Report Value1 :" {{product_row.reportValue1}}<br/>
-                      "Report Value2 :" {{product_row.reportValue2}}<br/>
-                      "Created time : " {{product_row.createdTime}}<br/>
-                      "Flag :         " {{product_row.checkFlag}}<br/>
-
-                    </p> -->
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onClickReviewed(dayBook_row)">Reviewed</button>
                   </div>
                 </div>
               </div>
