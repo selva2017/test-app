@@ -27,12 +27,13 @@ export class DaybookComponent implements OnInit {
   }
   onClickReviewed(key) {
     console.log("Modal clicked..." + key)
-    this.serverService.updateTallyDaybook(key)
+    // this.serverService.updateTallyDaybook(key)
+    this.serverService.setFlagTallyDaybook(key)
       .subscribe(
       // (res: Daybook) => console.log(res),
       (success) => {
         console.log("success");
-        // this.refreshList();
+        this.refreshList();
       },
       (error) => console.log(error)
       );
