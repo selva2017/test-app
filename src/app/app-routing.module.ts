@@ -1,3 +1,4 @@
+import { LoginComponent } from './login/login/login.component';
 import { DaybookComponent } from './view/daybook/daybook.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
@@ -17,19 +18,22 @@ import { Ang2ChartjsComponent } from './charts/ang2-chartjs/ang2-chartjs.compone
 import { AboutComponent } from './about/about.component';
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'employee', component: EmployeeComponent },
   { path: 'googlechart', component: GoogleChartComponent },
   { path: 'ngchart', component: Ang2ChartjsComponent },
-    { path: 'inventory', component: InventoryComponent , children: [
-    { path: 'add', component: AddInventoryComponent },
-     { path: 'modify', component: ModifyInventoryComponent },
+  {
+    path: 'inventory', component: InventoryComponent, children: [
+      { path: 'add', component: AddInventoryComponent },
+      { path: 'modify', component: ModifyInventoryComponent },
       { path: 'view', component: ViewInventoryComponent },
       { path: 'edit', component: EditInventoryComponent }
-  ] },
-  { path: 'graphs', component: SimpleChartExampleComponent},
-  { path: 'daybook', component: DaybookComponent},
-  { path: 'test', component: TestComponent},
+    ]
+  },
+  { path: 'graphs', component: SimpleChartExampleComponent },
+  { path: 'daybook', component: DaybookComponent },
+  { path: 'test', component: TestComponent },
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }
 ];

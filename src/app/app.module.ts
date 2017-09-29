@@ -29,6 +29,7 @@ import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { GoogleChartComponent } from './charts/google-chart/google-chart.component';
 import { Ang2ChartjsComponent } from './charts/ang2-chartjs/ang2-chartjs.component';
 import { DaybookComponent } from './view/daybook/daybook.component';
+import { LoginComponent } from './login/login/login.component';
 
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
@@ -55,7 +56,8 @@ declare var require : any;
     TestComponent,
     GoogleChartComponent,
     Ang2ChartjsComponent,
-    DaybookComponent
+    DaybookComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

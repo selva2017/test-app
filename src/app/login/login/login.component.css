@@ -1,0 +1,10 @@
+/* Center the avatar image inside this container */
+.imgcontainer {
+    margin: 24px 0 12px 0;
+}
+
+/* Avatar image */
+img.avatar {
+    width: 30%;
+    border-radius: 30%;
+}
