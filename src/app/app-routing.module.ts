@@ -16,15 +16,16 @@ import { TestComponent } from './test/test.component';
 import { GoogleChartComponent } from './charts/google-chart/google-chart.component';
 import { Ang2ChartjsComponent } from './charts/ang2-chartjs/ang2-chartjs.component';
 import { AboutComponent } from './about/about.component';
+import { AuthGuard } from './login/auth-guard.service';
 
 const appRoutes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent},
   { path: 'employee', component: EmployeeComponent },
   { path: 'googlechart', component: GoogleChartComponent },
   { path: 'ngchart', component: Ang2ChartjsComponent },
   {
-    path: 'inventory', component: InventoryComponent, children: [
+    path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard], children: [
       { path: 'add', component: AddInventoryComponent },
       { path: 'modify', component: ModifyInventoryComponent },
       { path: 'view', component: ViewInventoryComponent },
@@ -32,17 +33,20 @@ const appRoutes: Routes = [
     ]
   },
   { path: 'graphs', component: SimpleChartExampleComponent },
-  { path: 'daybook', component: DaybookComponent },
-  { path: 'test', component: TestComponent },
+  { path: 'daybook', component: DaybookComponent, canActivate: [AuthGuard] },
+  { path: 'test', component: TestComponent, canActivate: [AuthGuard] },
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules })
-  ],
-  exports: [RouterModule]
+  // imports: [
+  //   RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules })
+//   // ],
+//   exports: [RouterModule]
+// })
+imports: [RouterModule.forRoot(appRoutes)],
+exports: [RouterModule]
 })
 export class AppRoutingModule {
 

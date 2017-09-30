@@ -1,3 +1,5 @@
+import { AuthService } from './login/auth.service';
+import { AuthGuard } from './login/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -70,7 +72,7 @@ declare var require : any;
     DataTableModule,
     Ng2GoogleChartsModule
   ],
-  providers: [InventoryService, ServerService,
+  providers: [InventoryService, ServerService, AuthGuard,AuthService,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory

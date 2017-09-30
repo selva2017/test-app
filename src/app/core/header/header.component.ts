@@ -7,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit() {
   }
-onclick(){
-  alert("clicked");
-}
+  onclick() {
+    alert("clicked");
+  }
 }

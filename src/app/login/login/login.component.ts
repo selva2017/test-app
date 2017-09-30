@@ -1,4 +1,4 @@
-import { ServerService } from './../../shared/server.service';
+import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
 import { User } from './../../shared/user';
@@ -10,12 +10,12 @@ import { User } from './../../shared/user';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private serviceAuth: ServerService) { }
-  postdata: string;
   user: User = {
     'email': '',
     'password': '',
   };
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -24,14 +24,6 @@ export class LoginComponent implements OnInit {
     this.user.email = form.value.email;
     this.user.password = form.value.password;
 
-    console.log(this.user);
-
-    this.serviceAuth.authenticateUser(this.user)
-      .subscribe(
-      data => this.postdata = JSON.stringify(data),
-      error => alert(error),
-      () => console.log('finished')
-      );
-
+    this.authService.signinUser(this.user);
   }
 }
