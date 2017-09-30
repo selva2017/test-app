@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-    <form (ngSubmit)="onSignin(f)" #f="ngForm">
+    <form (ngSubmit)="onSubmit(itemForm)" #itemForm="ngForm">
       <div class="imgcontainer" align="center">
         <img src="/assets/spak_logo.png" alt="" class="avatar" border>
       </div>
@@ -12,8 +12,8 @@
         <label for="password">Password</label>
         <input type="password" id="password" name="password" ngModel class="form-control">
       </div>
-      <button class="btn btn-primary btn-lg" type="submit" [disabled]="!f.valid">Sign In</button>
-      <button class="btn btn-lg">Cancel</button>
+      <button type="submit" class="btn btn-primary btn-lg">Sign In</button>
+      <!-- <button class="btn btn-lg">Cancel</button> -->
     </form>
   </div>
 </div>

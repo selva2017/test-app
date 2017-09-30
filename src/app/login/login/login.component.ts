@@ -1,5 +1,7 @@
+import { ServerService } from './../../shared/server.service';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { User } from './../../shared/user';
 
 @Component({
   selector: 'app-login',
@@ -8,15 +10,28 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private serviceAuth: ServerService) { }
+  postdata: string;
+  user: User = {
+    'email': '',
+    'password': '',
+  };
 
   ngOnInit() {
   }
-  onSignin(form: NgForm) {
-    const email = form.value.email;
-    const password = form.value.password;
-    console.log(email + " " + password)
-    // this.authService.signinUser(email, password);
-  }
 
+  onSubmit(form: NgForm) {
+    this.user.email = form.value.email;
+    this.user.password = form.value.password;
+
+    console.log(this.user);
+
+    this.serviceAuth.authenticateUser(this.user)
+      .subscribe(
+      data => this.postdata = JSON.stringify(data),
+      error => alert(error),
+      () => console.log('finished')
+      );
+
+  }
 }
