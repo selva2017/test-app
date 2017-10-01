@@ -1,5 +1,5 @@
 <div>
-<hr>
+  <hr>
   <table class="table table-responsive table-hover table-sm table-striped">
     <thead>
       <tr>
@@ -27,19 +27,19 @@
             <!-- {{row.ledgerEntryVOs[0].amount}} -->
             <!-- </div> -->
           </td>
-          <!-- <td> -->
-          <!-- <div *ngFor="let inventory of row.inventoryEntryVOs"> -->
-          <!-- {{row.inventoryEntryVOs[0].amount}} -->
-          <!-- {{row.inventoryEntryVOs[0].amount}} -->
-          <!-- </div> -->
-          <!-- </td> -->
+          <td>
+            <!-- <div *ngFor="let inventory of row.inventoryEntryVOs"> -->
+            <!-- {{row.inventoryEntryVOs[0].amount}} -->
+            <!-- {{row.inventoryEntryVOs[0].amount}} -->
+            <!-- </div> -->
+          </td>
           <td>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row)">View
       </button>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" >
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
               <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -99,14 +99,14 @@
                     <h5>Inventory Details</h5>
                     <div *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
                       <table class="w-100 p-3">
-                        <!-- <tr>
+                        <tr>
                             <td>Voucher Key:</td>
                             <td>{{inventory.voucherKey}} </td>
-                          </tr> -->
-                        <!-- <tr>
+                          </tr> 
+                        <tr>
                           <td>Ledger Name:</td>
                           <td>{{inventory.ledgerName}} </td>
-                        </tr> -->
+                        </tr>
                         <tr>
                           <td>Stock Item Name:</td>
                           <td>{{inventory.stockItemName}} </td>
@@ -143,23 +143,4 @@
         </tr>
     </tbody>
   </table>
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Previous</span>
-        </a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-          <span class="sr-only">Next</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
 </div>
