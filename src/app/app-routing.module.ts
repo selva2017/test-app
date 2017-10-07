@@ -1,5 +1,3 @@
-import { LoginComponent } from './login/login/login.component';
-import { DaybookComponent } from './view/daybook/daybook.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
@@ -16,11 +14,15 @@ import { TestComponent } from './test/test.component';
 import { GoogleChartComponent } from './charts/google-chart/google-chart.component';
 import { Ang2ChartjsComponent } from './charts/ang2-chartjs/ang2-chartjs.component';
 import { AboutComponent } from './about/about.component';
+import { HeaderComponent } from './core/header/header.component';
+import { LoginComponent } from './login/login/login.component';
+import { DaybookComponent } from './view/daybook/daybook.component';
 import { AuthGuard } from './login/auth-guard.service';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: '', component: HomeComponent},
+  { path: '', component: HomeComponent },
+  { path: 'header', component: HeaderComponent },
   { path: 'employee', component: EmployeeComponent },
   { path: 'googlechart', component: GoogleChartComponent },
   { path: 'ngchart', component: Ang2ChartjsComponent },
@@ -42,11 +44,11 @@ const appRoutes: Routes = [
 @NgModule({
   // imports: [
   //   RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules })
-//   // ],
-//   exports: [RouterModule]
-// })
-imports: [RouterModule.forRoot(appRoutes)],
-exports: [RouterModule]
+  //   // ],
+  //   exports: [RouterModule]
+  // })
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 

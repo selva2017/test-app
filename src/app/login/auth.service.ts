@@ -16,10 +16,18 @@ export class AuthService {
             .subscribe(
             // data => console.log(data),
             success => {
-                this.responseStatus = success.status;
-                console.log(this.responseStatus);
-                this.token = true;
-                this.router.navigate(['/']);
+                // this.responseStatus = success.status;
+                // console.log(this.responseStatus);
+                // console.log("success");
+                // console.log(success);
+                if (success.statusMessage == "AUTH_SUCCESS") {
+                    this.token = true;
+                    this.router.navigate(['']);
+                }
+                else {
+                    this.token = false;
+                    console.log('login error');
+                }
             },
             error => alert(error),
             () => console.log('finished')

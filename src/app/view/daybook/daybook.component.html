@@ -1,6 +1,6 @@
 <div>
-  <hr>
-  <table class="table table-responsive table-hover table-sm table-striped">
+  <br>
+  <table class="table table-responsive table-hover table-sm table-striped table-bordered ">
     <thead>
       <tr>
         <th>No</th>
@@ -8,139 +8,179 @@
         <th>Particulars</th>
         <th>Vch Type</th>
         <th>Vch No</th>
-        <th>Credit/Debit(-)</th>
+        <th>Credit/Debit</th>
         <!-- <th>Credit Amount / Outwards Qty</th> -->
+        <th>Details</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="col-xs-12">
-        <tr *ngFor="let row of dayBook; let i = index">
-          <td>{{i+1}}</td>
-          <td>{{row.voucherDate}}</td>
-          <!-- <td>{{row.ledgerEntryVOs[0].ledgerName}}</td> -->
+      <!-- <tr class="col-xs-12"> -->
+      <tr *ngFor="let row of dayBook; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{row.voucherDate | date : 'dd-MM-yyyy'}}</td>
+        <!-- <td> -->
+        <!-- <ng-container *ngIf="row.voucherType ==='Delivery Note GST'; then first; row.voucherType ==='Stock Journal Fg';then second;"></ng-container> -->
+
+        <!-- <ng-container *ngIf="foo === 1; then first else second"></ng-container> -->
+        <!-- <ng-template #first>{{row.ledgerEntryVOs[0].ledgerName}}</ng-template> -->
+
+        <!-- <div *ngIf="row.voucherType ==='Delivery Note GST'; else ledgerData">
+            <td>{{row.inventoryEntryVOs[0].stockItemName}}
+            </td>
+            <ng-template #ledgerData>
+              <td>{{row.ledgerEntryVOs[0].ledgerName}}
+              </td>
+            </ng-template>
+          </div> -->
+
+        <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST'">
+          <td>{{row.inventoryEntryVOs[0].stockItemName}}</td>
           <td>{{row.voucherType}}</td>
           <td>{{row.voucherNumber}}</td>
-          <td>
-            <!-- <div *ngFor="let ledger of row.ledgerEntryVOs"> -->
-            <!-- {{ledger.amount}} -->
-            <!-- {{row.ledgerEntryVOs[0].amount}} -->
-            <!-- </div> -->
-          </td>
-          <td>
-            <!-- <div *ngFor="let inventory of row.inventoryEntryVOs"> -->
-            <!-- {{row.inventoryEntryVOs[0].amount}} -->
-            <!-- {{row.inventoryEntryVOs[0].amount}} -->
-            <!-- </div> -->
-          </td>
-          <td>
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row)">View
+          <td>{{row.inventoryEntryVOs[0].billedQuantity | slice:0:12}}</td>
+        </ng-template>
+        <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal'
+        || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material'|| row.voucherType ==='GRN-General'">
+          <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
+          <td>{{row.voucherType}}</td>
+          <td>{{row.voucherNumber}}</td>
+          <td>{{row.ledgerEntryVOs[0].amount | currency : "INR" : true}}</td>
+        </ng-template>
+
+        <!-- <ng-template #second>{{row.inventoryEntryVOs[0].ledgerName}}</ng-template> -->
+        <!-- <ng-template #third>Third</ng-template> -->
+        <!-- <label *ngIf="j === 0; else elseBlock">{{val}}</label> -->
+        <!-- <ng-template #elseBlock> -->
+        <!-- <label style="color:#000000;font-size:12px;padding-top: 5px">{{val}}</label> -->
+        <!-- </ng-template> -->
+
+        <!-- </td> -->
+        <!-- <td> -->
+        <!-- <div *ngFor="let ledger of row.ledgerEntryVOs"> -->
+        <!-- {{ledger.amount}} -->
+        <!-- {{row.ledgerEntryVOs[0].amount}} -->
+        <!-- </div> -->
+        <!-- </td> -->
+        <!-- <td> -->
+        <!-- <div *ngFor="let inventory of row.inventoryEntryVOs"> -->
+        <!-- {{row.inventoryEntryVOs[0].amount}} -->
+        <!-- {{row.inventoryEntryVOs[0].amount}} -->
+        <!-- </div> -->
+        <!-- </td> -->
+        <td>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row)">View
       </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-              <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Day Book Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Day Book Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-                  </div>
-                  <div class="modal-body">
+                </div>
+                <div class="modal-body">
 
-                    <h5>Master Details</h5>
-                    <table class="w-100 p-3">
+                  <h5 class="blockquote blockquote-reverse">Master Details</h5>
+                  <table class="w-100 p-3 table-striped table-bordered ">
+                    <tr>
+                      <td width="30%">Voucher Date</td>
+                      <td>{{dayBook_row.voucherDate | date : 'dd-MM-yyyy'}} </td>
+                    </tr>
+                    <tr>
+                      <td width="30%">Ledger Name</td>
+                      <td>{{dayBook_row.partyLedgerName}} </td>
+                    </tr>
+                    <tr>
+                      <td width="30%">Voucher Type</td>
+                      <td>{{dayBook_row.voucherType}} </td>
+                    </tr>
+                    <tr>
+                      <td width="30%">Voucher Number</td>
+                      <td>{{dayBook_row.voucherNumber}} </td>
+                    </tr>
+                    <tr>
+                      <td width="30%">Voucher Key</td>
+                      <td>{{dayBook_row.voucherKey}} </td>
+                    </tr>
+                  </table>
+                  <hr class="style2">
+                  <h5 *ngIf="dayBook_row.ledgerEntryVOs?.length > 0">Ledger Details</h5>
+                  <div *ngFor="let ledger of dayBook_row.ledgerEntryVOs">
+                    <table class="w-100 p-3 table-striped table-bordered ">
                       <tr>
-                        <td>Voucher Date:</td>
-                        <td>{{dayBook_row.voucherDate}} </td>
+                        <td width="30%">Ledger Name</td>
+                        <td>{{ledger.ledgerName}} </td>
                       </tr>
                       <tr>
-                        <td>Ledger Name:</td>
-                        <td>{{dayBook_row.partyLedgerName}} </td>
+                        <td width="30%">Amount</td>
+                        <td>{{ledger.amount | currency : "INR" : true}} </td>
                       </tr>
-                      <tr>
-                        <td>Voucher Type:</td>
-                        <td>{{dayBook_row.voucherType}} </td>
-                      </tr>
-                      <tr>
-                        <td>Voucher Number:</td>
-                        <td>{{dayBook_row.voucherNumber}} </td>
-                      </tr>
-                      <tr>
-                        <td>Voucher Key:</td>
-                        <td>{{dayBook_row.voucherKey}} </td>
-                      </tr>
-                    </table>
-                    <hr class="style2">
-                    <h5>Ledger Details</h5>
-                    <div *ngFor="let ledger of dayBook_row.ledgerEntryVOs">
-                      <table class="w-100 p-3">
-                        <tr>
-                          <td>Ledger Name:</td>
-                          <td>{{ledger.ledgerName}} </td>
-                        </tr>
-                        <tr>
-                          <td>Amount:</td>
-                          <td>{{ledger.amount}} </td>
-                        </tr>
-                        <tr>
-                          <td>Voucher Key:</td>
-                          <td>{{ledger.voucherKey}} </td>
-                        </tr>
-                        <!-- <tr>
+                      <!-- <tr>
+                        <td width="30%">Voucher Key</td>
+                        <td>{{ledger.voucherKey}} </td>
+                      </tr> -->
+                      <!-- <tr>
                             <td>ID:</td>
                             <td>{{ledger.id}} </td>
                           </tr> -->
-                      </table>
-                      <hr class="style2">
-                    </div>
-                    <h5>Inventory Details</h5>
-                    <div *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
-                      <table class="w-100 p-3">
-                        <tr>
-                            <td>Voucher Key:</td>
-                            <td>{{inventory.voucherKey}} </td>
-                          </tr> 
-                        <tr>
+                    </table>
+                    <hr class="style2">
+                  </div>
+                  <h5 *ngIf="dayBook_row.inventoryEntryVOs?.length > 0">Inventory Details</h5>
+                  <div *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
+                    <table class="w-100 p-3 table-striped table-bordered ">
+                      <!-- <tr>
+                        <td width="30%">Voucher Key</td>
+                        <td>{{inventory.voucherKey}} </td>
+                      </tr> -->
+                      <!-- <tr>
                           <td>Ledger Name:</td>
                           <td>{{inventory.ledgerName}} </td>
-                        </tr>
-                        <tr>
-                          <td>Stock Item Name:</td>
-                          <td>{{inventory.stockItemName}} </td>
-                        </tr>
-                        <tr>
-                          <td>Rate:</td>
-                          <td>{{inventory.rate}} </td>
-                        </tr>
-                        <tr>
-                          <td>Amount:</td>
-                          <td>{{inventory.amount}} </td>
-                        </tr>
-                        <tr>
-                          <td>Billed Quantity:</td>
-                          <td>{{inventory.billedQuantity}} </td>
-                        </tr>
-                        <!-- <tr> -->
-                        <!-- <td>ID:</td>
+                        </tr> -->
+                      <tr>
+                        <td width="30%">Stock Item Name</td>
+                        <td>{{inventory.stockItemName}} </td>
+                      </tr>
+                      <tr>
+                        <td width="30%">Rate</td>
+                        <td>{{inventory.rate}} </td>
+                      </tr>
+                      <tr>
+                        <td width="30%">Amount</td>
+                        <td>{{inventory.amount | currency : "INR" : true}} </td>
+                      </tr>
+                      <tr>
+                        <td width="30%">Billed Quantity</td>
+                        <td>{{inventory.billedQuantity}} </td>
+                      </tr>
+                      <!-- <tr> -->
+                      <!-- <td>ID:</td>
                             <td>{{inventory.id}} </td>
                           </tr> -->
-                      </table>
-                      <hr class="style2">
-                    </div>
+                    </table>
+                    <hr class="style2">
+                  </div>
 
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onClickReviewed(dayBook_row.voucherKey)">Reviewed</button>
-                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="onClickReviewed(dayBook_row.voucherKey)">Reviewed</button>
                 </div>
               </div>
             </div>
-          </td>
-        </tr>
+          </div>
+        </td>
+        <td>
+          <!-- Button trigger delete  -->
+          <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row.voucherKey)">Hide
+      </button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

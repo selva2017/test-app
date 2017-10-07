@@ -1,30 +1,36 @@
-<div class="container-fluid" style="cursor: pointer;">
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Main page</a>
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<div class="container-fluid">
+  <ng-template [ngIf]="authService.isAuthenticated()">  
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <!-- <a class="navbar-brand" href="#">Spak</a> -->
+    <!-- <img src="./assets/spak_logo.png" style="width:50px;height:50px;"> -->
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <ul class="navbar-nav mr-auto">
-      <a class="nav-item nav-link active" routerLinkActive="active" routerLink="sales">Sales <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link active" routerLinkActive="active" routerLink="inventory">Inventory </a>
-      <a class="nav-item nav-link active" routerLinkActive="active" routerLink="employee">Employees </a>
-      <a class="nav-item nav-link active" routerLinkActive="active" routerLink="ngchart">Ang Chart </a>
-      <a class="nav-item nav-link active" routerLinkActive="active" routerLink="googlechart">Google Chart </a>
-      <a class="nav-item nav-link active" routerLinkActive="active" routerLink="graphs">Graphs </a>
-      <a class="nav-item nav-link active" routerLinkActive="active" routerLink="test">Test </a>
-      <a class="nav-item nav-link active" routerLinkActive="active" routerLink="daybook">Day book</a>
-      <a class="nav-item nav-link active" routerLinkActive="active" routerLink="about">Smart table </a>
-    </ul>
-    <ul class="navbar-nav ml-auto">
-      <ng-template [ngIf]="!authService.isAuthenticated()">
-        <a class="nav-item nav-link" routerLinkActive="active" routerLink="login">Login</a>
-      </ng-template>
-      <ng-template [ngIf]="authService.isAuthenticated()">
-        <a class="nav-item nav-link" routerLinkActive="active" routerLink="" (click)="onLogout()">Logout</a>
-      </ng-template>
-    </ul>
-  </div>
-</nav>
+    
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup" style="cursor: pointer;">
+      <ul class="navbar-nav mr-auto">
+        <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="sales">Sales <span class="sr-only">(current)</span></a> -->
+        <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="inventory">Inventory </a> -->
+        <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="employee">Employees </a> -->
+        <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="ngchart">Ang Chart </a> -->
+        <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="googlechart">Google Chart </a> -->
+        <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="graphs">Graphs </a> -->
+        <ng-template [ngIf]="authService.isAuthenticated()">
+          <a class="nav-item nav-link active" routerLinkActive="active" routerLink="daybook">Day book</a>
+          <a class="nav-item nav-link active" routerLinkActive="active" routerLink="test">Trial Balance</a>
+        </ng-template>
+        <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="about">Smart table </a> -->
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <!-- <ng-template [ngIf]="!authService.isAuthenticated()">
+          <a class="nav-item nav-link" routerLinkActive="active" routerLink="login">Login</a>
+        </ng-template> -->
+        <ng-template [ngIf]="authService.isAuthenticated()">
+          <a class="nav-item nav-link" routerLinkActive="active" routerLink="" (click)="onLogout()">Logout</a>
+        </ng-template>
+      </ul>
+    </div>
+  </nav>
+</ng-template>
 </div>

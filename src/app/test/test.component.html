@@ -1,7 +1,7 @@
-<hr>
-<p>
+<br>
+<!-- <p>
   <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
-</p>
+</p> -->
 <p>
   <input #query (keyup)="filter(query.value)" type="text" class="form-control" placeholder="Search...">
 </p>
@@ -50,13 +50,13 @@
 <data-table [items]="items" [itemCount]="itemCount" [limit]="5" (reload)="reloadItems($event)">
   <data-table-column [property]="'tallySummaryIid'" [header]="'ID'" [sortable]="true"  [width]="50" [resizable]="true">
   </data-table-column>
-  <data-table-column [property]="'reportName'" [header]="'Report name'" [sortable]="true" [width]="300" [resizable]="true">
-  </data-table-column>
-  <data-table-column [property]="'reportKey'" [header]="'Report Type'" [sortable]="true" [resizable]="true">
-  </data-table-column>
-  <data-table-column [property]="'reportValue1'" [header]="'Debit'" [sortable]="true" [resizable]="true">
+  <!-- <data-table-column [property]="'reportName'" [header]="'Report name'" [sortable]="true" [width]="300" [resizable]="true">
+  </data-table-column> -->
+  <data-table-column [property]="'reportKey'" [header]="'Name'" [sortable]="true" [width]="400" [resizable]="true">
   </data-table-column>
   <data-table-column [property]="'reportValue2'" [header]="'Credit'" [sortable]="true" [resizable]="true">
+  </data-table-column>
+  <data-table-column [property]="'reportValue1'" [header]="'Debit'" [sortable]="true" [resizable]="true">
   </data-table-column>
   <data-table-column [property]="'createdTime'" [header]="'Report Date'" [sortable]="true" [resizable]="true">
   </data-table-column>
@@ -67,16 +67,18 @@
     [resizable]="true"
   >
   </data-table-column> -->
-  <data-table-column [property]="'tallySummaryIid'" [property]="'$key'" [width]="75">
+  <data-table-column [property]="'tallySummaryIid'" [property]="'$key'" [width]="75" [header]="'Action'" >
     <ng-template #dataTableCell let-item="item">
       <!-- <button (click)="onClick([item.createdTime,item.tallySummaryIid])">Complete</button> -->
       <!-- <button (click)="onClick(item.tallySummaryIid)">Complete</button> -->
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="close" (click)="onClick(item.tallySummaryIid)">
-    <span aria-hidden="true">&times;</span>
-       </button>
+      <!-- <div class="alert alert-danger alert-dismissible fade show" role="alert"> -->
+          <button type="button" class="btn btn-warning btn-sm" (click)="onClick(item.tallySummaryIid)">Hide
+            </button>
+        <!-- <button type="button" class="close" data-dismiss="alert" aria-label="close" (click)="onClick(item.tallySummaryIid)">
+    <span aria-hidden="true">&times;</span> -->
+       <!-- </button> -->
       
-      </div>
+      <!-- </div> -->
       <!-- <div class="alert alert-success alert-dismissable">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
       </div> -->

@@ -9,7 +9,7 @@ import { User } from './../../shared/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
+  error_msg: string = '';
   user: User = {
     'email': '',
     'password': '',
@@ -25,5 +25,10 @@ export class LoginComponent implements OnInit {
     this.user.password = form.value.password;
 
     this.authService.signinUser(this.user);
+     // console.log("this.authService.error_message");
+    // console.log(this.authService.error_message);
+    // this.error_msg = this.authService.errorMessage();
+     if (this.authService.isAuthenticated())
+         this.error_msg = "Enter a valid Username and Password!";
   }
 }
