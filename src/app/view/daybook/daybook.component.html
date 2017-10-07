@@ -110,38 +110,54 @@
                   </table>
                   <hr class="style2">
                   <h5 *ngIf="dayBook_row.ledgerEntryVOs?.length > 0">Ledger Details</h5>
-                  <div *ngFor="let ledger of dayBook_row.ledgerEntryVOs">
-                    <table class="w-100 p-3 table-striped table-bordered ">
+                  <table *ngIf="dayBook_row.ledgerEntryVOs?.length > 0" class="w-100 p-3 table-striped table-bordered">
+                    <thead>
                       <tr>
-                        <td width="30%">Ledger Name</td>
-                        <td>{{ledger.ledgerName}} </td>
+                        <th width="70%">Name</th>
+                        <th width="30%">Amount</th>
                       </tr>
-                      <tr>
-                        <td width="30%">Amount</td>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let ledger of dayBook_row.ledgerEntryVOs">
+                        <td>{{ledger.ledgerName}} </td>
                         <td>{{ledger.amount | currency : "INR" : true}} </td>
                       </tr>
-                      <!-- <tr>
+                    </tbody>
+
+                    <!-- <tr>
                         <td width="30%">Voucher Key</td>
                         <td>{{ledger.voucherKey}} </td>
                       </tr> -->
-                      <!-- <tr>
+                    <!-- <tr>
                             <td>ID:</td>
                             <td>{{ledger.id}} </td>
                           </tr> -->
-                    </table>
-                    <hr class="style2">
-                  </div>
+                  </table>
+                  <hr class="style2">
+
                   <h5 *ngIf="dayBook_row.inventoryEntryVOs?.length > 0">Inventory Details</h5>
-                  <div *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
+
+                  <table *ngIf="dayBook_row.inventoryEntryVOs?.length > 0" class="w-100 p-3 table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th width="35%">Item Name</th>
+                        <th width="20%">Rate</th>
+                        <th width="20%">Amount</th>
+                        <th width="20%">Billed Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
+                          <td>{{inventory.stockItemName}} </td>
+                          <td>{{inventory.rate}} </td>
+                          <td>{{inventory.amount | currency : "INR" : true}} </td>
+                          <td>{{inventory.billedQuantity}} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <!-- <div *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
                     <table class="w-100 p-3 table-striped table-bordered ">
-                      <!-- <tr>
-                        <td width="30%">Voucher Key</td>
-                        <td>{{inventory.voucherKey}} </td>
-                      </tr> -->
-                      <!-- <tr>
-                          <td>Ledger Name:</td>
-                          <td>{{inventory.ledgerName}} </td>
-                        </tr> -->
                       <tr>
                         <td width="30%">Stock Item Name</td>
                         <td>{{inventory.stockItemName}} </td>
@@ -158,13 +174,9 @@
                         <td width="30%">Billed Quantity</td>
                         <td>{{inventory.billedQuantity}} </td>
                       </tr>
-                      <!-- <tr> -->
-                      <!-- <td>ID:</td>
-                            <td>{{inventory.id}} </td>
-                          </tr> -->
                     </table>
                     <hr class="style2">
-                  </div>
+                  </div> -->
 
                 </div>
                 <div class="modal-footer">
@@ -174,7 +186,7 @@
               </div>
             </div>
           </div>
-        </td>
+        <!-- </td> -->
         <td>
           <!-- Button trigger delete  -->
           <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row.voucherKey)">Hide
