@@ -1,3 +1,4 @@
+import { AuthGuard } from './../auth-guard.service';
 import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
@@ -9,13 +10,14 @@ import { User } from './../../shared/user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  error_msg: string = '';
+  error_msg: string;
   user: User = {
     'email': '',
     'password': '',
   };
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit() {
   }
@@ -25,11 +27,10 @@ export class LoginComponent implements OnInit {
     this.user.password = form.value.password;
 
     this.authService.signinUser(this.user);
-    // console.log(this.authService.token);
-     // console.log("this.authService.error_message");
-    // console.log(this.authService.error_message);
-    // this.error_msg = this.authService.errorMessage();
-     if (this.authService.isAuthenticated())
-         this.error_msg = "Enter a valid Username and Password!";
+    if (!this.authService.isAuthenticated())
+      this.error_msg = "Please enter a valid Username and Password.";
+    else
+      this.error_msg = "";
   }
+
 }

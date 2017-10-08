@@ -17,8 +17,8 @@
         <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="googlechart">Google Chart </a> -->
         <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="graphs">Graphs </a> -->
         <!-- <ng-template [ngIf]="authService.isAuthenticated()"> -->
-          <a class="nav-item nav-link active" routerLinkActive="active" routerLink="daybook">Day book</a>
-          <a class="nav-item nav-link active" routerLinkActive="active" routerLink="test">Trial Balance</a>
+          <a *ngIf="role === 'admin'" class="nav-item nav-link active" routerLinkActive="active" routerLink="daybook">Day book</a>
+          <a *ngIf="role === 'associate' || role === 'admin'" class="nav-item nav-link active" routerLinkActive="active" routerLink="test">Trial Balance</a>
         <!-- </ng-template> -->
         <!-- <a class="nav-item nav-link active" routerLinkActive="active" routerLink="about">Smart table </a> -->
       </ul>

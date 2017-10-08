@@ -38,7 +38,7 @@
           <td>{{row.inventoryEntryVOs[0].stockItemName}}</td>
           <td>{{row.voucherType}}</td>
           <td>{{row.voucherNumber}}</td>
-          <td>{{row.inventoryEntryVOs[0].billedQuantity | slice:0:12}}</td>
+          <td>{{row.inventoryEntryVOs[0].billedQuantity}}</td>
         </ng-template>
         <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal'
         || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material'|| row.voucherType ==='GRN-General'">
@@ -88,23 +88,23 @@
                   <h5 class="blockquote blockquote-reverse">Master Details</h5>
                   <table class="w-100 p-3 table-striped table-bordered ">
                     <tr>
-                      <td width="30%">Voucher Date</td>
+                      <td>Voucher Date</td>
                       <td>{{dayBook_row.voucherDate | date : 'dd-MM-yyyy'}} </td>
                     </tr>
                     <tr>
-                      <td width="30%">Ledger Name</td>
+                      <td>Ledger Name</td>
                       <td>{{dayBook_row.partyLedgerName}} </td>
                     </tr>
                     <tr>
-                      <td width="30%">Voucher Type</td>
+                      <td>Voucher Type</td>
                       <td>{{dayBook_row.voucherType}} </td>
                     </tr>
                     <tr>
-                      <td width="30%">Voucher Number</td>
+                      <td>Voucher Number</td>
                       <td>{{dayBook_row.voucherNumber}} </td>
                     </tr>
                     <tr>
-                      <td width="30%">Voucher Key</td>
+                      <td>Voucher Key</td>
                       <td>{{dayBook_row.voucherKey}} </td>
                     </tr>
                   </table>
@@ -113,8 +113,8 @@
                   <table *ngIf="dayBook_row.ledgerEntryVOs?.length > 0" class="w-100 p-3 table-striped table-bordered">
                     <thead>
                       <tr>
-                        <th width="70%">Name</th>
-                        <th width="30%">Amount</th>
+                        <th>Name</th>
+                        <th>Amount</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -125,7 +125,7 @@
                     </tbody>
 
                     <!-- <tr>
-                        <td width="30%">Voucher Key</td>
+                        <td>Voucher Key</td>
                         <td>{{ledger.voucherKey}} </td>
                       </tr> -->
                     <!-- <tr>
@@ -140,10 +140,10 @@
                   <table *ngIf="dayBook_row.inventoryEntryVOs?.length > 0" class="w-100 p-3 table-striped table-bordered">
                     <thead>
                       <tr>
-                        <th width="35%">Item Name</th>
-                        <th width="20%">Rate</th>
-                        <th width="20%">Amount</th>
-                        <th width="20%">Billed Quantity</th>
+                        <th>Item Name</th>
+                        <th>Rate/ton</th>
+                        <th>Amount</th>
+                        <th>Billed Quantity</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -159,19 +159,19 @@
                   <!-- <div *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
                     <table class="w-100 p-3 table-striped table-bordered ">
                       <tr>
-                        <td width="30%">Stock Item Name</td>
+                        <td>Stock Item Name</td>
                         <td>{{inventory.stockItemName}} </td>
                       </tr>
                       <tr>
-                        <td width="30%">Rate</td>
+                        <td>Rate</td>
                         <td>{{inventory.rate}} </td>
                       </tr>
                       <tr>
-                        <td width="30%">Amount</td>
+                        <td>Amount</td>
                         <td>{{inventory.amount | currency : "INR" : true}} </td>
                       </tr>
                       <tr>
-                        <td width="30%">Billed Quantity</td>
+                        <td>Billed Quantity</td>
                         <td>{{inventory.billedQuantity}} </td>
                       </tr>
                     </table>
