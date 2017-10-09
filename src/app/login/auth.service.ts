@@ -7,7 +7,9 @@ import { ServerService } from './../shared/server.service';
 export class AuthService {
     responseStatus: string;
     token: boolean = false;
+    token_name: string;
     role = new EventEmitter<string>();
+    invalidLogin = new EventEmitter<boolean>();
 
     constructor(private serviceAuth: ServerService, private router: Router) { }
 
@@ -19,19 +21,24 @@ export class AuthService {
                     this.token = true;
                     this.router.navigate(['']);
                     this.isAdmin(success.role);
+                    this.token_name = success.token;
+                    console.log('token name-'+this.token_name);
+                    localStorage.setItem('currentUser',JSON.stringify(this.token_name));
                 }
                 else {
                     this.token = false;
+                    this.invalidLogin.emit(true);            
                 }
             },
             error => alert(error),
             () => console.log('finished')
-            );
+        );
     }
-
+    
     logout() {
         this.token = null;
         this.router.navigate(['login']);
+        localStorage.removeItem('currentUser');
     }
 
     isAuthenticated() {

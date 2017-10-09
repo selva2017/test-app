@@ -15,11 +15,20 @@ export class LoginComponent implements OnInit {
     'email': '',
     'password': '',
   };
+  invalidLogin: boolean;
 
   constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
+
+    this.authService.invalidLogin.subscribe(
+      (status: boolean) => {
+        console.log("Login: "+ status);
+        this.invalidLogin=status;
+      }
+      // (status: string) => this.role=status
+    );
   }
 
   onSubmit(form: NgForm) {
@@ -28,7 +37,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.signinUser(this.user);
     if (!this.authService.isAuthenticated())
-      this.error_msg = "Please enter a valid Username and Password.";
+      this.error_msg = "Invalid username or password.";
     else
       this.error_msg = "";
   }

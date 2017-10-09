@@ -12,12 +12,15 @@
         <!-- <label for="password">Password</label> -->
         <input class="form-control input-underline input-lg" type="password" id="password" name="password"  placeholder="Password" ngModel required>
       </div>
-      <ng-template [ngIf]="!authService.isAuthenticated()">
-          <p align="left" class="text-error" style="color:red">{{error_msg}}</p>
+      <div *ngIf="invalidLogin" class="alert alert-danger">
+        {{error_msg}}
+      </div>
+      <!-- <ng-template [ngIf]="invalidLogin">
+          <p align="left" class="text-error" style="color:red">{{error_msg}}</p> -->
         <!-- <span class="alert" style="color:red">{{error_msg}}</span> -->
         <!-- <div [hidden]="authService.isAuthenticated()" class="alert alert-danger">{{error_msg}}</div> -->
-        <br>
-      </ng-template>
+        <!-- <br>
+      </ng-template> -->
       <button class="btn btn-primary btn-md" type="submit" [disabled]="!loginForm.valid">Sign In</button>
       <!-- <button class="btn btn-lg">Cancel</button> -->
     </form>
