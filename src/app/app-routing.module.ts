@@ -18,14 +18,20 @@ import { HeaderComponent } from './core/header/header.component';
 import { LoginComponent } from './login/login/login.component';
 import { DaybookComponent } from './view/daybook/daybook.component';
 import { AuthGuard } from './login/auth-guard.service';
+import { BfComponent } from './charts/bf/bf.component';
+import { GsmComponent } from './charts/gsm/gsm.component';
+import { StockComponent } from './view/stock/stock.component';
+import { GraphsComponent } from './view/graphs/graphs.component';
 
 const appRoutes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: '', component: HomeComponent },
+  { path: '', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'header', component: HeaderComponent },
   { path: 'employee', component: EmployeeComponent },
   { path: 'googlechart', component: GoogleChartComponent },
-  { path: 'ngchart', component: Ang2ChartjsComponent },
+  { path: 'gsmchart', component: GsmComponent },
+  { path: 'bfchart', component: BfComponent, canActivate: [AuthGuard] },
+  { path: 'ngchart', component: Ang2ChartjsComponent, canActivate: [AuthGuard] },
   {
     path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard], children: [
       { path: 'add', component: AddInventoryComponent },
@@ -34,9 +40,11 @@ const appRoutes: Routes = [
       { path: 'edit', component: EditInventoryComponent }
     ]
   },
-  { path: 'graphs', component: SimpleChartExampleComponent },
+  // { path: 'graphs', component: SimpleChartExampleComponent },
   { path: 'daybook', component: DaybookComponent, canActivate: [AuthGuard] },
   { path: 'test', component: TestComponent, canActivate: [AuthGuard] },
+  { path: 'stock', component: StockComponent, canActivate: [AuthGuard] },
+  { path: 'graphs', component: GraphsComponent, canActivate: [AuthGuard]},
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }
 ];

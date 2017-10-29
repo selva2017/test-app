@@ -1,7 +1,13 @@
-<div>
+<div *ngIf="showLoader" align="center">
   <br>
-  <table class="table table-responsive table-hover table-sm table-striped table-bordered ">
-    <thead>
+  <br>
+  <img src="./assets/loading_spark.gif">
+</div>
+<div *ngIf="!showLoader">
+  <br>
+  <h3>Day Book Details</h3>
+  <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+    <thead class="thead-inverse">
       <tr>
         <th>No</th>
         <th>Date</th>
@@ -34,14 +40,14 @@
             </ng-template>
           </div> -->
 
-        <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST'">
+        <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST' || row.voucherType === 'Consumption Entry'">
           <td>{{row.inventoryEntryVOs[0].stockItemName}}</td>
           <td>{{row.voucherType}}</td>
           <td>{{row.voucherNumber}}</td>
           <td>{{row.inventoryEntryVOs[0].billedQuantity}}</td>
         </ng-template>
         <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal'
-        || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material'|| row.voucherType ==='GRN-General'">
+        || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General'">
           <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
           <td>{{row.voucherType}}</td>
           <td>{{row.voucherNumber}}</td>

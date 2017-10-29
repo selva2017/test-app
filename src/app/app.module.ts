@@ -32,6 +32,10 @@ import { GoogleChartComponent } from './charts/google-chart/google-chart.compone
 import { Ang2ChartjsComponent } from './charts/ang2-chartjs/ang2-chartjs.component';
 import { DaybookComponent } from './view/daybook/daybook.component';
 import { LoginComponent } from './login/login/login.component';
+import { StockComponent } from './view/stock/stock.component';
+import { GsmComponent } from './charts/gsm/gsm.component';
+import { BfComponent } from './charts/bf/bf.component';
+import { GraphsComponent } from './view/graphs/graphs.component';
 
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
@@ -59,7 +63,11 @@ declare var require : any;
     GoogleChartComponent,
     Ang2ChartjsComponent,
     DaybookComponent,
-    LoginComponent
+    LoginComponent,
+    StockComponent,
+    GsmComponent,
+    BfComponent,
+    GraphsComponent
   ],
   imports: [
     BrowserModule,

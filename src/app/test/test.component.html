@@ -48,7 +48,7 @@
    -->
 <!-- added for tally trial report -->
 <data-table [items]="items" [itemCount]="itemCount" [limit]="5" (reload)="reloadItems($event)">
-  <data-table-column [property]="'tallySummaryIid'" [header]="'ID'" [sortable]="true"  [width]="50" [resizable]="true">
+  <data-table-column [property]="'tallySummaryIid'" [header]="'ID'" [sortable]="true" [width]="50" [resizable]="true">
   </data-table-column>
   <!-- <data-table-column [property]="'reportName'" [header]="'Report name'" [sortable]="true" [width]="300" [resizable]="true">
   </data-table-column> -->
@@ -67,17 +67,17 @@
     [resizable]="true"
   >
   </data-table-column> -->
-  <data-table-column [property]="'tallySummaryIid'" [property]="'$key'" [width]="75" [header]="'Action'" >
+  <data-table-column [property]="'tallySummaryIid'" [property]="'$key'" [width]="75" [header]="'Action'">
     <ng-template #dataTableCell let-item="item">
       <!-- <button (click)="onClick([item.createdTime,item.tallySummaryIid])">Complete</button> -->
       <!-- <button (click)="onClick(item.tallySummaryIid)">Complete</button> -->
       <!-- <div class="alert alert-danger alert-dismissible fade show" role="alert"> -->
-          <button type="button" class="btn btn-warning btn-sm" (click)="onClick(item.tallySummaryIid)">Hide
-            </button>
-        <!-- <button type="button" class="close" data-dismiss="alert" aria-label="close" (click)="onClick(item.tallySummaryIid)">
+      <button type="button" class="btn btn-warning btn-sm" (click)="onClick(item.tallySummaryIid)">Hide
+      </button>
+      <!-- <button type="button" class="close" data-dismiss="alert" aria-label="close" (click)="onClick(item.tallySummaryIid)">
     <span aria-hidden="true">&times;</span> -->
-       <!-- </button> -->
-      
+      <!-- </button> -->
+
       <!-- </div> -->
       <!-- <div class="alert alert-success alert-dismissable">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

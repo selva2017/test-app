@@ -18,9 +18,11 @@ export class TestComponent implements OnInit, OnDestroy {
   tableResource: DataTableResource<Prod>;
   items: Prod[] = [];
   itemCount: number;
+  showLoader: boolean;
 
   constructor(private productService: ServerService,
     private router: Router) {
+    this.showLoader = true;
   }
   refreshList() {
     this.subscription = this.productService.getTallyData()
@@ -29,7 +31,6 @@ export class TestComponent implements OnInit, OnDestroy {
         this.products = products;
         this.initializeTable(products);
       });
-
   }
   private initializeTable(products: Prod[]) {
     // console.log(products);
@@ -83,10 +84,10 @@ export class TestComponent implements OnInit, OnDestroy {
     // product_update.checkFlag = "1";
     this.productService.putTallyData(product_update)
       .subscribe(
-        (success) => {
-          // console.log("success");
-          this.refreshList();
-        },
+      (success) => {
+        // console.log("success");
+        this.refreshList();
+      },
       // (servers: Prod) => console.log(servers),
       (error) => console.log(error)
       );

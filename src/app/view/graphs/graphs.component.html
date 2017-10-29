@@ -1,0 +1,25 @@
+<br>
+<div class="row">
+  <div class="col-md-6">
+    <div class="btn-group">
+      <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true">Weekly GSM Trends</button>
+      <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true">Monthly GSM Trends</button>
+      <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true" (click)="viewGSMGraph()">Yearly GSM Trends</button>
+      <div class="col-md-6">
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true">Weekly BF Trends</button>
+          <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true">Monthly BF Trends</button>
+          <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true" (click)="viewBFGraph()">Yearly BF Trends</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showLoader" align="center">
+  <img src="./assets/loading_spark.gif">
+</div>
+
+<div *ngIf="showGraph">
+  <google-chart [data]="graphData"></google-chart>
+</div>

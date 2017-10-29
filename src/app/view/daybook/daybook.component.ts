@@ -14,9 +14,10 @@ export class DaybookComponent implements OnInit {
   subscription: Subscription;
   dayBook: Daybook[];
   dayBook_row: Daybook[] = [];
+  showLoader: boolean;
 
   constructor(private serverService: ServerService) {
-
+    this.showLoader = true;
   }
 
   ngOnInit() {
@@ -42,7 +43,8 @@ export class DaybookComponent implements OnInit {
     this.subscription = this.serverService.getTallyDaybook().
       subscribe(list => {
         this.dayBook = list;
-        console.log(this.dayBook);
+        // console.log(this.dayBook);
+        this.showLoader = false;
       })
   }
 }

@@ -1,0 +1,62 @@
+<div *ngIf="showLoader" align="center">
+  <img src="./assets/loading.gif">
+</div>
+<div *ngIf="!showLoader">
+  <br>
+  <h3>Inventory Details</h3>
+  <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+    <thead class="thead-inverse">
+      <tr>
+        <!-- <th>ID</th> -->
+        <th>No</th>
+        <th>Date</th>
+        <th>Voucher</th>
+        <th>StockItemName</th>
+        <!-- <th>Key</th> -->
+        <th>Qty</th>
+        <th>Rate</th>
+        <th>Amount</th>
+        <th>BF Target</th>
+        <th>BF Actual</th>
+        <th>GSM Target</th>
+        <th>GSM Actual</th>
+        <th>Joints</th>
+        <th>Length</th>
+        <th>Moist</th>
+        <th>Diameter</th>
+        <th>Length</th>
+        <th>Cobb</th>
+        <th>Size Actual</th>
+        <th>Size Target</th>
+        <!-- <th>temp</th> -->
+        <th>Unit</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    <tr *ngFor="let row of stock_list; let i = index">
+      <td>{{i+1}}</td>
+      <!-- <td>{{row.stockItemDetailsId}}</td> -->
+      <td>{{row.voucherEffectiveDate | date : 'dd-MM-yy'}}</td>
+      <td>{{row.voucherNumber}}</td>
+      <td>{{row.stockItemName}}</td>
+      <!-- <td>{{row.voucherKey}}</td> -->
+      <td>{{row.billedQty}}</td>
+      <td>{{row.rate}}</td>
+      <td>{{row.amount}}</td>
+      <td>{{row.bfTgt}}</td>
+      <td>{{row.bfAct}}</td>
+      <td>{{row.gsmTgt}}</td>
+      <td>{{row.gsmAct}}</td>
+      <td>{{row.joints}}</td>
+      <td>{{row.length1}}</td>
+      <td>{{row.moist}}</td>
+      <td>{{row.realDia}}</td>
+      <td>{{row.reelLen}}</td>
+      <td>{{row.sizeAct}}</td>
+      <td>{{row.sizeAct1}}</td>
+      <td>{{row.sizeTgt1}}</td>
+      <!-- <td>{{row.temp}}</td> -->
+      <td>{{row.units}}</td>
+
+  </table>
+</div>

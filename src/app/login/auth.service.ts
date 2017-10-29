@@ -19,22 +19,22 @@ export class AuthService {
             success => {
                 if (success.statusMessage == "AUTH_SUCCESS") {
                     this.token = true;
-                    this.router.navigate(['']);
+                    this.router.navigate(['home']);
                     this.isAdmin(success.role);
                     this.token_name = success.token;
-                    console.log('token name-'+this.token_name);
-                    localStorage.setItem('currentUser',JSON.stringify(this.token_name));
+                    console.log('token name-' + this.token_name);
+                    localStorage.setItem('currentUser', JSON.stringify(this.token_name));
                 }
                 else {
                     this.token = false;
-                    this.invalidLogin.emit(true);            
+                    this.invalidLogin.emit(true);
                 }
             },
             error => alert(error),
             () => console.log('finished')
-        );
+            );
     }
-    
+
     logout() {
         this.token = null;
         this.router.navigate(['login']);
@@ -48,4 +48,20 @@ export class AuthService {
     isAdmin(role) {
         this.role.emit(role);
     }
+
+    // Function to set if the user is in login page 
+    // Send the value to header if the user is login page and NOT show login link in header
+
+    private loginFlag: boolean = false;
+
+    setFlagLogin(passedValue: boolean) {
+        this.loginFlag = passedValue;
+        console.log("this.loginFlag");
+        console.log(this.loginFlag);
+    }
+
+    getFlagLogin() {
+        return this.loginFlag;
+    }
+
 }

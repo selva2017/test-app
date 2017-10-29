@@ -49,16 +49,34 @@ export class Ang2ChartjsComponent implements OnInit {
   // ---------------Another way-------------------------
 type = 'line';
 data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    labels: ["12 BF 100 GSM 48",
+    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",    "12 BF 100 GSM 38",    "12 BF 100 GSM 39",    "12 BF 100 GSM 33",
+    "12 BF 100 GSM 48",    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",    "12 BF 100 GSM 38",    "12 BF 100 GSM 39",
+    "12 BF 100 GSM 33",    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",   "12 BF 100 GSM 38",    "12 BF 100 GSM 39",
+    "12 BF 100 GSM 33",    "12 BF 100 GSM 48",    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",    "12 BF 100 GSM 38",
+    "12 BF 100 GSM 39",    "12 BF 100 GSM 33"    ],
     datasets: [{
-      label: "Dataset #1",
+      label: "Target",
+      backgroundColor: "rgba(0,128,120,110.2)",
+      borderColor: "rgba(0,100,0,1)",
+      borderWidth: 2,
+      hoverBackgroundColor: "rgba(255,99,132,0.4)",
+      hoverBorderColor: "rgba(255,99,132,1)",
+      data: [120	,        120	,        100	,        100	,        120	,        120	,        100	,
+        100	,        120	,        120	,        100	,        100	,        120	,        120	,        100	,        100	,        120	,        120	,         120	,        100	,        100	,        120	,
+        120	,        100	,        100	,        120	,        120	,        100	,        100	,        120	,        120	,        100	,        100	,        120	,        120	]    
+      },
+    {
+      label: "Actual",
       backgroundColor: "rgba(0,128,0,0.2)",
       borderColor: "rgba(0,100,0,1)",
       borderWidth: 2,
       hoverBackgroundColor: "rgba(255,99,132,0.4)",
       hoverBorderColor: "rgba(255,99,132,1)",
-      data: [65, 59, 20, 81, 56, 55, 40],
-    }]
+      data: [117	,        121	,        99	,        101	,        116	,        119	,        99	,        100	,        117	,        121	,        99	,        101	,
+        116	,        119	,        99	,        100	,        122	,        125	,        121	,        99	,        101	,        116	,        119	,        99	,        100	,
+        117	,        121	,        99	,        101	,        116	,        119	,        99	,        100	,
+        122	,        125]    }]
   };
   
   options = {

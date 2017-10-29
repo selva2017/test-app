@@ -1,8 +1,14 @@
 table { 
 	width: 100%; 
 	border-width: 1px;
+	/* color: #66615b; */
+	font-size: 14px;
+	font-family: 'Muli', Arial, sans-serif;
 	/* border-collapse: collapse;  */
 	/* margin:50px auto; */
+	}
+	h3{
+		font-family: 'Muli', "Helvetica", Arial, sans-serif;
 	}
 /* 
 th { 

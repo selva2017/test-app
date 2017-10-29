@@ -16,11 +16,15 @@ export class LoginComponent implements OnInit {
     'password': '',
   };
   invalidLogin: boolean;
+  isLogin: boolean;
 
   constructor(private authService: AuthService) {
   }
 
   ngOnInit() {
+    //Set the value if the login page is called
+    this.isLogin=true;
+    this.authService.setFlagLogin(this.isLogin);
 
     this.authService.invalidLogin.subscribe(
       (status: boolean) => {
