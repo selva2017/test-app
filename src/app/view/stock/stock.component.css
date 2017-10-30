@@ -4,11 +4,16 @@ table {
 	/* color: #66615b; */
 	font-size: 14px;
 	font-family: 'Muli', Arial, sans-serif;
-	}
-	h3{
+  }
+
+  tr {
+    border-top: 1.5px solid;
+  }
+  
+  h3{
 		font-family: 'Muli', "Helvetica", Arial, sans-serif;
     }
-    hr { 
+  hr { 
         display: block;
         margin-top: 0.5em;
         margin-bottom: 0.5em;
@@ -16,4 +21,5 @@ table {
         margin-right: auto;
         border-style: inset;
         border-width: 1px;
-        } 
+      } 
+    

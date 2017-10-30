@@ -1,4 +1,5 @@
 <br>
+<h3>Trial Balance Details</h3>
 <!-- <p>
   <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
 </p> -->
@@ -48,8 +49,8 @@
    -->
 <!-- added for tally trial report -->
 <data-table [items]="items" [itemCount]="itemCount" [limit]="5" (reload)="reloadItems($event)">
-  <data-table-column [property]="'tallySummaryIid'" [header]="'ID'" [sortable]="true" [width]="50" [resizable]="true">
-  </data-table-column>
+  <!-- <data-table-column [property]="'tallySummaryIid'" [header]="'ID'" [sortable]="true" [width]="50" [resizable]="true"> -->
+  <!-- </data-table-column> -->
   <!-- <data-table-column [property]="'reportName'" [header]="'Report name'" [sortable]="true" [width]="300" [resizable]="true">
   </data-table-column> -->
   <data-table-column [property]="'reportKey'" [header]="'Name'" [sortable]="true" [width]="400" [resizable]="true">

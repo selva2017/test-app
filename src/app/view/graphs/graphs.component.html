@@ -2,14 +2,14 @@
 <div class="row">
   <div class="col-md-6">
     <div class="btn-group">
-      <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true">Weekly GSM Trends</button>
-      <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true">Monthly GSM Trends</button>
-      <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true" (click)="viewGSMGraph()">Yearly GSM Trends</button>
+      <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true" (click)="weeklyGSMGraph()">Weekly GSM Trends</button>
+      <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true" (click)="monthlyGSMGraph()">Monthly GSM Trends</button>
+      <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true" (click)="showGSMYearly()">Yearly GSM Trends</button>
       <div class="col-md-6">
         <div class="btn-group">
-          <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true">Weekly BF Trends</button>
-          <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true">Monthly BF Trends</button>
-          <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true" (click)="viewBFGraph()">Yearly BF Trends</button>
+          <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true" (click)="weeklyBFGraph()">Weekly BF Trends</button>
+          <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true" (click)="monthlyBFGraph()">Monthly BF Trends</button>
+          <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true" (click)="showBFYearly()">Yearly BF Trends</button>
         </div>
       </div>
     </div>
@@ -17,9 +17,12 @@
 </div>
 
 <div *ngIf="showLoader" align="center">
-  <img src="./assets/loading_spark.gif">
+  <br>
+  <br>
+  <img src="./assets/loading-2.gif">
 </div>
-
-<div *ngIf="showGraph">
-  <google-chart [data]="graphData"></google-chart>
-</div>
+<ng-template [ngIf]="showGraph && !showLoader">
+  <div>
+    <google-chart [data]="graphData"></google-chart>
+  </div>
+</ng-template>

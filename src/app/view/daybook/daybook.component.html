@@ -1,7 +1,7 @@
 <div *ngIf="showLoader" align="center">
   <br>
   <br>
-  <img src="./assets/loading_spark.gif">
+  <img src="./assets/loading-2.gif">
 </div>
 <div *ngIf="!showLoader">
   <br>
@@ -51,7 +51,8 @@
           <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
           <td>{{row.voucherType}}</td>
           <td>{{row.voucherNumber}}</td>
-          <td>{{row.ledgerEntryVOs[0].amount | currency : "INR" : true}}</td>
+          <td>{{row.ledgerEntryVOs[0].amount | currency : "INR" : 2}}</td>
+          <!-- <td>{{row.ledgerEntryVOs[0].amount | currency : "INR" : true}}</td> -->
         </ng-template>
 
         <!-- <ng-template #second>{{row.inventoryEntryVOs[0].ledgerName}}</ng-template> -->
