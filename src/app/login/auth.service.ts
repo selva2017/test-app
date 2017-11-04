@@ -24,6 +24,7 @@ export class AuthService {
                     this.token_name = success.token;
                     console.log('token name-' + this.token_name);
                     localStorage.setItem('currentUser', JSON.stringify(this.token_name));
+                    localStorage.setItem('userType', JSON.stringify(success.role));
                 }
                 else {
                     this.token = false;
@@ -39,6 +40,7 @@ export class AuthService {
         this.token = null;
         this.router.navigate(['login']);
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('userType');
     }
 
     isAuthenticated() {

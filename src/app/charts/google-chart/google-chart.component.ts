@@ -156,7 +156,7 @@ export class GoogleChartComponent implements OnInit {
 
   pieChartData = {
     
-    chartType: 'LineChart',
+    chartType: 'BarChart',
     dataTable: this.ldata,
     options: {
       title: 'GSM Variation Datewise',

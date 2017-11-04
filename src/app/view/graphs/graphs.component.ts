@@ -27,20 +27,29 @@ export class GraphsComponent implements OnInit {
   ngOnInit() {
   }
 
-  showGSMYearly() {
+  showGSMGraph(days: string) {
     this.showLoader = true;
     this.lineData = [];
-    this.subscription = this.serverService.getTallyGSMData().
+    this.subscription = this.serverService.getGSMData(days).
       subscribe(list => {
         this.gsm_data = list;
-        this.lineData[0] = ['Type', "Target", { 'type': 'string', 'role': 'tooltip', 'p': { 'html': false } }, "Actual", { 'type': 'string', 'role': 'tooltip', 'p': { 'html': true } }];
+        this.lineData[0] = ['Type', "Target", { 'type': 'string', 'role': 'tooltip', 'p': { 'html': true } }, "Actual", { 'type': 'string', 'role': 'tooltip', 'p': { 'html': true } }];
         for (var i = 0; i < this.gsm_data.length; i++) {
           var type = this.gsm_data[i].voucherEffectiveDate;
           var actual = this.gsm_data[i].gsmTgt;
-          var target_tooltip = "Date: " + this.gsm_data[i].voucherEffectiveDate + ", Item: " + this.gsm_data[i].stockItemName + ", Target:" + this.gsm_data[i].gsmTgt + " vs Actual:" + this.gsm_data[i].gsmAct;
+          var gsm_tooltip = '<style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td, th {border: 1.5px solid #dddddd;text-align: left;padding: 8px;}</style><table class="table-sm"><tr><td>Date</td><td>' + this.gsm_data[i].voucherEffectiveDate
+          + '</td></tr><tr><td>Item</td><td>' + this.gsm_data[i].stockItemName + '</td></tr><tr style="background-color:#b5e7a0"><td>Target</td><td><b>'
+          + this.gsm_data[i].gsmTgt + '</td></tr><tr style="background-color:#ffcc5c"><td>Actual</td><td><b>' + this.gsm_data[i].gsmAct + ' </td></tr></table>';
+          
+          // var target_tooltip = '<div>Date: <strong>' + this.gsm_data[i].voucherEffectiveDate + '</strong><br>Item: <strong>' + this.gsm_data[i].stockItemName
+          //   + '</strong></br><div style="color:Green;">Target: <strong>' + this.gsm_data[i].gsmTgt + '</strong></div><div style="color:Blue;">Actual: <strong>' + this.gsm_data[i].gsmAct + '</strong></div> </div>';
+          // var target_tooltip = '<div><strong>2010</strong><br>Date: <strong>00/00/0000</strong><br>Sales: <strong>$600</strong></div>';
+          // var target_tooltip = "Date: " + this.gsm_data[i].voucherEffectiveDate + ", Item: " + this.gsm_data[i].stockItemName + ", Target:" + this.gsm_data[i].gsmTgt + " vs Actual:" + this.gsm_data[i].gsmAct;
           var target = this.gsm_data[i].gsmAct;
-          var actual_tooltip = "Date: " + this.gsm_data[i].voucherEffectiveDate + ", Item: " + this.gsm_data[i].stockItemName + ", Target:" + this.gsm_data[i].gsmTgt + " vs Actual:" + this.gsm_data[i].gsmAct;
-          this.lineData[i + 1] = [type, target, target_tooltip, actual, actual_tooltip];
+          // var actual_tooltip = '<div>Date: <strong>' + this.gsm_data[i].voucherEffectiveDate + '</strong><br>Item: <strong>' + this.gsm_data[i].stockItemName
+          // + '</strong></br>Target: <strong>' + this.gsm_data[i].gsmTgt + '</strong><br>Actual: <strong>' + this.gsm_data[i].gsmAct + '</strong > </div>';
+          // var actual_tooltip = "Date: " + this.gsm_data[i].voucherEffectiveDate + ", Item: " + this.gsm_data[i].stockItemName + ", Target:" + this.gsm_data[i].gsmTgt + " vs Actual:" + this.gsm_data[i].gsmAct;
+          this.lineData[i + 1] = [type, target, gsm_tooltip, actual, gsm_tooltip];
         }
         this.showLoader = false;
         this.title = "GSM variance yearly trend";
@@ -50,27 +59,23 @@ export class GraphsComponent implements OnInit {
       )
   }
 
-  monthlyGSMGraph() {
-    // this.subscription = this.serverService.getMonthlyGSMData().
-  }
-  weeklyGSMGraph() {
-    // this.subscription = this.serverService.getWeeklyGSMData().
-  }
-
-  showBFYearly() {
+  showBFGraph(days: string) {
     this.showLoader = true;
     this.lineData = [];
-    this.subscription = this.serverService.getTallyBFData().
+    this.subscription = this.serverService.getBFData(days).
       subscribe(list => {
         this.bf_data = list;
-        this.lineData[0] = ['Type', "Target", { 'type': 'string', 'role': 'tooltip', 'p': { 'html': false } }, "Actual", { 'type': 'string', 'role': 'tooltip', 'p': { 'html': true } }];
+        this.lineData[0] = ['Type', "Target", { 'type': 'string', 'role': 'tooltip', 'p': { 'html': true } }, "Actual", { 'type': 'string', 'role': 'tooltip', 'p': { 'html': true } }];
         for (var i = 0; i < this.bf_data.length; i++) {
           var type = this.bf_data[i].voucherEffectiveDate;
           var actual = this.bf_data[i].bfTgt;
-          var target_tooltip = "Date: " + this.bf_data[i].voucherEffectiveDate + ", Item: " + this.bf_data[i].stockItemName + ", Target:" + this.bf_data[i].bfTgt + " vs Actual:" + this.bf_data[i].bfAct;
+          // var bf_tooltip = '<div>Date: <strong>' + this.bf_data[i].voucherEffectiveDate + '</strong><br>Item: <strong>' + this.bf_data[i].stockItemName 
+          // + '</strong></br><div style="color:Green;">Target: <strong>' + this.bf_data[i].bfTgt + '</strong></div><div style="color:Blue;">Actual: <strong>' + this.bf_data[i].bfAct + '</strong></div> </div>';
+          var bf_tooltip = '<style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td, th {border: 1.5px solid #dddddd;text-align: left;padding: 8px;}</style><table class="table-sm"><tr><td>Date</td><td>' + this.bf_data[i].voucherEffectiveDate
+            + '</td></tr><tr><td>Item</td><td>' + this.bf_data[i].stockItemName + '</td></tr><tr style="background-color:#b5e7a0"><td>Target</td><td><b>'
+            + this.bf_data[i].bfTgt + '</td></tr><tr style="background-color:#ffcc5c"><td>Actual</td><td><b>' + this.bf_data[i].bfAct + ' </td></tr></table>';
           var target = this.bf_data[i].bfAct;
-          var actual_tooltip = "Date: " + this.bf_data[i].voucherEffectiveDate + ", Item: " + this.bf_data[i].stockItemName + ", Target:" + this.bf_data[i].bfTgt + " vs Actual:" + this.bf_data[i].bfAct;
-          this.lineData[i + 1] = [type, target, target_tooltip, actual, actual_tooltip];
+          this.lineData[i + 1] = [type, target, bf_tooltip, actual, bf_tooltip];
         }
         this.showLoader = false;
         this.title = "BF variance yearly trend";
@@ -80,94 +85,94 @@ export class GraphsComponent implements OnInit {
       )
   }
 
-  viewBFGraph() {
-    // alert("BF Graph");
-    this.showLoader = true;
-    var lineData = [];
-    this.subscription = this.serverService.getTallyBFData().
-      subscribe(list => {
-        this.bf_data = list;
-        // console.log(this.gsm_data);
-        // this.convertArray();
-        // var lineData: any[];
-        lineData[0] = ['Type', "Target", "Actual"];
-        for (var i = 0; i < this.bf_data.length; i++) {
-          var type = this.bf_data[i].voucherEffectiveDate + this.bf_data[i].stockItemName;
-          var type = this.bf_data[i].voucherEffectiveDate + " " + this.bf_data[i].stockItemName;
-          var target = this.bf_data[i].bfAct;
-          var actual = this.bf_data[i].bfTgt;
-          lineData[i + 1] = [type, target, actual];
-        }
-        this.showGraph = true;
-        this.showLoader = false;
-        this.title = "BF variance yearly trend";
-        this.displayGraph(lineData);
-      }
-      )
-    // var lineData = [
-    //   ["type", "Target", "Actual"],
-    //   ["2017-10-02120 GSM 100.5CM", 120.00, 120.00],
-    //   ["2017-10-02120 GSM 91.5CM", 127.00, 127.00]]
-    // this.showGraph = true;
-    // this.displayGraph(lineData);
-    // lineData = [];
-    // this.showGraph = false;
-  }
+  // viewBFGraph() {
+  //   // alert("BF Graph");
+  //   this.showLoader = true;
+  //   var lineData = [];
+  //   this.subscription = this.serverService.getTallyBFData().
+  //     subscribe(list => {
+  //       this.bf_data = list;
+  //       // console.log(this.gsm_data);
+  //       // this.convertArray();
+  //       // var lineData: any[];
+  //       lineData[0] = ['Type', "Target", "Actual"];
+  //       for (var i = 0; i < this.bf_data.length; i++) {
+  //         var type = this.bf_data[i].voucherEffectiveDate + this.bf_data[i].stockItemName;
+  //         var type = this.bf_data[i].voucherEffectiveDate + " " + this.bf_data[i].stockItemName;
+  //         var target = this.bf_data[i].bfAct;
+  //         var actual = this.bf_data[i].bfTgt;
+  //         lineData[i + 1] = [type, target, actual];
+  //       }
+  //       this.showGraph = true;
+  //       this.showLoader = false;
+  //       this.title = "BF variance yearly trend";
+  //       this.displayGraph(lineData);
+  //     }
+  //     )
+  //   // var lineData = [
+  //   //   ["type", "Target", "Actual"],
+  //   //   ["2017-10-02120 GSM 100.5CM", 120.00, 120.00],
+  //   //   ["2017-10-02120 GSM 91.5CM", 127.00, 127.00]]
+  //   // this.showGraph = true;
+  //   // this.displayGraph(lineData);
+  //   // lineData = [];
+  //   // this.showGraph = false;
+  // }
 
-  weeklyBFGraph() {
-    // alert("BF Graph");
-    this.showLoader = true;
-    var lineData = [];
-    this.subscription = this.serverService.getWeeklyBFData().
-      subscribe(list => {
-        this.bf_data = list;
-        // console.log(this.gsm_data);
-        // this.convertArray();
-        // var lineData: any[];
-        lineData[0] = ['Type', "Target", "Actual"];
-        for (var i = 0; i < this.bf_data.length; i++) {
-          var type = this.bf_data[i].voucherEffectiveDate + this.bf_data[i].stockItemName;
-          var type = this.bf_data[i].voucherEffectiveDate + " " + this.bf_data[i].stockItemName;
-          var target = this.bf_data[i].bfAct;
-          var actual = this.bf_data[i].bfTgt;
-          lineData[i + 1] = [type, target, actual];
-        }
-        this.showGraph = true;
-        this.showLoader = false;
-        this.title = "BF variance weekly";
-        this.displayGraph(lineData);
-      }
-      )
-  }
+  // weeklyBFGraph() {
+  //   // alert("BF Graph");
+  //   this.showLoader = true;
+  //   var lineData = [];
+  //   this.subscription = this.serverService.getWeeklyBFData().
+  //     subscribe(list => {
+  //       this.bf_data = list;
+  //       // console.log(this.gsm_data);
+  //       // this.convertArray();
+  //       // var lineData: any[];
+  //       lineData[0] = ['Type', "Target", "Actual"];
+  //       for (var i = 0; i < this.bf_data.length; i++) {
+  //         var type = this.bf_data[i].voucherEffectiveDate + this.bf_data[i].stockItemName;
+  //         var type = this.bf_data[i].voucherEffectiveDate + " " + this.bf_data[i].stockItemName;
+  //         var target = this.bf_data[i].bfAct;
+  //         var actual = this.bf_data[i].bfTgt;
+  //         lineData[i + 1] = [type, target, actual];
+  //       }
+  //       this.showGraph = true;
+  //       this.showLoader = false;
+  //       this.title = "BF variance weekly";
+  //       this.displayGraph(lineData);
+  //     }
+  //     )
+  // }
 
-  monthlyBFGraph() {
-    // alert("BF Graph");
-    this.showLoader = true;
-    var lineData = [];
-    this.subscription = this.serverService.getMonthlyBFData().
-      subscribe(list => {
-        this.bf_data = list;
-        // console.log(this.gsm_data);
-        // this.convertArray();
-        // var lineData: any[];
-        lineData[0] = ['Type', "Target", "Actual"];
-        for (var i = 0; i < this.bf_data.length; i++) {
-          var type = this.bf_data[i].voucherEffectiveDate + this.bf_data[i].stockItemName;
-          var type = this.bf_data[i].voucherEffectiveDate + " " + this.bf_data[i].stockItemName;
-          var target = this.bf_data[i].bfAct;
-          var actual = this.bf_data[i].bfTgt;
-          lineData[i + 1] = [type, target, actual];
-        }
-        this.showGraph = true;
-        this.showLoader = false;
-        this.title = "BF variance monthly trend";
-        this.displayGraph(lineData);
-      }
-      )
-  }
+  // monthlyBFGraph() {
+  //   // alert("BF Graph");
+  //   this.showLoader = true;
+  //   var lineData = [];
+  //   this.subscription = this.serverService.getMonthlyBFData().
+  //     subscribe(list => {
+  //       this.bf_data = list;
+  //       // console.log(this.gsm_data);
+  //       // this.convertArray();
+  //       // var lineData: any[];
+  //       lineData[0] = ['Type', "Target", "Actual"];
+  //       for (var i = 0; i < this.bf_data.length; i++) {
+  //         var type = this.bf_data[i].voucherEffectiveDate + this.bf_data[i].stockItemName;
+  //         var type = this.bf_data[i].voucherEffectiveDate + " " + this.bf_data[i].stockItemName;
+  //         var target = this.bf_data[i].bfAct;
+  //         var actual = this.bf_data[i].bfTgt;
+  //         lineData[i + 1] = [type, target, actual];
+  //       }
+  //       this.showGraph = true;
+  //       this.showLoader = false;
+  //       this.title = "BF variance monthly trend";
+  //       this.displayGraph(lineData);
+  //     }
+  //     )
+  // }
   displayGraph(lineData) {
     this.graphData = {
-      chartType: 'LineChart',
+      chartType: 'ComboChart',
       dataTable: lineData,
       options: {
         title: this.title,

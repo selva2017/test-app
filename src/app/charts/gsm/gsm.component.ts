@@ -17,7 +17,7 @@ export class GsmComponent implements OnInit, OnDestroy {
 
   constructor(private serverService: ServerService) {
     alert("inside constructor gsm");
-    this.subscription = this.serverService.getTallyGSMData().
+    this.subscription = this.serverService.getGSMData("7").
       subscribe(list => {
         this.gsm_data = list;
         // console.log(this.gsm_data);

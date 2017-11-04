@@ -19,7 +19,7 @@ export class BfComponent implements OnInit, OnDestroy {
 
   constructor(private serverService: ServerService) {
     alert("inside constructor- bf");
-    this.subscription = this.serverService.getTallyBFData().
+    this.subscription = this.serverService.getBFData('0').
       subscribe(list => {
         this.bf_data = list;
         // console.log(this.bf_data);

@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { AuthService } from './login/auth.service';
 import { AuthGuard } from './login/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,7 +44,7 @@ export function highchartsFactory() {
   dd(hc);
   return hc;
 }
-declare var require : any;
+declare var require: any;
 
 @NgModule({
   declarations: [
@@ -80,9 +81,10 @@ declare var require : any;
     DataTableModule,
     Ng2GoogleChartsModule
   ],
-  providers: [InventoryService, ServerService, AuthGuard,AuthService,
+  providers: [InventoryService, ServerService, AuthGuard, AuthService,
     {
       provide: HighchartsStatic,
+      // provide: LOCALE_ID, useValue: "en-IN",
       useFactory: highchartsFactory
     }],
   bootstrap: [AppComponent]

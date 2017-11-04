@@ -1,2 +1,187 @@
-<!-- <app-header></app-header> -->
-<!-- <p>Welcome...</p> -->
+<div class="container-fluid">
+    <div class="header">
+        <h3 class="title">Production Data</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-success text-center">
+                                <i class="fa fa-signal fa-2x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                <!-- <img src="./assets/graph_9.png" style="width:100px;height:90px;"> -->
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>Daily</p>
+                                45 Tons
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <hr />
+                        <div class="stats">
+                            <i class="ti-reload"></i> Updated now
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-warning text-center">
+                                <!-- <img src="./assets/graph_8.png" style="width:100px;height:90px;"> -->
+                                <i class="fa fa-line-chart fa-2x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>Weekly</p>
+                                345 Tons
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <hr />
+                        <div class="stats">
+                            <i class="ti-calendar"></i> Last day
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="content">
+                        <div class="row">
+                            <div class="col-xs-5">
+                                <div class="icon-big icon-danger text-center">
+                                    <!-- <img src="./assets/graph_8.png" style="width:100px;height:90px;"> -->
+                                    <i class="fa fa-pie-chart fa-2x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="numbers">
+                                    <p>Quarterly</p>
+                                    345 Tons
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <hr />
+                            <div class="stats">
+                                <i class="ti-calendar"></i> Last hour
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="col-lg-3 col-sm-6">
+            <div class="card">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-xs-5">
+                            <div class="icon-big icon-info text-center">
+                                <i class="fa fa-bar-chart fa-2x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                <!-- <img src="./assets/graph_6.png" style="width:100px;height:90px;"> -->
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="numbers">
+                                <p>Yearly</p>
+                                350 Tons
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <hr />
+                        <div class="stats">
+                            <i class="ti-reload"></i> Updated now
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Production Statistics</h4>
+                    <p class="category">Yearly Data</p>
+                </div>
+                <div class="content">
+                    <div *ngIf="showLoader" align="center">
+                        <br>
+                        <br>
+                        <img src="./assets/loading-2.gif">
+                    </div>
+                    <ng-template [ngIf]="showGraph && !showLoader">
+                        <div>
+                            <google-chart [data]="graphData"></google-chart>
+                        </div>
+                    </ng-template>
+                    <div class="footer">
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-reload"></i> Updated 3 hours ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Revenue Statistics</h4>
+                    <p class="category">Trail Balance</p>
+                </div>
+                <div class="content">
+                    <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+
+                    <div class="footer">
+                        <div class="chart-legend">
+                            <i class="fa fa-circle text-info"></i> Open
+                            <i class="fa fa-circle text-danger"></i> Bounce
+                            <i class="fa fa-circle text-warning"></i> Unsubscribe
+                        </div>
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-timer"></i> Campaign sent 2 days ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card ">
+                <div class="header">
+                    <h4 class="title">2017 Sales</h4>
+                    <p class="category">All products including Taxes</p>
+                </div>
+                <div class="content">
+                    <div id="chartActivity" class="ct-chart"></div>
+
+                    <div class="footer">
+                        <div class="chart-legend">
+                            <i class="fa fa-circle text-info"></i> Paper
+                            <i class="fa fa-circle text-warning"></i> Notebooks
+                        </div>
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-check"></i> Data information certified
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
