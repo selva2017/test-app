@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
     console.log("login Page--"+this.isLoginPage);
     this.authService.role.subscribe(
       (status: string) => {
-        console.log("status: "+ status);
+        console.log("role: "+ status);
         this.role=status;
       }
       // (status: string) => this.role=status

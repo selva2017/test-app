@@ -17,14 +17,22 @@ export class AuthService {
         this.serviceAuth.authenticateUser(user)
             .subscribe(
             success => {
+                console.log(success);
+
                 if (success.statusMessage == "AUTH_SUCCESS") {
                     this.token = true;
                     this.router.navigate(['home']);
                     this.isAdmin(success.role);
                     this.token_name = success.token;
+                    localStorage.setItem('token', JSON.stringify(this.token_name));
+                    localStorage.setItem('role', JSON.stringify(success.role));
+                    localStorage.setItem('companyId', JSON.stringify(success.companyId));
                     console.log('token name-' + this.token_name);
-                    localStorage.setItem('currentUser', JSON.stringify(this.token_name));
-                    localStorage.setItem('userType', JSON.stringify(success.role));
+                    console.log('Company Id -' + success.companyId);
+                    console.log('Company Name -' + success.companyName);
+                    console.log('First Name -' + success.firstName);
+                    console.log('Last Name -' + success.lastName);
+                    console.log('Role -' + success.role);
                 }
                 else {
                     this.token = false;
@@ -38,9 +46,9 @@ export class AuthService {
 
     logout() {
         this.token = null;
-        this.router.navigate(['login']);
         localStorage.removeItem('currentUser');
         localStorage.removeItem('userType');
+        this.router.navigate(['']);
     }
 
     isAuthenticated() {

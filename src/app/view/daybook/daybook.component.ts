@@ -43,7 +43,7 @@ export class DaybookComponent implements OnInit {
     this.subscription = this.serverService.getTallyDaybook().
       subscribe(list => {
         this.dayBook = list;
-        // console.log(this.dayBook);
+        console.log(this.dayBook);
         this.showLoader = false;
       })
   }
