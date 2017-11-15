@@ -1,0 +1,36 @@
+<form class="form-inline">
+  <div class="row">
+    <div class="form-group">
+      <div class="input-group">
+        <!-- <label>Starting :</label> -->
+        <span class="input-group-btn">
+          <!-- <button class="btn btn-oultine" type="button"  (click)="d1.toggle()" >Starting</button> -->
+          <a class="btn btn-info border-info" (click)="d1.toggle()">
+            <i class="fa fa-calendar fa-1x"></i> Starting</a>
+          </span>
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp1" [(ngModel)]="model1" ngbDatepicker #d1="ngbDatepicker"> 
+        <!-- <button class="btn btn-outline-warning btn-md" (click)="d1.toggle()" type="button"> -->
+          <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" /> -->
+        <!-- </button> -->
+        
+      </div>
+      <div class="input-group">
+        <!-- <label>Ending :</label> -->
+        <!-- <button class="btn btn-outline-warning btn-md" (click)="d2.toggle()" type="button"> -->
+          <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;" /> -->
+          <!-- </button> -->
+          <span class="input-group-btn">
+            <!-- <button class="btn btn-oultine" type="button"  (click)="d1.toggle()" >Starting</button> -->
+            <a class="btn btn-warning border-warning" (click)="d2.toggle()">
+              <i class="fa fa-calendar fa-1x"></i> Ending</a>
+            </span>
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp2" [(ngModel)]="model2" ngbDatepicker #d2="ngbDatepicker"> 
+      </div>
+      
+      <button type="button" class="btn btn-outline-success btn-md" aria-pressed="true" (click)="onTest()">Show Graph</button>
+    </div>
+  </div>
+</form>
+
+<hr/>
+<pre>Model: {{ model | date : 'dd-MM-yyyy' }}</pre>

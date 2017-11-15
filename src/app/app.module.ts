@@ -37,6 +37,8 @@ import { StockComponent } from './view/stock/stock.component';
 import { GsmComponent } from './charts/gsm/gsm.component';
 import { BfComponent } from './charts/bf/bf.component';
 import { GraphsComponent } from './view/graphs/graphs.component';
+import { NgbdDatepickerRangeComponent } from './ngbd-datepicker-range/ngbd-datepicker-range.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
@@ -68,7 +70,8 @@ declare var require: any;
     StockComponent,
     GsmComponent,
     BfComponent,
-    GraphsComponent
+    GraphsComponent,
+    NgbdDatepickerRangeComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,8 @@ declare var require: any;
     FormsModule,
     Ng2SmartTableModule,
     DataTableModule,
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    NgbModule.forRoot()
   ],
   providers: [InventoryService, ServerService, AuthGuard, AuthService,
     {

@@ -1,3 +1,4 @@
+import { NgbdDatepickerRangeComponent } from './ngbd-datepicker-range/ngbd-datepicker-range.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
   { path: 'gsmchart', component: GsmComponent },
   { path: 'bfchart', component: BfComponent, canActivate: [AuthGuard] },
   { path: 'ngchart', component: Ang2ChartjsComponent, canActivate: [AuthGuard] },
+  { path: 'datepicker', component: NgbdDatepickerRangeComponent },
   {
     path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard], children: [
       { path: 'add', component: AddInventoryComponent },
