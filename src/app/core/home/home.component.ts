@@ -42,6 +42,13 @@ export class HomeComponent implements OnInit {
       this.showLoader = false;
   }
 
+    displayINR(amount: number){
+    return Number(amount).toLocaleString('en-IN');
+    // return new Intl.NumberFormat('en-IN').format(amount);
+    // console.log(new Intl.NumberFormat('en-IN').format(amount));
+
+  }
+
 showProdDataGraph() {
   this.showLoader = true;
   this.lineData = [];

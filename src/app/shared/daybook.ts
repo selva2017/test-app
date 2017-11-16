@@ -16,7 +16,7 @@ export interface Daybook {
     ledgerEntryVOs: [
         {
             ledgerName: string;
-            amount: string;
+            amount: number;
             voucherKey: string;
             id: string;
         }];
@@ -25,8 +25,8 @@ export interface Daybook {
             voucherKey: string;
             ledgerName: string;
             stockItemName: string;
-            rate: string;
-            amount: string;
+            rate: number;
+            amount: number;
             billedQuantity: string;
             id: string;
         }];

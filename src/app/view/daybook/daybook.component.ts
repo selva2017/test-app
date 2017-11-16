@@ -23,6 +23,11 @@ export class DaybookComponent implements OnInit {
   ngOnInit() {
     this.refreshList();
   }
+  displayINR(amount: number) {
+    // return String(Number(amount).toLocaleString('en-IN'));
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
+  }
+
   onClickView(record) {
     this.dayBook_row = record;
   }

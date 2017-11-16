@@ -86,9 +86,9 @@ declare var require: any;
     NgbModule.forRoot()
   ],
   providers: [InventoryService, ServerService, AuthGuard, AuthService,
+    {provide: LOCALE_ID, useValue: "en-IN"},
     {
       provide: HighchartsStatic,
-      // provide: LOCALE_ID, useValue: "en-IN",
       useFactory: highchartsFactory
     }],
   bootstrap: [AppComponent]

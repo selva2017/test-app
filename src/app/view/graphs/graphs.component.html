@@ -1,5 +1,38 @@
-<br>
-<div class="row">
+<form class="form-inline">
+  <div class="row">
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <a class="btn btn-warning border-warning" (click)="d1.toggle()">
+            <i class="fa fa-calendar fa-1x"></i> Starting</a>
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp1" [(ngModel)]="date1" ngbDatepicker #d1="ngbDatepicker" readonly> 
+          </span>
+      </div>
+      <div class="input-group">
+          <span class="input-group-btn">
+            <a class="btn btn-warning border-warning" (click)="d2.toggle()">
+              <i class="fa fa-calendar fa-1x"></i> Ending</a>
+              <input class="form-control" placeholder="yyyy-mm-dd" name="dp2" [(ngModel)]="date2" ngbDatepicker #d2="ngbDatepicker" readonly> 
+            </span>
+      </div>
+      <button type="button" class="btn btn-outline-success btn-md active" aria-pressed="true" (click)="onTest()">Show Graph</button>
+    </div>
+  </div>
+
+<div *ngIf="showLoader" align="center">
+  <br>
+  <br>
+  <img src="./assets/loading-2.gif">
+</div>
+<ng-template [ngIf]="showGraph && !showLoader">
+  <div>
+    <google-chart [data]="graphData"></google-chart>
+  </div>
+</ng-template>
+</form>
+
+<!-- <br> -->
+<!-- <div class="row">
   <div class="col-md-6">
     <div class="btn-group">
       <button type="button" class="btn btn-outline-primary btn-md" aria-pressed="true" (click)="showGSMGraph('7')">Weekly GSM Trends</button>
@@ -14,15 +47,4 @@
       </div>
     </div>
   </div>
-</div>
-
-<div *ngIf="showLoader" align="center">
-  <br>
-  <br>
-  <img src="./assets/loading-2.gif">
-</div>
-<ng-template [ngIf]="showGraph && !showLoader">
-  <div>
-    <google-chart [data]="graphData"></google-chart>
-  </div>
-</ng-template>
+</div> -->

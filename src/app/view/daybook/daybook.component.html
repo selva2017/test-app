@@ -51,7 +51,7 @@
           <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
           <td>{{row.voucherType}}</td>
           <td>{{row.voucherNumber}}</td>
-          <td>{{row.ledgerEntryVOs[0].amount | currency : "INR" : 2}}</td>
+          <td>{{displayINR(row.ledgerEntryVOs[0].amount)}}</td>
           <!-- <td>{{row.ledgerEntryVOs[0].amount | currency : "INR" : true}}</td> -->
         </ng-template>
 
@@ -127,7 +127,7 @@
                     <tbody>
                       <tr *ngFor="let ledger of dayBook_row.ledgerEntryVOs">
                         <td>{{ledger.ledgerName}} </td>
-                        <td>{{ledger.amount | currency : "INR" : true}} </td>
+                        <td>{{displayINR(ledger.amount) }} </td>
                       </tr>
                     </tbody>
 
@@ -157,7 +157,7 @@
                       <tr *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
                           <td>{{inventory.stockItemName}} </td>
                           <td>{{inventory.rate}} </td>
-                          <td>{{inventory.amount | currency : "INR" : true}} </td>
+                          <td>{{displayINR(inventory.amount) }} </td>
                           <td>{{inventory.billedQuantity}} </td>
                       </tr>
                     </tbody>

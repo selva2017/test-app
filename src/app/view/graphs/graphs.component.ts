@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { ServerService } from './../../shared/server.service';
 import { Component, OnInit } from '@angular/core';
 
+import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-graphs',
   templateUrl: './graphs.component.html',
@@ -20,13 +22,30 @@ export class GraphsComponent implements OnInit {
   bf_data: BfData[];
   title: string;
 
+  // For the Date Picker
+  displayMonths = 2;
+  navigation = 'select';
+  date1: {};
+  date2: {};
+  now = new Date();
+
   constructor(private serverService: ServerService) {
     this.showGraph = false;
   }
 
   ngOnInit() {
+    this.date2 = {year: this.now.getFullYear(), month: this.now.getMonth() + 1, day: this.now.getDate()};
+    this.now.setDate(this.now.getDate()-5);
+    this.date1 = {year: this.now.getFullYear(), month: this.now.getMonth() + 1, day: this.now.getDate()};
   }
 
+  onTest(){
+    console.log(this.date1);
+    console.log(this.date2);
+    let model = [this.date1,this.date2]
+    console.log(model);
+    this.showGSMGraph('0')
+  }
   showGSMGraph(days: string) {
     this.showLoader = true;
     this.lineData = [];
