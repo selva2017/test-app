@@ -21,6 +21,7 @@ export class AuthService {
 
                 if (success.statusMessage == "AUTH_SUCCESS") {
                     this.token = true;
+                    // this.router.navigate(['stock']);
                     this.router.navigate(['home']);
                     this.isAdmin(success.role);
                     this.token_name = success.token;

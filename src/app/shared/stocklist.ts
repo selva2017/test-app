@@ -1,9 +1,11 @@
 export interface StockList {
 //    Order from Service
     amount: number;
+    batchName: string;
     bfAct: number;
     bfTgt: number;
     billedQty: string;
+    cobb: number;
     gsmAct: number;
     gsmTgt: number;
     joints: number;
@@ -12,12 +14,12 @@ export interface StockList {
     rate: string;
     realDia: number;
     reelLen: number;
+    // sizeAct: number;
     sizeAct: number;
-    sizeAct1: number;
-    sizeTgt1: number;
+    sizeTgt: number;
     stockItemDetailsId: number;
     stockItemName: string;
-    temp: number;
+    // temp: number;
     units: string;
     voucherEffectiveDate: string;
     voucherKey: string;

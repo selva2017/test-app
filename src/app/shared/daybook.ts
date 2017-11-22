@@ -1,17 +1,17 @@
 
 export interface Daybook {
     voucherType: string;
-    voucherAction: string;
+    // voucherAction: string;
     voucherDate: string;
-    voucherTypeName: string;
+    // voucherTypeName: string;
     voucherNumber: string;
     partyLedgerName: string;
     voucherKey: string;
     effectiveDate: string;
-    persistedView: string;
-    alterId: string;
+    // persistedView: string;
+    // alterId: string;
     masterId: string;
-    ledgerName: string;
+    // ledgerName: string;
     checkFlag: string;
     ledgerEntryVOs: [
         {

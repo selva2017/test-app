@@ -39,6 +39,7 @@ import { BfComponent } from './charts/bf/bf.component';
 import { GraphsComponent } from './view/graphs/graphs.component';
 import { NgbdDatepickerRangeComponent } from './ngbd-datepicker-range/ngbd-datepicker-range.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
@@ -83,7 +84,8 @@ declare var require: any;
     Ng2SmartTableModule,
     DataTableModule,
     Ng2GoogleChartsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    NgxPaginationModule
   ],
   providers: [InventoryService, ServerService, AuthGuard, AuthService,
     {provide: LOCALE_ID, useValue: "en-IN"},

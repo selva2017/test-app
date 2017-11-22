@@ -15,10 +15,22 @@
               <input class="form-control" placeholder="yyyy-mm-dd" name="dp2" [(ngModel)]="date2" ngbDatepicker #d2="ngbDatepicker" readonly> 
             </span>
       </div>
-      <button type="button" class="btn btn-outline-success btn-md active" aria-pressed="true" (click)="onTest()">Show Graph</button>
+      <!-- <button type="button" class="btn btn-outline-success btn-md active" aria-pressed="true" (click)="onTest()">Show Graph</button> -->
+      <!-- <input type="checkbox" checked data-toggle="toggle" [(ngModel)]="checkBoxValue" data-on="GSM" data-off="BF" data-onstyle="success" data-offstyle="warning"> -->
+
+      <div class="btn-group" role="group">
+        <button id="btnGroupDrop1" type="button" class="btn btn-outline-success btn-md active dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Select Graph
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="btn btn-outline-success btn-block" (click)="onTest('gsm')">GSM Data</a>
+          <a class="btn btn-outline-success btn-block" (click)="onTest('bf')">BF Data</a>
+        </div>
+      </div>
+
     </div>
   </div>
-
+</form>
 <div *ngIf="showLoader" align="center">
   <br>
   <br>
@@ -29,8 +41,6 @@
     <google-chart [data]="graphData"></google-chart>
   </div>
 </ng-template>
-</form>
-
 <!-- <br> -->
 <!-- <div class="row">
   <div class="col-md-6">

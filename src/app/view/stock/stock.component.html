@@ -13,6 +13,7 @@
         <th>No</th>
         <th>VoucherDate</th>
         <th>Voucher</th>
+        <th>Batch</th>
         <th>StockItemName</th>
         <!-- <th>Key</th> -->
         <th>Qty (Kgs)</th>
@@ -34,12 +35,16 @@
         <th>Unit</th>
       </tr>
     </thead>
-    <tbody></tbody>
-    <tr *ngFor="let row of stock_list; let i = index">
+    <tbody>
+    <!-- <tr *ngFor="let row of stock_list; let i = index"> -->
+    <!-- <tr *ngFor="let row of stock_list; let i = index"> -->
+    <tr *ngFor="let row of stock_list | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+            
       <td>{{i+1}}</td>
       <!-- <td>{{row.stockItemDetailsId}}</td> -->
       <td>{{row.voucherEffectiveDate | date : 'dd-MM-yy'}}</td>
       <td>{{row.voucherNumber}}</td>
+      <td>{{row.batchName}}</td>
       <td>{{row.stockItemName}}</td>
       <!-- <td>{{row.voucherKey}}</td> -->
       <td>{{row.billedQty}}</td>
@@ -54,11 +59,12 @@
       <td>{{row.moist}}</td>
       <td>{{row.realDia}}</td>
       <td>{{row.reelLen}}</td>
-      <td>{{row.sizeAct}}</td> 
-      <td>{{row.sizeAct1}}</td>
-      <td>{{row.sizeTgt1}}</td>
+      <td>{{row.cobb}}</td> 
+      <td>{{row.sizeAct}}</td>
+      <td>{{row.sizeTgt}}</td>
       <!-- <td>{{row.temp}}</td> -->
       <td>{{row.units}}</td>
-
+</tbody>
   </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
