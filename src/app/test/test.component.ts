@@ -33,7 +33,7 @@ export class TestComponent implements OnInit, OnDestroy {
       });
   }
   private initializeTable(products: Prod[]) {
-    console.log(products);
+    // console.log(products);
     this.tableResource = new DataTableResource(products);
     this.tableResource.query({ offset: 0 })
       .then(items => this.items = items);

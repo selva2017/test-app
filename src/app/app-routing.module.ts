@@ -43,10 +43,10 @@ const appRoutes: Routes = [
     ]
   },
   // { path: 'graphs', component: SimpleChartExampleComponent },
-  { path: 'daybook', component: DaybookComponent},
-  { path: 'test', component: TestComponent},
-  { path: 'stock', component: StockComponent },
-  { path: 'graphs', component: GraphsComponent},
+  { path: 'daybook', component: DaybookComponent, canActivate: [AuthGuard] },
+  { path: 'test', component: TestComponent, canActivate: [AuthGuard] },
+  { path: 'stock', component: StockComponent, canActivate: [AuthGuard] },
+  { path: 'graphs', component: GraphsComponent, canActivate: [AuthGuard] },
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }
 ];

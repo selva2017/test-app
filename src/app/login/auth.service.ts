@@ -28,11 +28,11 @@ export class AuthService {
                     localStorage.setItem('token', JSON.stringify(this.token_name));
                     localStorage.setItem('role', JSON.stringify(success.role));
                     localStorage.setItem('companyId', JSON.stringify(success.companyId));
-                    console.log('token name-' + this.token_name);
+                    // console.log('token name-' + this.token_name);
                     console.log('Company Id -' + success.companyId);
-                    console.log('Company Name -' + success.companyName);
-                    console.log('First Name -' + success.firstName);
-                    console.log('Last Name -' + success.lastName);
+                    // console.log('Company Name -' + success.companyName);
+                    // console.log('First Name -' + success.firstName);
+                    // console.log('Last Name -' + success.lastName);
                     console.log('Role -' + success.role);
                 }
                 else {

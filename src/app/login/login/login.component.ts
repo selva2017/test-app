@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.invalidLogin.subscribe(
       (status: boolean) => {
-        console.log("Login: "+ status);
+        // console.log("Login: "+ status);
         this.invalidLogin=status;
       }
       // (status: string) => this.role=status

@@ -29,7 +29,7 @@ export class StockComponent implements OnInit {
     this.subscription = this.serverService.getTallyStockData().
     subscribe(list => {
       this.stock_list = list;
-      console.log(this.stock_list);
+      // console.log(this.stock_list);
       this.showLoader = false;
     })
   }

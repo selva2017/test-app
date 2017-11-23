@@ -41,12 +41,12 @@ export class GraphsComponent implements OnInit {
   }
 
   onClickShowGraph(graph_type){
-    console.log(graph_type);
+    // console.log(graph_type);
     // console.log(this.checkBoxValue);
-    console.log(this.date1);
-    console.log(this.date2);
+    // console.log(this.date1);
+    // console.log(this.date2);
     let model = [this.date1,this.date2]
-    console.log(model);
+    // console.log(model);
     graph_type == 'gsm' ? this.showGSMGraph('0') : this.showBFGraph('0');
   }
   showGSMGraph(days: string) {
