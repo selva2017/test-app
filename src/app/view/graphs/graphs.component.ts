@@ -28,7 +28,7 @@ export class GraphsComponent implements OnInit {
   date1: {};
   date2: {};
   now = new Date();
-  checkBoxValue: boolean;
+  // checkBoxValue: boolean;
 
   constructor(private serverService: ServerService) {
     this.showGraph = false;
@@ -40,14 +40,14 @@ export class GraphsComponent implements OnInit {
     this.date1 = {year: this.now.getFullYear(), month: this.now.getMonth() + 1, day: this.now.getDate()};
   }
 
-  onTest(num){
-    console.log(num);
-    console.log(this.checkBoxValue);
+  onClickShowGraph(graph_type){
+    console.log(graph_type);
+    // console.log(this.checkBoxValue);
     console.log(this.date1);
     console.log(this.date2);
     let model = [this.date1,this.date2]
     console.log(model);
-    this.showGSMGraph('0')
+    graph_type == 'gsm' ? this.showGSMGraph('0') : this.showBFGraph('0');
   }
   showGSMGraph(days: string) {
     this.showLoader = true;
@@ -75,7 +75,7 @@ export class GraphsComponent implements OnInit {
           this.lineData[i + 1] = [type, target, gsm_tooltip, actual, gsm_tooltip];
         }
         this.showLoader = false;
-        this.title = "GSM variance yearly trend";
+        this.title = "GSM variance trend";
         this.showGraph = true;
         this.displayGraph(this.lineData);
       }
@@ -102,7 +102,7 @@ export class GraphsComponent implements OnInit {
           this.lineData[i + 1] = [type, target, bf_tooltip, actual, bf_tooltip];
         }
         this.showLoader = false;
-        this.title = "BF variance yearly trend";
+        this.title = "BF variance trend";
         this.showGraph = true;
         this.displayGraph(this.lineData);
       }
