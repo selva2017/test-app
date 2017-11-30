@@ -19,8 +19,9 @@ export class HomeComponent implements OnInit {
   statistics_data: any[];
   title: string;
   today: number = Date.now();
-  
+  showProductionGraph: boolean;
   constructor(private serverService: ServerService) {
+    
     this.showGraph = false;
     // alert("cons");
   }
@@ -28,11 +29,21 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     // this.showGSMGraph("30");
     // alert("nginit");
+    this.showProductionGraph = false;
+    console.log("mychk = "+ this.showProductionGraph);
+    var role = localStorage.getItem('role');
+    console.log("role" + role);
+    if (role =='admin'){
+      this.showProductionGraph = true;
+      console.log("Flag = "+this.showProductionGraph);
+      console.log("mychk = "+ this.showProductionGraph);
+    }
     this.showProdStatistics();
     this.showProdDataGraph();
   }
   showProdStatistics() {
     this.showLoader = true;
+
     this.lineData = [];
     this.subscription = this.serverService.getProdStatsForDashboard().
       subscribe(list => {
@@ -43,7 +54,8 @@ export class HomeComponent implements OnInit {
   }
 
     displayINR(amount: number){
-    return Number(amount).toLocaleString('en-IN');
+    // return Number(amount/1000).toLocaleString('en-IN');
+    return Number(Math.round(amount/1000)).toLocaleString('en-IN');
     // return new Intl.NumberFormat('en-IN').format(amount);
     // console.log(new Intl.NumberFormat('en-IN').format(amount));
 
@@ -59,7 +71,7 @@ showProdDataGraph() {
       for (var i = 0; i < this.graph_data.length; i++) {
         var type = '';
         // var type = this.graph_data[i].date;
-        var actual = this.graph_data[i].quantity;
+        var actual = Math.round(this.graph_data[i].quantity/1000);
         var graph_tooltip = '<style>table {font-family: arial, sans-serif;border-collapse: collapse;width: 100%;}td, th {border: 1.5px solid #dddddd;text-align: left;padding: 8px;}</style><table class="table-sm"><tr><td>Tonnes</td><td>' + this.graph_data[i].quantity
           + '</td></tr><tr><td>Date</td><td>' + this.graph_data[i].date + '</td></tr>';
         this.lineData[i + 1] = [type, actual, graph_tooltip];

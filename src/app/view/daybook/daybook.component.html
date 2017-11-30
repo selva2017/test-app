@@ -26,7 +26,7 @@
       <tr *ngFor="let row of dayBook | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
 
         <td>{{i+1}}</td>
-        <td>{{row.voucherDate | date : 'dd-MM-yyyy'}}</td>
+        <td>{{row.voucherDate}}</td>
         <!-- <td> -->
         <!-- <ng-container *ngIf="row.voucherType ==='Delivery Note GST'; then first; row.voucherType ==='Stock Journal Fg';then second;"></ng-container> -->
 
@@ -98,7 +98,7 @@
                   <table class="w-100 p-3 table-striped table-bordered ">
                     <tr>
                       <td>Voucher Date</td>
-                      <td>{{dayBook_row.voucherDate | date : 'dd-MM-yyyy'}} </td>
+                      <td>{{dayBook_row.voucherDate}} </td>
                     </tr>
                     <tr>
                       <td>Ledger Name</td>

@@ -5,14 +5,14 @@
         <span class="input-group-btn">
           <a class="btn btn-warning border-warning" (click)="d1.toggle()">
             <i class="fa fa-calendar fa-1x"></i> Starting</a>
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp1" [(ngModel)]="date1" ngbDatepicker #d1="ngbDatepicker" readonly> 
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp1" [(ngModel)]="start_date" ngbDatepicker #d1="ngbDatepicker" readonly> 
           </span>
       </div>
       <div class="input-group">
           <span class="input-group-btn">
             <a class="btn btn-warning border-warning" (click)="d2.toggle()">
               <i class="fa fa-calendar fa-1x"></i> Ending</a>
-              <input class="form-control" placeholder="yyyy-mm-dd" name="dp2" [(ngModel)]="date2" ngbDatepicker #d2="ngbDatepicker" readonly> 
+              <input class="form-control" placeholder="yyyy-mm-dd" name="dp2" [(ngModel)]="end_date" ngbDatepicker #d2="ngbDatepicker" readonly> 
             </span>
       </div>
       <!-- <button type="button" class="btn btn-outline-success btn-md active" aria-pressed="true" (click)="onTest()">Show Graph</button> -->

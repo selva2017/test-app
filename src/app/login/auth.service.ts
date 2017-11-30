@@ -25,9 +25,12 @@ export class AuthService {
                     this.router.navigate(['home']);
                     this.isAdmin(success.role);
                     this.token_name = success.token;
-                    localStorage.setItem('token', JSON.stringify(this.token_name));
-                    localStorage.setItem('role', JSON.stringify(success.role));
-                    localStorage.setItem('companyId', JSON.stringify(success.companyId));
+                    localStorage.setItem('token', this.token_name);
+                    // localStorage.setItem('token', JSON.stringify(this.token_name));
+                    localStorage.setItem('role', success.role);
+                    // localStorage.setItem('role', JSON.stringify(success.role));
+                    localStorage.setItem('companyId', success.companyId);
+                    // localStorage.setItem('companyId', JSON.stringify(success.companyId));
                     // console.log('token name-' + this.token_name);
                     console.log('Company Id -' + success.companyId);
                     // console.log('Company Name -' + success.companyName);
