@@ -1,124 +1,202 @@
 <div class="container-fluid">
-    <div class="header">
+    <!-- <div class="header">
         <h3 class="title">Production Data</h3>
-    </div>
-    
+    </div> -->
  
-<div class="row">
-    <div class="col-lg-3 col-sm-6">
-        <div class="card">
-            <div class="content">
-                <div class="row">
-                    <div class="col-xs-5">
-                        <div class="icon-big icon-success text-center">
-                            <i class="fa fa-signal fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
-                            <!-- <img src="./assets/graph_9.png" style="width:100px;height:90px;"> -->
-                        </div>
+    <div class="row">
+        
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Sales and Production Statistics</h4>
                     </div>
-                    <div class="col-xs-7">
-                        <div class="numbers">
-                            <p>Weekly</p>
-                            {{displayINR(statistics_data.stockWeek)}}
-                            <p>tons</p>
+                    <div class="content">
+                        <div *ngIf="showLoader" align="center">
+                            <br>
+                            <br>
+                            <img src="./assets/loading-2.gif">
                         </div>
-                    </div>
-                </div>
-                <div class="footer">
-                    <hr />
-                    <div class="stats">
-                        <i class="ti-reload"></i>
-                        {{today | date:'medium'}}
+                        <ng-template [ngIf]="showGraph && !showLoader">
+                            <div>
+                               
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="card">
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-xs-5">
+                                                        <div class="icon-big icon-success text-center">
+                                                            <i class="fa fa-signal fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-7">
+                                                        <div class="numbers">
+                                                            <p>Weekly</p>
+                                                            {{displayIndianFormat(statistics_data.weeklyProduction)}}
+                                                            <p>tons</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="card">
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-xs-5">
+                                                        <div class="icon-big icon-warning text-center">
+                                                            <i class="fa fa-line-chart fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-7">
+                                                        <div class="numbers">
+                                                            <p>Monthly</p>
+                                                            {{displayIndianFormat(statistics_data.monthlyProduction)}}
+                                                            <p>tons</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="card">
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-xs-5">
+                                                        <div class="icon-big icon-primary text-center">
+                                                            <i class="fa fa-area-chart fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-7">
+                                                        <div class="numbers">
+                                                            <p>Quarterly</p>
+                                                            {{displayIndianFormat(statistics_data.quarterlyProduction)}}
+                                                            <p>tons</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="card">
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <div class="icon-big icon-info text-center">
+                                                            <i class="fa fa-bar-chart fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <div class="numbers">
+                                                            <p>Yearly</p>
+                                                            {{displayIndianFormat(statistics_data.yearlyProduction)}}
+                                                            <p>tons</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="card">
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-xs-5">
+                                                        <div class="icon-big icon-success text-center">
+                                                            <i class="fa fa-signal fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-7">
+                                                        <div class="numbers">
+                                                            <p>Weekly</p>
+                                                            {{displayINR(statistics_data.weeklySales)}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="card">
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-xs-5">
+                                                        <div class="icon-big icon-warning text-center">
+                                                            <i class="fa fa-line-chart fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-7">
+                                                        <div class="numbers">
+                                                            <p>Monthly</p>
+                                                            {{displayINR(statistics_data.monthlySales)}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="card">
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-xs-5">
+                                                        <div class="icon-big icon-primary text-center">
+                                                            <i class="fa fa-area-chart fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-7">
+                                                        <div class="numbers">
+                                                            <p>Quarterly</p>
+                                                            {{displayINR(statistics_data.quarterlySales)}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-sm-6">
+                                        <div class="card">
+                                            <div class="content">
+                                                <div class="row">
+                                                    <div class="col-xs-6">
+                                                        <div class="icon-big icon-info text-center">
+                                                            <i class="fa fa-bar-chart fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-6">
+                                                        <div class="numbers">
+                                                            <p>Yearly</p>
+                                                            {{displayINR(statistics_data.yearlySales)}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <div class="footer">
+                            <hr>
+                            <div class="stats">
+                                <i class="ti-reload"></i>
+                                {{today | date:'medium'}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-        <div class="card">
-            <div class="content">
-                <div class="row">
-                    <div class="col-xs-5">
-                        <div class="icon-big icon-warning text-center">
-                            <!-- <img src="./assets/graph_8.png" style="width:100px;height:90px;"> -->
-                            <i class="fa fa-line-chart fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
-                        </div>
-                    </div>
-                    <div class="col-xs-7">
-                        <div class="numbers">
-                            <p>Monthly</p>
-                            {{displayINR(statistics_data.stockMonth)}}
-                            <p>tons</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer">
-                    <hr />
-                    <div class="stats">
-                        <i class="ti-calendar"></i>
-                        {{today | date:'medium'}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-        <div class="card">
-            <div class="content">
-                <div class="row">
-                    <div class="col-xs-5">
-                        <div class="icon-big icon-primary text-center">
-                            <!-- <img src="./assets/graph_8.png" style="width:100px;height:90px;"> -->
-                            <i class="fa fa-area-chart fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
-                        </div>
-                    </div>
-                    <div class="col-xs-7">
-                        <div class="numbers">
-                            <p>Quarterly</p>
-                            {{displayINR(statistics_data.stockQuarter)}}
-                            <p>tons</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer">
-                    <hr />
-                    <div class="stats">
-                        <i class="ti-calendar"></i>
-                        {{today | date:'medium'}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-sm-6">
-        <div class="card">
-            <div class="content">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="icon-big icon-info text-center">
-                            <i class="fa fa-bar-chart fa-1x" aria-hidden="true" style="width:100px;height:90px;"></i>
-                            <!-- <img src="./assets/graph_6.png" style="width:100px;height:90px;"> -->
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="numbers">
-                            <p>Yearly</p>
-                            {{displayINR(statistics_data.stockYear)}}
-                            <p>tons</p>
-                            <!-- <div class="aggr-stats">tons</div> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="footer">
-                    <hr />
-                    <div class="stats">
-                        <i class="ti-reload"></i>
-                        {{today | date:'medium'}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
+ 
+
 <div class="row" *ngIf="showProductionGraph">
 
     <div class="col-md-12">

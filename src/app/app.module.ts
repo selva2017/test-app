@@ -4,7 +4,7 @@ import { AuthGuard } from './login/auth-guard.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpModule } from '@angular/http';
+import { HttpModule, RequestOptions } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 // import { ChartModule } from 'angular2-highcharts';
