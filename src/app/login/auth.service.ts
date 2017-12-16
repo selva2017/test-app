@@ -29,6 +29,7 @@ export class AuthService {
                     // localStorage.setItem('token', JSON.stringify(this.token_name));
                     localStorage.setItem('role', success.role);
                     // localStorage.setItem('role', JSON.stringify(success.role));
+                    localStorage.setItem('companyName', success.companyName);
                     localStorage.setItem('companyId', success.companyId);
                     // localStorage.setItem('companyId', JSON.stringify(success.companyId));
                     // console.log('token name-' + this.token_name);

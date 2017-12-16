@@ -16,7 +16,7 @@
                             <br>
                             <img src="./assets/loading-2.gif">
                         </div>
-                        <ng-template [ngIf]="showGraph && !showLoader">
+                        <!-- <ng-template [ngIf]="showGraph && !showLoader"> -->
                             <div>
                                
                                 <div class="row">
@@ -32,8 +32,8 @@
                                                     <div class="col-xs-7">
                                                         <div class="numbers">
                                                             <p>Weekly</p>
-                                                            {{displayIndianFormat(statistics_data.weeklyProduction)}}
-                                                            <p>tons</p>
+                                                            <p>{{displayIndianFormat(statistics_data.weeklyProduction)}}
+                                                            tons</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -52,8 +52,8 @@
                                                     <div class="col-xs-7">
                                                         <div class="numbers">
                                                             <p>Monthly</p>
-                                                            {{displayIndianFormat(statistics_data.monthlyProduction)}}
-                                                            <p>tons</p>
+                                                            <p>{{displayIndianFormat(statistics_data.monthlyProduction)}}
+                                                            tons</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -72,8 +72,8 @@
                                                     <div class="col-xs-7">
                                                         <div class="numbers">
                                                             <p>Quarterly</p>
-                                                            {{displayIndianFormat(statistics_data.quarterlyProduction)}}
-                                                            <p>tons</p>
+                                                            <p>{{displayIndianFormat(statistics_data.quarterlyProduction)}}
+                                                            tons</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -92,8 +92,8 @@
                                                     <div class="col-xs-6">
                                                         <div class="numbers">
                                                             <p>Yearly</p>
-                                                            {{displayIndianFormat(statistics_data.yearlyProduction)}}
-                                                            <p>tons</p>
+                                                            <p>{{displayIndianFormat(statistics_data.yearlyProduction)}}
+                                                            tons</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -114,7 +114,7 @@
                                                     <div class="col-xs-7">
                                                         <div class="numbers">
                                                             <p>Weekly</p>
-                                                            {{displayINR(statistics_data.weeklySales)}}
+                                                            <p>{{displayINR(statistics_data.weeklySales)}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,7 +133,7 @@
                                                     <div class="col-xs-7">
                                                         <div class="numbers">
                                                             <p>Monthly</p>
-                                                            {{displayINR(statistics_data.monthlySales)}}
+                                                            <p>{{displayINR(statistics_data.monthlySales)}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -152,7 +152,7 @@
                                                     <div class="col-xs-7">
                                                         <div class="numbers">
                                                             <p>Quarterly</p>
-                                                            {{displayINR(statistics_data.quarterlySales)}}
+                                                        <p>{{displayINR(statistics_data.quarterlySales)}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -171,7 +171,7 @@
                                                     <div class="col-xs-6">
                                                         <div class="numbers">
                                                             <p>Yearly</p>
-                                                            {{displayINR(statistics_data.yearlySales)}}
+                                                        <p>   {{displayINR(statistics_data.yearlySales)}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -180,7 +180,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </ng-template>
+                        <!-- </ng-template> -->
                         <div class="footer">
                             <hr>
                             <div class="stats">

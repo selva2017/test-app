@@ -1,3 +1,4 @@
+import { ProdStatistics } from './../../shared/prod-statistics';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
@@ -20,6 +21,10 @@ export class HomeComponent implements OnInit {
   title: string;
   today: number = Date.now();
   showProductionGraph: boolean;
+  salesData: any[];
+  salesMonth: any[];
+  prodStatistics: ProdStatistics;
+  monthSalesData: any[];
   constructor(private serverService: ServerService) {
 
     this.showGraph = false;
@@ -39,7 +44,8 @@ export class HomeComponent implements OnInit {
       console.log("mychk = " + this.showProductionGraph);
     }
     this.showProdStatistics();
-    this.showProdDataGraph();
+    // this.showProdDataGraph(); //No Data and getting length NULL
+    this.showMonthlySalesGraph();
   }
   showProdStatistics() {
     this.showLoader = true;
@@ -58,7 +64,7 @@ export class HomeComponent implements OnInit {
   }
 
   displayINR(amount: number) {
-    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 }).format(amount);
   }
 
   showProdDataGraph() {
@@ -104,4 +110,83 @@ export class HomeComponent implements OnInit {
       }
     };
   }
+
+  showMonthlySalesGraph() {
+    this.showLoader = true;
+    this.salesData = [];
+    this.salesMonth = [];
+    this.monthSalesData = [];
+    this.serverService.getProdStatsForDashboard()
+      .subscribe(
+      (list) => {
+        this.prodStatistics = list;
+        console.log(this.prodStatistics);
+        this.salesData = [];
+        this.salesMonth = [];
+        // console.log(this.prodStatistics[0].salesSummaryByMonth.length);
+        this.monthSalesData[0] = ['Month', 'Percentage'];
+        for (var i = 0; i < this.prodStatistics.salesSummaryByMonth.length; i++)
+          if (Number(this.prodStatistics.salesSummaryByMonth[i].amount) > 0) {
+            this.salesData[i] = Number(this.prodStatistics.salesSummaryByMonth[i].amount);
+            this.salesMonth[i] = this.prodStatistics.salesSummaryByMonth[i].month;
+            this.monthSalesData[i+1] = [this.salesMonth[i], this.salesData[i]]
+          }
+        // console.log(sales.length);
+        // console.log(this.salesData);
+        // console.log(this.salesMonth);
+        console.log(this.monthSalesData);
+      }
+      )
+    this.showLoader = false;
+  }
+
+  lData = ([
+    [this.monthSalesData]
+    // ["April", "May", "June", "July", "August", "September", "October", "November", "December", "January", "Febrarury", "March"],
+    // [9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999, 9999]
+    // console.log(this.salesMonth),
+    // console.log(this.salesData),
+    // [this.salesMonth],
+    // [this.salesData]
+    // ['Month', 'Percentage'],
+    // ["King's pawn (e4)", 44],
+    // ["Queen's pawn (d4)", 31],
+    // ["Knight to King 3 (Nf3)", 12],
+    // ["Queen's bishop pawn (c4)", 10],
+    // ['Other', 3]
+  ]);
+
+
+
+  pieChartData = {
+
+    chartType: 'Bar',
+    dataTable: this.lData,
+    // dataTable: this.monthSalesData,
+    options: {
+      title: 'GSM Variation Datewise',
+      legend: 'none',
+      tooltip: { isHtml: true },
+      // width: 1000,
+      // height: 500,
+      colors: ['green'],
+      hAxis: {
+        title: 'Date'
+      },
+      vAxis: {
+        title: 'GSM ',
+        // ticks: [0, 10, 15, 20, 40]
+      }
+      // series: {
+      //   0: { color: '#6f9654' },
+      //   1: { color: '#e7711b' },
+      // 0: { color: '#e2431e' },
+      // 1: { color: '#e7711b' },
+      // 2: { color: '#f1ca3a' },
+      // 3: { color: '#6f9654' },
+      // 4: { color: '#1c91c0' },
+      // 5: { color: '#43459d' },
+      //  },
+    }
+  };
 }
