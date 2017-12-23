@@ -154,10 +154,13 @@ export class GoogleChartComponent implements OnInit {
 //     }
 // };
 
+ddata = [["Month", "Percentage"],
+["April", 21978335],
+["May", 19165279]]
   pieChartData = {
     
     chartType: 'BarChart',
-    dataTable: this.ldata,
+    dataTable: this.ddata,
     options: {
       title: 'GSM Variation Datewise',
       legend: 'none',

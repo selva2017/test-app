@@ -25,6 +25,22 @@ export class HomeComponent implements OnInit {
   salesMonth: any[];
   prodStatistics: ProdStatistics;
   monthSalesData: any[];
+
+  prod_data = [];
+  prod_month = [];
+  sales_data = [];
+  sales_month = [];
+  prod_data_graph  = [];
+  prod_month_graph  = [];
+  sales_data_graph  = [];
+  sales_month_graph  = [];
+  type_month_sales = 'bar';
+  type_month_prod = 'bar';
+  data_month_sales = {};
+  data_month_prod = {};
+  options_month_sales = {};
+  options_month_prod = {};
+
   constructor(private serverService: ServerService) {
 
     this.showGraph = false;
@@ -43,20 +59,59 @@ export class HomeComponent implements OnInit {
       console.log("Flag = " + this.showProductionGraph);
       console.log("mychk = " + this.showProductionGraph);
     }
-    this.showProdStatistics();
-    // this.showProdDataGraph(); //No Data and getting length NULL
-    this.showMonthlySalesGraph();
-  }
-  showProdStatistics() {
+ 
     this.showLoader = true;
-
     this.lineData = [];
     this.subscription = this.serverService.getProdStatsForDashboard().
       subscribe(list => {
         this.statistics_data = list;
+        this.prodStatistics = list;
+        console.log("this.prodStatistics");
+        console.log(this.prodStatistics);
+        for (var i = 0; i < this.prodStatistics.productionSummaryByMonth.length; i++)
+          if (Number(this.prodStatistics.productionSummaryByMonth[i].amount) > 0) {
+            console.log("in prod data");
+            this.prod_data[i] = Math.round(this.prodStatistics.productionSummaryByMonth[i].amount / 1000);
+            this.prod_month[i] = this.prodStatistics.productionSummaryByMonth[i].month.substring(0, 3);
+          }
+          console.log(this.prod_data.length);
+          console.log(this.prod_data);
+          console.log(this.prod_month);
+          
+          for (var i = 0; i < this.prodStatistics.salesSummaryByMonth.length; i++)
+          if (Number(this.prodStatistics.salesSummaryByMonth[i].amount) > 0) {
+            console.log("in sales data");
+            this.sales_data[i] = Math.round(this.prodStatistics.salesSummaryByMonth[i].amount / 100000);
+            this.sales_month[i] = this.prodStatistics.salesSummaryByMonth[i].month.substring(0, 3);
+          }
+          this.prod_data_graph = this.prod_data;
+          this.prod_month_graph = this.prod_month;
+          this.sales_data_graph = this.sales_data;
+          this.sales_month_graph = this.sales_month;
+          this.showProdStatistics();
+        this.monthlyProdGraph(); 
+        this.monthlySalesGraph(); 
+      },
+      error => {
       }
-      )
+      );
+    
+      // this.showProdDataGraph(); //No Data and getting length NULL
+      // this.showMonthlySalesGraph();
+      // this.showMonthlyGraph();
+      
+  }
+  showProdStatistics() {
+    // this.showLoader = true;
+
+    // this.lineData = [];
+    // this.subscription = this.serverService.getProdStatsForDashboard().
+    //   subscribe(list => {
+    //     this.statistics_data = list;
+    //   }
+    //   )
     this.showLoader = false;
+    this.showGraph = true;
   }
 
   displayIndianFormat(amount: number) {
@@ -129,7 +184,7 @@ export class HomeComponent implements OnInit {
           if (Number(this.prodStatistics.salesSummaryByMonth[i].amount) > 0) {
             this.salesData[i] = Number(this.prodStatistics.salesSummaryByMonth[i].amount);
             this.salesMonth[i] = this.prodStatistics.salesSummaryByMonth[i].month;
-            this.monthSalesData[i+1] = [this.salesMonth[i], this.salesData[i]]
+            this.monthSalesData[i + 1] = [this.salesMonth[i], this.salesData[i]]
           }
         // console.log(sales.length);
         // console.log(this.salesData);
@@ -189,4 +244,171 @@ export class HomeComponent implements OnInit {
       //  },
     }
   };
+
+  showMonthlyGraph() {
+    this.showLoader = false;
+    console.log("in show month graph")
+    this.serverService.getProdStatsForDashboard()
+      .subscribe(
+      (list) => {
+        this.prodStatistics = list;
+        console.log("this.prodStatistics");
+        console.log(this.prodStatistics);
+        // this.prod_data = [];
+        // this.prod_month = [];
+        // this.sales_data = [];
+        // this.sales_month = [];
+        // console.log(this.prodStatistics[0].productionSummaryByMonth.length);
+        for (var i = 0; i < this.prodStatistics.productionSummaryByMonth.length; i++)
+          if (Number(this.prodStatistics.productionSummaryByMonth[i].amount) > 0) {
+            console.log("innn");
+            this.prod_data[i] = Math.round(this.prodStatistics.productionSummaryByMonth[i].amount / 1000);
+            this.prod_month[i] = this.prodStatistics.productionSummaryByMonth[i].month.substring(0, 3);
+          }
+        console.log(this.prod_data.length);
+        console.log(this.prod_data);
+        console.log(this.prod_month);
+
+        for (var i = 0; i < this.prodStatistics.salesSummaryByMonth.length; i++)
+          if (Number(this.prodStatistics.salesSummaryByMonth[i].amount) > 0) {
+            // console.log(this.prodStatistics.salesSummaryByMonth[i].amount/1000);
+            // console.log(Number(this.prodStatistics.salesSummaryByMonth[i].amount/1000));
+            // console.log(Math.round(this.prodStatistics.salesSummaryByMonth[i].amount/1000));
+            this.sales_data[i] = Math.round(this.prodStatistics.salesSummaryByMonth[i].amount / 100000);
+            // this.sales_data[i] = Number(this.prodStatistics.salesSummaryByMonth[i].amount/1000);
+            this.sales_month[i] = this.prodStatistics.salesSummaryByMonth[i].month.substring(0, 3);
+          }
+
+        // this.numbers.push(Number(this.prodStatistics.stockWeek/1000));
+        // this.numbers.push(Number(this.prodStatistics.stockMonth/1000));
+        // this.numbers.push(Number(this.prodStatistics.stockQuarter/1000));
+        // this.numbers.push(Number(this.prodStatistics.stockYear)/1000);
+      },
+      error => {
+      }
+      );
+    this.showLoader = false;
+    this.showGraph = true;
+    this.monthlyProdGraph();
+  }
+  
+  monthlyProdGraph() {
+    this.showLoader = false;
+    this.showGraph = true;
+    console.log("inside prod");
+    console.log(this.prod_month_graph);
+    console.log(this.prod_data_graph);
+    this.type_month_prod = 'bar';
+    this.data_month_prod = {
+      labels: this.prod_month_graph,
+      // labels: ["12 BF 100 GSM 48",
+      // "12 BF 100 GSM 39",    "12 BF 100 GSM 33"    ],
+      datasets: [{
+        label: "Sales in lakhs",
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: '#42A5F5',
+        // backgroundColor: "rgba(75,192,192,0.4)",
+        borderColor: "rgba(75,192,192,1)",
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "rgba(75,192,192,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: this.prod_data_graph,
+        spanGaps: true,
+      },
+      ]
+    };
+
+    this.options_month_prod = {
+      legend: {
+        display: false
+      },
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'tons'
+          }
+        }]
+      }     ,
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem) {
+          console.log(tooltipItem)
+            return tooltipItem.yLabel;
+          }
+        }
+      }
+    };
+  }
+  monthlySalesGraph() {
+    this.showLoader = false;
+    this.showGraph = true;
+    console.log("inside sales");
+    console.log(this.sales_month_graph);
+    console.log(this.sales_data_graph);
+    this.type_month_sales = 'bar';
+    this.data_month_sales = {
+      labels: this.sales_month_graph,
+      // labels: ["12 BF 100 GSM 48",
+      // "12 BF 100 GSM 39",    "12 BF 100 GSM 33"    ],
+      datasets: [{
+        label: "Sales in lakhs",
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: '#9CCC65',
+        // backgroundColor: "rgba(75,192,192,0.4)",
+        borderColor: "rgba(75,192,192,1)",
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: "rgba(75,192,192,1)",
+        pointBackgroundColor: "#fff",
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: this.sales_data_graph,
+        spanGaps: true,
+      },
+      ]
+    };
+
+    this.options_month_sales = {
+      legend: {
+        display: false
+      },
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'rupees'
+          }
+        }]
+      }     ,
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem) {
+          console.log(tooltipItem)
+            return tooltipItem.yLabel;
+          }
+        }
+      }
+    };
+  }
+
 }

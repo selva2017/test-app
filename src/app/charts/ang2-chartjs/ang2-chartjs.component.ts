@@ -47,14 +47,15 @@ export class Ang2ChartjsComponent implements OnInit {
   //   maintainAspectRatio: false
   // };
   // ---------------Another way-------------------------
-type = 'line';
+type = 'bar';
 data = {
-    labels: ["12 BF 100 GSM 48",
-    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",    "12 BF 100 GSM 38",    "12 BF 100 GSM 39",    "12 BF 100 GSM 33",
-    "12 BF 100 GSM 48",    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",    "12 BF 100 GSM 38",    "12 BF 100 GSM 39",
-    "12 BF 100 GSM 33",    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",   "12 BF 100 GSM 38",    "12 BF 100 GSM 39",
-    "12 BF 100 GSM 33",    "12 BF 100 GSM 48",    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",    "12 BF 100 GSM 38",
-    "12 BF 100 GSM 39",    "12 BF 100 GSM 33"    ],
+  labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    // labels: ["12 BF 100 GSM 48",
+    // "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",    "12 BF 100 GSM 38",    "12 BF 100 GSM 39",    "12 BF 100 GSM 33",
+    // "12 BF 100 GSM 48",    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",    "12 BF 100 GSM 38",    "12 BF 100 GSM 39",
+    // "12 BF 100 GSM 33",    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",   "12 BF 100 GSM 38",    "12 BF 100 GSM 39",
+    // "12 BF 100 GSM 33",    "12 BF 100 GSM 48",    "12 BF 100 GSM 28",    "12 BF 100 GSM 33",    "12 BF 100 GSM 47",    "12 BF 100 GSM 22",    "12 BF 100 GSM 46",    "12 BF 100 GSM 38",
+    // "12 BF 100 GSM 39",    "12 BF 100 GSM 33"    ],
     datasets: [{
       label: "Target",
       backgroundColor: "rgba(0,128,120,110.2)",
@@ -62,9 +63,10 @@ data = {
       borderWidth: 2,
       hoverBackgroundColor: "rgba(255,99,132,0.4)",
       hoverBorderColor: "rgba(255,99,132,1)",
-      data: [120	,        120	,        100	,        100	,        120	,        120	,        100	,
-        100	,        120	,        120	,        100	,        100	,        120	,        120	,        100	,        100	,        120	,        120	,         120	,        100	,        100	,        120	,
-        120	,        100	,        100	,        120	,        120	,        100	,        100	,        120	,        120	,        100	,        100	,        120	,        120	]    
+      data: [690, 671, 1046, 548, 948, 993, 1169, 1523, 483]
+      // data: [120	,        120	,        100	,        100	,        120	,        120	,        100	,
+      //   100	,        120	,        120	,        100	,        100	,        120	,        120	,        100	,        100	,        120	,        120	,         120	,        100	,        100	,        120	,
+      //   120	,        100	,        100	,        120	,        120	,        100	,        100	,        120	,        120	,        100	,        100	,        120	,        120	]    
       },
     {
       label: "Actual",

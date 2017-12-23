@@ -26,13 +26,13 @@ import { GraphsComponent } from './view/graphs/graphs.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'header', component: HeaderComponent },
   { path: 'employee', component: EmployeeComponent },
   { path: 'googlechart', component: GoogleChartComponent },
   { path: 'gsmchart', component: GsmComponent },
   { path: 'bfchart', component: BfComponent, canActivate: [AuthGuard] },
-  { path: 'ngchart', component: Ang2ChartjsComponent, canActivate: [AuthGuard] },
+  { path: 'ngchart', component: Ang2ChartjsComponent },
   { path: 'datepicker', component: NgbdDatepickerRangeComponent },
   {
     path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard], children: [
