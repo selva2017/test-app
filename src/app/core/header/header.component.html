@@ -3,9 +3,11 @@
     <ng-template [ngIf]="authService.isAuthenticated()">
       <!-- <a class="navbar-brand" href="#">Spak</a> -->
       <div class="icon-big icon-success">
-        <i class="fa fa-leaf fa-2x" aria-hidden="false" style="width:50px;height:30px;"></i>
+        <!-- <i class="fa fa-leaf fa-2x" aria-hidden="false" style="width:50px;height:30px;"></i> -->
+        <img src="./assets/{{companyId}}.png" style="width:50px;height:30px;">
+        <!-- <img src="https://s3.ap-south-1.amazonaws.com/spak/assets/{{companyId}}.png" style="width:50px;height:30px;"> -->
+        <!-- <img src="https://s3.ap-south-1.amazonaws.com/spak/assets/SPAK.png" style="width:50px;height:30px;"> -->
       </div>
-      <!-- <img src="./assets/test_logo1.png" style="width:50px;height:30px;"> -->
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -26,6 +28,7 @@
           <a *ngIf="role === '1' || role === '2'" class="nav-item nav-link" routerLinkActive="active" routerLink="test">Trial Balance</a>
           <a *ngIf="role === '1'" class="nav-item nav-link" routerLinkActive="active" routerLink="stock">Stock</a>
           <a *ngIf="role === '1'" class="nav-item nav-link" routerLinkActive="active" routerLink="graphs">Graph</a>
+          <a *ngIf="role === '1'" class="nav-item nav-link" routerLinkActive="active" routerLink="admin">Admin</a>
           <!-- <a *ngIf="role === 'associate' || role === '1'" class="nav-item nav-link active" routerLinkActive="active" routerLink="graphs">Graph</a> -->
           <!-- <a *ngIf="role === 'associate' || role === '1'" class="nav-item nav-link active" routerLinkActive="active" routerLink="gsmchart">Gsm Trend</a> -->
           <!-- <a *ngIf="role === 'associate' || role === '1'" class="nav-item nav-link active" routerLinkActive="active" routerLink="bfchart">BF Trend</a> -->

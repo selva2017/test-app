@@ -1,3 +1,4 @@
+import { AdminComponent } from './view/admin/admin.component';
 import { NgbdDatepickerRangeComponent } from './ngbd-datepicker-range/ngbd-datepicker-range.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
   { path: 'ngchart', component: Ang2ChartjsComponent },
   { path: 'datepicker', component: NgbdDatepickerRangeComponent },
   {
-    path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard], children: [
+    path: 'inventory', component: InventoryComponent, children: [
+    // path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard], children: [
       { path: 'add', component: AddInventoryComponent },
       { path: 'modify', component: ModifyInventoryComponent },
       { path: 'view', component: ViewInventoryComponent },
@@ -47,6 +49,7 @@ const appRoutes: Routes = [
   { path: 'test', component: TestComponent, canActivate: [AuthGuard] },
   { path: 'stock', component: StockComponent, canActivate: [AuthGuard] },
   { path: 'graphs', component: GraphsComponent, canActivate: [AuthGuard] },
+  { path: 'admin', component: AdminComponent },
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }
 ];

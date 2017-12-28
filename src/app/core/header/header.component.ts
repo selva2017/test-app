@@ -10,6 +10,7 @@ import { Router, RouterModule } from '@angular/router';
 export class HeaderComponent implements OnInit {
   role: string;
   isLoginPage: boolean;
+  companyId: string;
 
   constructor(private authService: AuthService, private router: Router) { 
   }
@@ -19,6 +20,7 @@ export class HeaderComponent implements OnInit {
     this.isLoginPage = this.authService.getFlagLogin();
     console.log("this.isLoginPage");
     console.log(this.isLoginPage);
+    this.companyId = localStorage.getItem('companyId');
 
     console.log("login Page--"+this.isLoginPage);
     this.authService.role.subscribe(
@@ -28,6 +30,8 @@ export class HeaderComponent implements OnInit {
       }
       // (status: string) => this.role=status
     );
+    console.log("in header");
+    console.log(this.companyId);
   }
   onLogin() {
     this.router.navigate(['login']);
