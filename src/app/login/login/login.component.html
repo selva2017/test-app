@@ -4,12 +4,12 @@
       <div class="imgcontainer" align="center">
         <img src="./assets/spak_logo.png" class="avatar" border>
       </div>
-      <div class="form-group">
-        <!-- <label for="email">Username</label> -->
+      <div class="form-group" align="left">
+        <label for="email">Username</label>
         <input class="form-control input-underline input-lg"  type="email" id="email" name="email"  placeholder="Username" ngModel required>
       </div>
-      <div class="form-group">
-        <!-- <label for="password">Password</label> -->
+      <div class="form-group" align="left">
+        <label for="password">Password</label>
         <input class="form-control input-underline input-lg" type="password" id="password" name="password"  placeholder="Password" ngModel required>
       </div>
       <div *ngIf="invalidLogin" class="alert alert-danger">
@@ -21,7 +21,8 @@
         <!-- <div [hidden]="authService.isAuthenticated()" class="alert alert-danger">{{error_msg}}</div> -->
         <!-- <br>
       </ng-template> -->
-      <button class="btn btn-primary btn-md" type="submit" [disabled]="!loginForm.valid">Sign In</button>
+      <button class="btn btn-success btn-md" type="submit" [disabled]="!loginForm.valid">Sign in</button>
+      <button class="btn btn-warning btn-md" type="button" (click)="onSignUp()">Sign up</button>
       <!-- <button class="btn btn-lg">Cancel</button> -->
     </form>
   </div>

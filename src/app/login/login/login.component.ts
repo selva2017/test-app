@@ -3,6 +3,7 @@ import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl } from '@angular/forms';
 import { User } from './../../shared/user';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   invalidLogin: boolean;
   isLogin: boolean;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
   }
 
   ngOnInit() {
@@ -44,6 +45,9 @@ export class LoginComponent implements OnInit {
       this.error_msg = "Invalid username or password.";
     else
       this.error_msg = "";
+  }
+  onSignUp() {
+    this.router.navigate(['signup']);
   }
 
 }

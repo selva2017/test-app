@@ -13,16 +13,19 @@ export class AdminComponent implements OnInit {
   userList: UserList[];
   status: string;
   role: string;
+  disableUpdate: boolean = true;
 
   constructor(private serverService: ServerService) {
   }
   setStatus(value: string) {
     console.log(value);
     this.status = value;
+    this.disableUpdate = false;
   }
   setRole(value: string) {
     console.log(value);
     this.role = value;
+    this.disableUpdate = false;
   }
   onClickReviewed(key) {
     console.log("Modal clicked..." + key)
@@ -38,6 +41,7 @@ export class AdminComponent implements OnInit {
       // (res: Daybook) => console.log(res),
       (success) => {
         console.log("success");
+        this.disableUpdate = true;
         // this.refreshList();
       },
       (error) => console.log(error.status)

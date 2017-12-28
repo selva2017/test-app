@@ -1,3 +1,4 @@
+import { PublishComponent } from './view/publish/publish.component';
 import { AdminComponent } from './view/admin/admin.component';
 import { NgbdDatepickerRangeComponent } from './ngbd-datepicker-range/ngbd-datepicker-range.component';
 import { NgModule } from '@angular/core';
@@ -24,9 +25,11 @@ import { BfComponent } from './charts/bf/bf.component';
 import { GsmComponent } from './charts/gsm/gsm.component';
 import { StockComponent } from './view/stock/stock.component';
 import { GraphsComponent } from './view/graphs/graphs.component';
+import { SignupComponent } from 'app/login/signup/signup.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'header', component: HeaderComponent },
   { path: 'employee', component: EmployeeComponent },
@@ -49,7 +52,9 @@ const appRoutes: Routes = [
   { path: 'test', component: TestComponent, canActivate: [AuthGuard] },
   { path: 'stock', component: StockComponent, canActivate: [AuthGuard] },
   { path: 'graphs', component: GraphsComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  // { path: 'publish', component: PublishComponent, canActivate: [AuthGuard] },
+  { path: 'publish', component: PublishComponent },
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }
 ];

@@ -41,6 +41,8 @@ import { NgbdDatepickerRangeComponent } from './ngbd-datepicker-range/ngbd-datep
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { AdminComponent } from './view/admin/admin.component';
+import { PublishComponent } from './view/publish/publish.component';
+import { SignupComponent } from './login/signup/signup.component';
 
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
@@ -74,7 +76,9 @@ declare var require: any;
     BfComponent,
     GraphsComponent,
     NgbdDatepickerRangeComponent,
-    AdminComponent
+    AdminComponent,
+    PublishComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
