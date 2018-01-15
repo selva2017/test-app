@@ -251,4 +251,67 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">News and Announcements</h4>
+                </div>
+                <div class="content">
+                    <!-- <div *ngIf="showLoader" align="center"> -->
+                    <!-- <div>
+                                <br>
+                                <br>
+                                <img src="./assets/loading-2.gif">
+                            </div> -->
+                    <!-- <ng-template [ngIf]="showGraph && !showLoader"> -->
+                    <!-- <ng-template> -->
+                    <div *ngFor="let item of messages; let i = index;">
+
+                        <div *ngIf="i === 0" class="row">
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="card">
+                                    <div class="content">
+                                        <div class="header">
+                                            <h4 class="title">{{item.title}}</h4>
+                                            <p class="category">{{item.createdDate}}</p>
+                                        </div>
+                                        <div class="content">
+                                            <img style="width: 250px; height: 300px;" src={{item.url}}/>
+                                            <!-- <img src="https://offsiteimages-01.marathonfoto.com/MFT2015-01/05/787805/1047/0026.jpg?preset=t" /> -->
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="card">
+                                    <div class="content">
+                                        <div class="header">
+                                            <h4 class="title">{{item.title}}</h4>
+                                            <p class="category">{{item.createdDate}}</p>
+                                        </div>
+                                        <div class="content">
+                                            <p>{{item.message}}
+                                            </p>
+                                            <!-- <p>The most popular industrial group ever, and largely responsible for bringing -->
+                                            <!-- the new products.</p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </ng-template> -->
+                    <div class="footer">
+                        <hr>
+                        <div class="stats">
+                            <i class="ti-reload"></i>
+                            {{today | date:'medium'}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

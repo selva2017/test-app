@@ -31,6 +31,7 @@ const appRoutes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  // { path: 'home', component: HomeComponent },
   { path: 'header', component: HeaderComponent },
   { path: 'employee', component: EmployeeComponent },
   { path: 'googlechart', component: GoogleChartComponent },
@@ -53,8 +54,8 @@ const appRoutes: Routes = [
   { path: 'stock', component: StockComponent, canActivate: [AuthGuard] },
   { path: 'graphs', component: GraphsComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
-  // { path: 'publish', component: PublishComponent, canActivate: [AuthGuard] },
-  { path: 'publish', component: PublishComponent },
+  { path: 'publish', component: PublishComponent, canActivate: [AuthGuard] },
+  // { path: 'publish', component: PublishComponent },
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }
 ];

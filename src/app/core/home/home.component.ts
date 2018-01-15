@@ -30,20 +30,45 @@ export class HomeComponent implements OnInit {
   prod_month = [];
   sales_data = [];
   sales_month = [];
-  prod_data_graph  = [];
-  prod_month_graph  = [];
-  sales_data_graph  = [];
-  sales_month_graph  = [];
+  prod_data_graph = [];
+  prod_month_graph = [];
+  sales_data_graph = [];
+  sales_month_graph = [];
   type_month_sales = 'bar';
   type_month_prod = 'bar';
   data_month_sales = {};
   data_month_prod = {};
   options_month_sales = {};
   options_month_prod = {};
+  messages = {};
+    // [{
+    //   title: "Test Title1",
+    //   message: "Test messages 1",
+    //   url: "https://offsiteimages-01.marathonfoto.com/MFT2015-01/05/787805/1047/0026.jpg?preset=t",
+    //   roles: 1,
+    //   createdDate: '1-1-2018'
+    // },
+    // {
+    //   title: "Test Title2",
+    //   message: "Test messages2",
+    //   url: "https://image-store.slidesharecdn.com/d25f1d0b-1c00-44b0-823d-39403813af9e-original.png",
+    //   roles: 2,
+    //   createdDate: '1-18-2018'
+    // }
+    // ];
 
   constructor(private serverService: ServerService) {
 
     this.showGraph = false;
+    // var data: {};
+    
+    console.log("home constructor");
+    this.subscription = this.serverService.getMessages().
+      subscribe(list => {
+        this.messages = list;
+        console.log(list);
+      }
+      )
     // alert("cons");
   }
 
@@ -59,7 +84,7 @@ export class HomeComponent implements OnInit {
       console.log("Flag = " + this.showProductionGraph);
       console.log("mychk = " + this.showProductionGraph);
     }
- 
+
     this.showLoader = true;
     this.lineData = [];
     this.subscription = this.serverService.getProdStatsForDashboard().
@@ -74,32 +99,32 @@ export class HomeComponent implements OnInit {
             this.prod_data[i] = Math.round(this.prodStatistics.productionSummaryByMonth[i].amount / 1000);
             this.prod_month[i] = this.prodStatistics.productionSummaryByMonth[i].month.substring(0, 3);
           }
-          console.log(this.prod_data.length);
-          console.log(this.prod_data);
-          console.log(this.prod_month);
-          
-          for (var i = 0; i < this.prodStatistics.salesSummaryByMonth.length; i++)
+        console.log(this.prod_data.length);
+        console.log(this.prod_data);
+        console.log(this.prod_month);
+
+        for (var i = 0; i < this.prodStatistics.salesSummaryByMonth.length; i++)
           if (Number(this.prodStatistics.salesSummaryByMonth[i].amount) > 0) {
             console.log("in sales data");
             this.sales_data[i] = Math.round(this.prodStatistics.salesSummaryByMonth[i].amount / 100000);
             this.sales_month[i] = this.prodStatistics.salesSummaryByMonth[i].month.substring(0, 3);
           }
-          this.prod_data_graph = this.prod_data;
-          this.prod_month_graph = this.prod_month;
-          this.sales_data_graph = this.sales_data;
-          this.sales_month_graph = this.sales_month;
-          this.showProdStatistics();
-        this.monthlyProdGraph(); 
-        this.monthlySalesGraph(); 
+        this.prod_data_graph = this.prod_data;
+        this.prod_month_graph = this.prod_month;
+        this.sales_data_graph = this.sales_data;
+        this.sales_month_graph = this.sales_month;
+        this.showProdStatistics();
+        this.monthlyProdGraph();
+        this.monthlySalesGraph();
       },
       error => {
       }
       );
-    
-      // this.showProdDataGraph(); //No Data and getting length NULL
-      // this.showMonthlySalesGraph();
-      // this.showMonthlyGraph();
-      
+
+    // this.showProdDataGraph(); //No Data and getting length NULL
+    // this.showMonthlySalesGraph();
+    // this.showMonthlyGraph();
+
   }
   showProdStatistics() {
     // this.showLoader = true;
@@ -291,7 +316,7 @@ export class HomeComponent implements OnInit {
     this.showGraph = true;
     this.monthlyProdGraph();
   }
-  
+
   monthlyProdGraph() {
     this.showLoader = false;
     this.showGraph = true;
@@ -340,11 +365,11 @@ export class HomeComponent implements OnInit {
             labelString: 'tons'
           }
         }]
-      }     ,
+      },
       tooltips: {
         callbacks: {
-          label: function(tooltipItem) {
-          console.log(tooltipItem)
+          label: function (tooltipItem) {
+            console.log(tooltipItem)
             return tooltipItem.yLabel;
           }
         }
@@ -399,11 +424,11 @@ export class HomeComponent implements OnInit {
             labelString: 'rupees'
           }
         }]
-      }     ,
+      },
       tooltips: {
         callbacks: {
-          label: function(tooltipItem) {
-          console.log(tooltipItem)
+          label: function (tooltipItem) {
+            console.log(tooltipItem)
             return tooltipItem.yLabel;
           }
         }
