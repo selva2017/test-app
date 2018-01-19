@@ -18,20 +18,20 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     //Get the user is in login page
     this.isLoginPage = this.authService.getFlagLogin();
-    console.log("this.isLoginPage");
-    console.log(this.isLoginPage);
+    // console.log("this.isLoginPage");
+    // console.log(this.isLoginPage);
     this.companyId = localStorage.getItem('companyId');
 
-    console.log("login Page--"+this.isLoginPage);
+    // console.log("login Page--"+this.isLoginPage);
     this.authService.role.subscribe(
       (status: string) => {
-        console.log("role: "+ status);
+        // console.log("role: "+ status);
         this.role=status;
       }
       // (status: string) => this.role=status
     );
-    console.log("in header");
-    console.log(this.companyId);
+    // console.log("in header");
+    // console.log(this.companyId);
   }
   onLogin() {
     this.router.navigate(['login']);

@@ -43,6 +43,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { AdminComponent } from './view/admin/admin.component';
 import { PublishComponent } from './view/publish/publish.component';
 import { SignupComponent } from './login/signup/signup.component';
+import { PlanComponent } from './view/plan/plan.component';
 
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
@@ -78,7 +79,8 @@ declare var require: any;
     NgbdDatepickerRangeComponent,
     AdminComponent,
     PublishComponent,
-    SignupComponent
+    SignupComponent,
+    PlanComponent
   ],
   imports: [
     BrowserModule,

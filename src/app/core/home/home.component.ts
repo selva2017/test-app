@@ -62,11 +62,11 @@ export class HomeComponent implements OnInit {
     this.showGraph = false;
     // var data: {};
     
-    console.log("home constructor");
+    // console.log("home constructor");
     this.subscription = this.serverService.getMessages().
       subscribe(list => {
         this.messages = list;
-        console.log(list);
+        // console.log(list);
       }
       )
     // alert("cons");
@@ -76,13 +76,13 @@ export class HomeComponent implements OnInit {
     // this.showGSMGraph("30");
     // alert("nginit");
     this.showProductionGraph = false;
-    console.log("mychk = " + this.showProductionGraph);
+    // console.log("mychk = " + this.showProductionGraph);
     var role = localStorage.getItem('role');
-    console.log("role" + role);
+    // console.log("role" + role);
     if (role == 'admin') {
       this.showProductionGraph = true;
-      console.log("Flag = " + this.showProductionGraph);
-      console.log("mychk = " + this.showProductionGraph);
+      // console.log("Flag = " + this.showProductionGraph);
+      // console.log("mychk = " + this.showProductionGraph);
     }
 
     this.showLoader = true;
@@ -91,21 +91,21 @@ export class HomeComponent implements OnInit {
       subscribe(list => {
         this.statistics_data = list;
         this.prodStatistics = list;
-        console.log("this.prodStatistics");
-        console.log(this.prodStatistics);
+        // console.log("this.prodStatistics");
+        // console.log(this.prodStatistics);
         for (var i = 0; i < this.prodStatistics.productionSummaryByMonth.length; i++)
           if (Number(this.prodStatistics.productionSummaryByMonth[i].amount) > 0) {
-            console.log("in prod data");
+            // console.log("in prod data");
             this.prod_data[i] = Math.round(this.prodStatistics.productionSummaryByMonth[i].amount / 1000);
             this.prod_month[i] = this.prodStatistics.productionSummaryByMonth[i].month.substring(0, 3);
           }
-        console.log(this.prod_data.length);
-        console.log(this.prod_data);
-        console.log(this.prod_month);
+        // console.log(this.prod_data.length);
+        // console.log(this.prod_data);
+        // console.log(this.prod_month);
 
         for (var i = 0; i < this.prodStatistics.salesSummaryByMonth.length; i++)
           if (Number(this.prodStatistics.salesSummaryByMonth[i].amount) > 0) {
-            console.log("in sales data");
+            // console.log("in sales data");
             this.sales_data[i] = Math.round(this.prodStatistics.salesSummaryByMonth[i].amount / 100000);
             this.sales_month[i] = this.prodStatistics.salesSummaryByMonth[i].month.substring(0, 3);
           }
@@ -200,7 +200,7 @@ export class HomeComponent implements OnInit {
       .subscribe(
       (list) => {
         this.prodStatistics = list;
-        console.log(this.prodStatistics);
+        // console.log(this.prodStatistics);
         this.salesData = [];
         this.salesMonth = [];
         // console.log(this.prodStatistics[0].salesSummaryByMonth.length);
@@ -214,7 +214,7 @@ export class HomeComponent implements OnInit {
         // console.log(sales.length);
         // console.log(this.salesData);
         // console.log(this.salesMonth);
-        console.log(this.monthSalesData);
+        // console.log(this.monthSalesData);
       }
       )
     this.showLoader = false;
@@ -272,13 +272,13 @@ export class HomeComponent implements OnInit {
 
   showMonthlyGraph() {
     this.showLoader = false;
-    console.log("in show month graph")
+    // console.log("in show month graph")
     this.serverService.getProdStatsForDashboard()
       .subscribe(
       (list) => {
         this.prodStatistics = list;
-        console.log("this.prodStatistics");
-        console.log(this.prodStatistics);
+        // console.log("this.prodStatistics");
+        // console.log(this.prodStatistics);
         // this.prod_data = [];
         // this.prod_month = [];
         // this.sales_data = [];
@@ -286,13 +286,13 @@ export class HomeComponent implements OnInit {
         // console.log(this.prodStatistics[0].productionSummaryByMonth.length);
         for (var i = 0; i < this.prodStatistics.productionSummaryByMonth.length; i++)
           if (Number(this.prodStatistics.productionSummaryByMonth[i].amount) > 0) {
-            console.log("innn");
+            // console.log("innn");
             this.prod_data[i] = Math.round(this.prodStatistics.productionSummaryByMonth[i].amount / 1000);
             this.prod_month[i] = this.prodStatistics.productionSummaryByMonth[i].month.substring(0, 3);
           }
-        console.log(this.prod_data.length);
-        console.log(this.prod_data);
-        console.log(this.prod_month);
+        // console.log(this.prod_data.length);
+        // console.log(this.prod_data);
+        // console.log(this.prod_month);
 
         for (var i = 0; i < this.prodStatistics.salesSummaryByMonth.length; i++)
           if (Number(this.prodStatistics.salesSummaryByMonth[i].amount) > 0) {
@@ -320,9 +320,9 @@ export class HomeComponent implements OnInit {
   monthlyProdGraph() {
     this.showLoader = false;
     this.showGraph = true;
-    console.log("inside prod");
-    console.log(this.prod_month_graph);
-    console.log(this.prod_data_graph);
+    // console.log("inside prod");
+    // console.log(this.prod_month_graph);
+    // console.log(this.prod_data_graph);
     this.type_month_prod = 'bar';
     this.data_month_prod = {
       labels: this.prod_month_graph,
@@ -369,7 +369,7 @@ export class HomeComponent implements OnInit {
       tooltips: {
         callbacks: {
           label: function (tooltipItem) {
-            console.log(tooltipItem)
+            // console.log(tooltipItem)
             return tooltipItem.yLabel;
           }
         }
@@ -379,9 +379,9 @@ export class HomeComponent implements OnInit {
   monthlySalesGraph() {
     this.showLoader = false;
     this.showGraph = true;
-    console.log("inside sales");
-    console.log(this.sales_month_graph);
-    console.log(this.sales_data_graph);
+    // console.log("inside sales");
+    // console.log(this.sales_month_graph);
+    // console.log(this.sales_data_graph);
     this.type_month_sales = 'bar';
     this.data_month_sales = {
       labels: this.sales_month_graph,
@@ -428,7 +428,7 @@ export class HomeComponent implements OnInit {
       tooltips: {
         callbacks: {
           label: function (tooltipItem) {
-            console.log(tooltipItem)
+            // console.log(tooltipItem)
             return tooltipItem.yLabel;
           }
         }

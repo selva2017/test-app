@@ -29,17 +29,18 @@ export class PublishComponent implements OnInit {
       .subscribe(
       // (res: Daybook) => console.log(res),
       (success) => {
-        console.log("success");
+        // console.log("success");
         // this.refreshList();
+        form.reset();
       },
       (error) => console.log(error)
       );
 
-    console.log(form.value);
-    console.log(form.value.message);
-    console.log(form.value.url);
-    console.log(form.value.role);
-    console.log(form.value.importance);
+    // console.log(form.value);
+    // console.log(form.value.message);
+    // console.log(form.value.url);
+    // console.log(form.value.role);
+    // console.log(form.value.importance);
   }
 
 }

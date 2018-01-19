@@ -18,29 +18,29 @@ export class AdminComponent implements OnInit {
   constructor(private serverService: ServerService) {
   }
   setStatus(value: string) {
-    console.log(value);
+    // console.log(value);
     this.status = value;
     this.disableUpdate = false;
   }
   setRole(value: string) {
-    console.log(value);
+    // console.log(value);
     this.role = value;
     this.disableUpdate = false;
   }
   onClickReviewed(key) {
-    console.log("Modal clicked..." + key)
+    // console.log("Modal clicked..." + key)
     // key.userStatus = this.status;
     this.status? key.userStatus = this.status : '';
     // key.role = this.role;
     this.role? key.role = this.role : '';
     // console.log("After ..." + key)
-    console.log(JSON.stringify(key));
+    // console.log(JSON.stringify(key));
 
     this.serverService.updateUsers(key)
       .subscribe(
       // (res: Daybook) => console.log(res),
       (success) => {
-        console.log("success");
+        // console.log("success");
         this.disableUpdate = true;
         // this.refreshList();
       },
@@ -51,8 +51,8 @@ export class AdminComponent implements OnInit {
     this.subscription = this.serverService.getUserRoles().
       subscribe(list => {
         this.userList = list;
-        console.log("this.userlist");
-        console.log(this.userList);
+        // console.log("this.userlist");
+        // console.log(this.userList);
       },
       error => {
       }

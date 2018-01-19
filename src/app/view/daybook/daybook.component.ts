@@ -32,13 +32,13 @@ export class DaybookComponent implements OnInit {
     this.dayBook_row = record;
   }
   onClickReviewed(key) {
-    console.log("Modal clicked..." + key)
+    // console.log("Modal clicked..." + key)
     // this.serverService.updateTallyDaybook(key)
     this.serverService.setFlagTallyDaybook(key)
       .subscribe(
       // (res: Daybook) => console.log(res),
       (success) => {
-        console.log("success");
+        // console.log("success");
         this.refreshList();
       },
       (error) => console.log(error)

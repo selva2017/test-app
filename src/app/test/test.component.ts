@@ -27,7 +27,7 @@ export class TestComponent implements OnInit, OnDestroy {
   refreshList() {
     this.subscription = this.productService.getTallyData()
       .subscribe(products => {
-        console.log(products);
+        // console.log(products);
         this.products = products;
         this.initializeTable(products);
       });

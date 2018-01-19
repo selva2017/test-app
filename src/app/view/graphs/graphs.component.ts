@@ -47,7 +47,7 @@ export class GraphsComponent implements OnInit {
   onClickShowGraph(graph_type) {
     this.graph_data = String(this.start_date.year) + "-" + String(this.start_date.month) + "-" + String(this.start_date.day) + "/" +
       String(this.end_date.year) + "-" + String(this.end_date.month) + "-" + String(this.end_date.day);
-    console.log(this.graph_data);
+    // console.log(this.graph_data);
     graph_type == 'gsm' ? this.showGSMGraph('0') : this.showBFGraph('0');
   }
   showGSMGraph(days: string) {

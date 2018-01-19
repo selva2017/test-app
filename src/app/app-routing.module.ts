@@ -1,3 +1,4 @@
+import { PlanComponent } from './view/plan/plan.component';
 import { PublishComponent } from './view/publish/publish.component';
 import { AdminComponent } from './view/admin/admin.component';
 import { NgbdDatepickerRangeComponent } from './ngbd-datepicker-range/ngbd-datepicker-range.component';
@@ -41,7 +42,7 @@ const appRoutes: Routes = [
   { path: 'datepicker', component: NgbdDatepickerRangeComponent },
   {
     path: 'inventory', component: InventoryComponent, children: [
-    // path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard], children: [
+      // path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard], children: [
       { path: 'add', component: AddInventoryComponent },
       { path: 'modify', component: ModifyInventoryComponent },
       { path: 'view', component: ViewInventoryComponent },
@@ -54,8 +55,10 @@ const appRoutes: Routes = [
   { path: 'stock', component: StockComponent, canActivate: [AuthGuard] },
   { path: 'graphs', component: GraphsComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
-  { path: 'publish', component: PublishComponent, canActivate: [AuthGuard] },
-  // { path: 'publish', component: PublishComponent },
+  // { path: 'publish', component: PublishComponent, canActivate: [AuthGuard] },
+  // { path: 'plan', component: PlanComponent, canActivate: [AuthGuard]  },
+  { path: 'plan', component: PlanComponent },
+  { path: 'publish', component: PublishComponent },
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }
 ];

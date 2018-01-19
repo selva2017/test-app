@@ -1,0 +1,127 @@
+<div *ngIf="showLoader" align="center">
+  <br>
+  <br>
+  <img src="./assets/loading-2.gif">
+</div>
+<div *ngIf="!showLoader">
+  <br>
+  <h3>Day Book Details</h3>
+  <button *ngIf="showAll" (click)="showSelected()">Show Selected</button>
+  <button *ngIf="!showAll" (click)="showSelected()">Show All</button>
+  <button (click)="clearAll()">Clear All</button>
+  <table *ngIf="showAll" class="table table-responsive table-hover table-sm table-striped table-bordered">
+    <thead class="thead-inverse">
+      <tr>
+        <th>No</th>
+        <th>Date</th>
+        <th>Particulars</th>
+        <th>Vch Type</th>
+        <th>Vch No</th>
+        <th>Credit/Debit</th>
+        <th>Details</th>
+        <th>Select</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr class="col-xs-12"> -->
+      <!-- <tr *ngFor="let row of dayBook; let i = index"> -->
+      <tr *ngFor="let row of dayBook | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+
+        <td>{{i+1}}</td>
+        <td>{{row.voucherDate}}</td>
+
+        <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST' || row.voucherType === 'Consumption Entry'">
+          <td>{{row.inventoryEntryVOs[0].stockItemName}}</td>
+          <td>{{row.voucherType}}</td>
+          <td>{{row.voucherNumber}}</td>
+          <td>{{row.inventoryEntryVOs[0].billedQuantity}}</td>
+        </ng-template>
+        <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal'
+          || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General'">
+          <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
+          <td>{{row.voucherType}}</td>
+          <td>{{row.voucherNumber}}</td>
+          <td>{{displayINR(row.ledgerEntryVOs[0].amount)}}</td>
+          <!-- <td>{{row.ledgerEntryVOs[0].amount | currency : "INR" : true}}</td> -->
+        </ng-template>
+
+        <td>
+          <!-- Button trigger modal -->
+          <!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row)">View
+            </button> -->
+          <!-- <input #newQuantity flex placeholder="credit" type="text" maxlength="5" name="row-{{i}}" #credit="ngModel" [(ngModel)]="row.amount"> -->
+          <input #newQuantity type="text" [id]="i"/>
+        </td>
+        <td>
+          <!-- Button trigger delete  -->
+          <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row.voucherKey)">Hide
+              </button> -->
+          <!-- <div class="form-check"> -->
+          <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row,newQuantity.value)"/>
+          <!-- <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row,newQuantity.value)"/> -->
+          <!-- <label class="form-check-label" for="defaultCheck1">
+                    Select
+                  </label> -->
+          <!-- </div> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <table *ngIf="!showAll" class="table table-responsive table-hover table-sm table-striped table-bordered">
+    <thead class="thead-inverse">
+      <tr>
+        <th>No</th>
+        <th>Date</th>
+        <th>Particulars</th>
+        <th>Vch Type</th>
+        <th>Vch No</th>
+        <th>Credit/Debit</th>
+        <th>Details</th>
+        <th>Select</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr class="col-xs-12"> -->
+      <!-- <tr *ngFor="let row of dayBook; let i = index"> -->
+      <tr *ngFor="let row of dayBook_selected | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+
+        <td>{{i+1}}</td>
+        <td>{{row.voucherDate}}</td>
+
+        <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST' || row.voucherType === 'Consumption Entry'">
+          <td>{{row.inventoryEntryVOs[0].stockItemName}}</td>
+          <td>{{row.voucherType}}</td>
+          <td>{{row.voucherNumber}}</td>
+          <td>{{row.inventoryEntryVOs[0].billedQuantity}}</td>
+        </ng-template>
+        <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal'
+            || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General'">
+          <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
+          <td>{{row.voucherType}}</td>
+          <td>{{row.voucherNumber}}</td>
+          <td>{{displayINR(row.ledgerEntryVOs[0].amount)}}</td>
+          <!-- <td>{{row.ledgerEntryVOs[0].amount | currency : "INR" : true}}</td> -->
+        </ng-template>
+
+        <td>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row)">View
+          </button>
+
+        </td>
+        <td>
+          <!-- Button trigger delete  -->
+          <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row.voucherKey)">Hide
+                </button> -->
+          <!-- <div class="form-check"> -->
+          <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromSelected(row,row.voucherKey)">
+          <!-- <label class="form-check-label" for="defaultCheck1">
+                      Select
+                    </label> -->
+          <!-- </div> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
