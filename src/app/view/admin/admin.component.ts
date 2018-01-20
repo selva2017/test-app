@@ -14,7 +14,7 @@ export class AdminComponent implements OnInit {
   status: string;
   role: string;
   disableUpdate: boolean = true;
-
+check = false;
   constructor(private serverService: ServerService) {
   }
   setStatus(value: string) {

@@ -1,0 +1,29 @@
+input[type="text"] {
+    width: 50px;
+}
+body{
+	/* color:#fff; */
+	/* font-size:100pt; */
+}
+.section1{
+	/* background-color:#11181e; */
+	width:50%;
+	float:left;
+	/* height:100vh; */
+	border-right: 1vw solid #F5E5D6; 
+    box-sizing: border-box;
+    margin:0;
+    padding:0;	
+}
+.section2{
+	/* background-color:#f1c40f; */
+	width:50%;
+	float:left;
+	/* height:100vh; */
+	margin:0;
+	padding:0;
+  box-sizing: border-box;
+}
+.table caption button{
+    float:right;
+}
