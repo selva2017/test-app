@@ -1,9 +1,11 @@
 export interface ProdPlan {
-    voucherKey: Number,
-    orderDate: String,
     company: String,
+    id: String,
     item: String,
-    size: Number,
-    qty: Number,
+    orderDate: String,
     orderStatus: Number
+    qty: Number,
+    size: Number,
+    totalQty: Number,
+    voucherKey: Number,
 };

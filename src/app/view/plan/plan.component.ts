@@ -1,11 +1,11 @@
-import { Item } from './../../shared/item.model';
+// import { Item } from './../../shared/item.model';
 import { UserList } from './../../shared/user-list';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ServerService } from './../../shared/server.service';
 import { ProdPlan } from './../../shared/prod_plan';
-import { forEach } from '@angular/router/src/utils/collection';
+// import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-plan',
@@ -22,15 +22,17 @@ export class PlanComponent implements OnInit {
   salesOrder_modified: ProdPlan[] = [];
   showLoader: boolean;
   showAll: boolean = true;
-  salesOrder_selected_temp: ProdPlan[] = [];
-  // salesOrder_selected_temp =[{item:String,reel:Number}];
+  salesOrder_BFGSM: ProdPlan[] = [];
+  salesOrder_BFGSMSize: ProdPlan[] = [];
+  salesOrder_BF: ProdPlan[] = [];
+  // salesOrder_BFGSM =[{item:String,reel:Number}];
   constructor(private serverService: ServerService) {
     this.showLoader = true;
   }
 
   ngOnInit() {
     this.refreshList();
-    console.log(this.salesOrder);
+    // //console.log(this.salesOrder);
   }
   displayINR(amount: number) {
     // return String(Number(amount).toLocaleString('en-IN'));
@@ -44,13 +46,18 @@ export class PlanComponent implements OnInit {
     this.showAll = !this.showAll;
   }
   clearAll() {
-    // this.salesOrder_selected = [];
-    // this.salesOrder_modified = [];
-    // this.refreshList();
-    this.generateReport();
+    this.salesOrder_selected = [];
+    this.salesOrder_selected1 = [];
+    this.salesOrder_BFGSMSize = [];
+    this.salesOrder_BFGSM = [];
+    this.salesOrder_BF = [];
+    this.salesOrder_modified = [];
+    this.refreshList();
+    this.showAll = true;
+    // this.generateItemBFGSM();
     // this.extractModified();
-    // console.log(this.salesOrder_selected);
-    // console.log(this.salesOrder_modified);
+    // //console.log(this.salesOrder_selected);
+    // //console.log(this.salesOrder_modified);
   }
   extractModified() {
     for (var i = 0; i < this.salesOrder_selected.length; i++) {
@@ -61,60 +68,111 @@ export class PlanComponent implements OnInit {
       }
     }
   }
-  generateReport() {
+  generateItemBFGSM() {
+    this.salesOrder_BFGSM = [];
     this.salesOrder_selected1 = this.salesOrder_selected.map(x => Object.assign({}, x));
-    if (this.salesOrder_selected1.length > 1) {
+    if (this.salesOrder_selected1.length >= 1) {
       // alert("inside"+this.salesOrder_selected.length);
       // alert(this.salesOrder_selected[0].item);
-      this.salesOrder_selected_temp[0] = this.salesOrder_selected1[0];
-      // alert(this.salesOrder_selected_temp[0].item);
-      for (var i = 1; i < this.salesOrder_selected1.length; i++) {
+      // this.salesOrder_BFGSM[0] = this.salesOrder_selected1[0];
+      // alert(this.salesOrder_BFGSM[0].item);
+      for (var i = 0; i < this.salesOrder_selected1.length; i++) {
         var match: boolean = false;
         // alert("salesOrder_selected " + i)
-        for (var j = 0; j < this.salesOrder_selected_temp.length; j++) {
-          // alert("salesOrder_selected_temp " + j)
-          if ((this.salesOrder_selected_temp[j].item).trim() === (this.salesOrder_selected1[i].item).trim()) {
+        for (var j = 0; j < this.salesOrder_BFGSM.length; j++) {
+          // alert("salesOrder_BFGSM " + j)
+          if ((this.salesOrder_BFGSM[j].item).trim() === (this.salesOrder_selected1[i].item).trim()) {
             // alert("MAtches " + i + " "+j)
-            // this.salesOrder_selected_temp[j].reel;
-            // alert(this.salesOrder_selected_temp[j].item);
-            this.salesOrder_selected_temp[j].qty = Number(this.salesOrder_selected_temp[j].qty) + Number(this.salesOrder_selected1[i].qty);
+            // this.salesOrder_BFGSM[j].reel;
+            // alert(this.salesOrder_BFGSM[j].item);
+            var sum = Number(Number(this.salesOrder_BFGSM[j].qty) + Number(this.salesOrder_selected1[i].qty)).toFixed(2);
+            this.salesOrder_BFGSM[j].qty = parseFloat(sum);
             // alert("break" + i + " "+j)
             match = true;
             break;
           }
         }
         if (!match) {
-          this.salesOrder_selected_temp.push(this.salesOrder_selected1[i]);
+          this.salesOrder_BFGSM.push(this.salesOrder_selected1[i]);
         }
 
       }
-      console.log(this.salesOrder_selected_temp);
+      //console.log(this.salesOrder_BFGSM);
     }
-    // alert(this.salesOrder_selected_temp);
+    // alert(this.salesOrder_BFGSM);
   }
-  // groupbyQty() {
-  //   for (var i = 0; i < this.salesOrder_selected.length; i++) {
-  //     if (this.salesOrder_selected[i].item == this.salesOrder_selected[i].item) {
-  //       this.salesOrder_selected.splice(i, 1);
-  //     }
-  //   }
+  generateItemBFGMSSize() {
+    this.salesOrder_BFGSMSize = [];
+    this.salesOrder_selected1 = this.salesOrder_selected.map(x => Object.assign({}, x));
+    if (this.salesOrder_selected1.length >= 1) {
+      // this.salesOrder_BFGSMSize[0] = this.salesOrder_selected1[0];
+      for (var i = 0; i < this.salesOrder_selected1.length; i++) {
+        var match: boolean = false;
+        for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
+          if ((this.salesOrder_BFGSMSize[j].item.concat(String(this.salesOrder_BFGSMSize[j].size))).trim() === (this.salesOrder_selected1[i].item.concat(String(this.salesOrder_selected1[i].size))).trim()) {
+            // this.salesOrder_BFGSMSize[j].reel;
+            var sum = Number(Number(this.salesOrder_BFGSMSize[j].qty) + Number(this.salesOrder_selected1[i].qty)).toFixed(2);
+            this.salesOrder_BFGSMSize[j].qty = parseFloat(sum)
+            match = true;
+            break;
+          }
+        }
+        if (!match) {
+          this.salesOrder_BFGSMSize.push(this.salesOrder_selected1[i]);
+        }
+      }
+    }
+  }
+  generateItemBF() {
+    this.salesOrder_BF = [];
+    var result;
+    this.salesOrder_selected1 = this.salesOrder_selected.map(x => Object.assign({}, x));
+    if (this.salesOrder_selected1.length >= 1) {
+      // this.salesOrder_BF[0] = this.salesOrder_selected1[0];
+      for (var i = 0; i < this.salesOrder_selected1.length; i++) {
+        var match: boolean = false;
+        for (var j = 0; j < this.salesOrder_BF.length; j++) {
+          var reg = new RegExp('[0-9]+ (BF)', 'g');
+          var item = this.salesOrder_selected1[i].item;
+          // while ((result = reg.exec(item.toString())) !== null) {
+          //   result = JSON.stringify(result);
+          // }
+          result = reg.exec(item.toString());
+          // alert(result);
+          // alert(this.salesOrder_BF[j].item);
+          if (this.salesOrder_BF[j].item.includes(result[0])) {
+            // this.salesOrder_BF[j].reel;
+            // alert("inside");
+            var sum = Number(Number(this.salesOrder_BF[j].qty) + Number(this.salesOrder_selected1[i].qty)).toFixed(2);
+            this.salesOrder_BF[j].qty = parseFloat(sum);
+            match = true;
+            break;
+          }
+        }
+        if (!match) {
+          this.salesOrder_BF.push(this.salesOrder_selected1[i]);
+        }
+      }
+    }
+  }
+
   selectFromAll(key, voucherKey, newQuantity) {
-    // console.log(newQuantity);
+    // //console.log(newQuantity);
     // alert("newQuantity: " + newQuantity + "voucherKey: " + key.voucherKey +
     //  "Diff: " + (Number(key.voucherNumber)-Number(newQuantity)));
-    console.log("key..." + key);
+    //console.log("key..." + key);
     if (newQuantity > 0) {
       key.qty = Number(newQuantity);
       this.salesOrder_modified.push(key);
-    }
-    console.log(this.salesOrder_modified);
-    console.log("key..." + key);
-    // console.log("voucher number..." + voucherNumber)
+    } 
+    //console.log(this.salesOrder_modified);
+    //console.log("key..." + key);
+    // //console.log("voucher number..." + voucherNumber)
     // this.salesOrder_row = key;
     this.salesOrder_selected.push(key);
-    // console.log(this.salesOrder_selected);
-    console.log(this.salesOrder.length);
-    console.log(this.salesOrder_selected.length);
+    // //console.log(this.salesOrder_selected);
+    //console.log(this.salesOrder.length);
+    //console.log(this.salesOrder_selected.length);
     for (var i = 0; i < this.salesOrder.length; i++) {
       // alert(i);
       if (this.salesOrder[i].voucherKey === voucherKey) {
@@ -123,27 +181,30 @@ export class PlanComponent implements OnInit {
         break;
       }
     }
-    console.log(this.salesOrder.length);
-    console.log(this.salesOrder_selected.length);
+    //console.log(this.salesOrder.length);
+    //console.log(this.salesOrder_selected.length);
+    this.generateItemBFGSM();
+    this.generateItemBFGMSSize();
+    this.generateItemBF();
     // this.serverService.updateTallysalesOrder(key)
     // this.serverService.setFlagTallysalesOrder(key)
     //   .subscribe(
-    //   // (res: salesOrder) => console.log(res),
+    //   // (res: salesOrder) => //console.log(res),
     //   (success) => {
-    //     console.log("success");
+    //     //console.log("success");
     //     this.refreshList();
     //   },
-    //   (error) => console.log(error)
+    //   (error) => //console.log(error)
     //   );
   }
   selectFromSelected(key, voucherKey) {
-    console.log("key..." + key.voucherKey)
-    console.log("voucher number..." + voucherKey)
+    //console.log("key..." + key.voucherKey)
+    //console.log("voucher number..." + voucherKey)
     // this.salesOrder_row = key;
     this.salesOrder.push(key);
-    // console.log(this.salesOrder);
-    console.log(this.salesOrder_selected.length);
-    console.log(this.salesOrder.length);
+    // //console.log(this.salesOrder);
+    //console.log(this.salesOrder_selected.length);
+    //console.log(this.salesOrder.length);
     for (var i = 0; i < this.salesOrder_selected.length; i++) {
       // alert(i);
       if (this.salesOrder_selected[i].voucherKey === voucherKey) {
@@ -152,89 +213,23 @@ export class PlanComponent implements OnInit {
         break;
       }
     }
-    console.log(this.salesOrder_selected.length);
-    console.log(this.salesOrder.length);
+    this.generateItemBFGSM();
+    this.generateItemBFGMSSize();
+    this.generateItemBF();
+    //console.log(this.salesOrder_selected.length);
+    //console.log(this.salesOrder.length);
   }
   refreshList() {
-    // this.subscription = this.serverService.getTallysalesOrder().
-    //   subscribe(list => {
-    //     this.salesOrder = list;
-    //     // console.log(this.salesOrder);
-    //     this.showLoader = false;
-    //   })
+    this.subscription = this.serverService.getSalesOrder().
+      subscribe(list => {
+        this.salesOrder = list;
+        // //console.log(this.salesOrder);
+        this.showLoader = false;
+      })
     this.showLoader = false;
-    this.salesOrder = [
-      {
-        voucherKey: 1,
-        orderDate: '01012018',
-        company: 'Selva Inc',
-        item: '16 BF 120 GSM',
-        size: 100.5,
-        qty: 2.5,
-        orderStatus: 0
-      },
-      {
-        voucherKey: 2,
-        orderDate: '01012018',
-        company: 'Santhosh Inc',
-        item: '26 BF 120 GSM',
-        size: 90,
-        qty: 3,
-        orderStatus: 0
-      },
-      {
-        voucherKey: 3,
-        orderDate: '02012018',
-        company: 'Vanathi Inc',
-        item: '16 BF 12 GSM',
-        size: 10,
-        qty: 2,
-        orderStatus: 0
-      },
-      {
-        voucherKey: 4,
-        orderDate: '03012018',
-        company: 'Sel Inc',
-        item: '16 BF 10 GSM',
-        size: 100,
-        qty: 59,
-        orderStatus: 0
-      },
-      {
-        voucherKey: 5,
-        orderDate: '01112018',
-        company: 'Selva Inc',
-        item: '16 BF 120 GSM',
-        size: 100,
-        qty: 20,
-        orderStatus: 0
-      },
-      {
-        voucherKey: 6,
-        orderDate: '01012018',
-        company: 'Santhosh Inc',
-        item: '26 BF 120 GSM',
-        size: 90,
-        qty: 30,
-        orderStatus: 0
-      },
-      {
-        voucherKey: 7,
-        orderDate: '02012018',
-        company: 'Van Inc',
-        item: '16 BF 12 GSM',
-        size: 10,
-        qty: 2.5,
-        orderStatus: 0
-      },
-      {
-        voucherKey: 8,
-        orderDate: '03012018',
-        company: 'Sel Inc',
-        item: '16 BF 10 GSM',
-        size: 100,
-        qty: 25,
-        orderStatus: 0
-      }];
+  }
+  maskContent(item) {
+    var reg = new RegExp('[0-9]+ (BF)', 'g');
+    return reg.exec(item.toString())[0];
   }
 }

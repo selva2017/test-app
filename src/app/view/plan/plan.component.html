@@ -6,110 +6,193 @@
 <div *ngIf="!showLoader">
   <br>
   <h3>Production Planning</h3>
-  <button *ngIf="showAll" (click)="showSelected()">Show Selected</button>
-  <button *ngIf="!showAll" (click)="showSelected()">Show All</button>
-  <button (click)="clearAll()">Clear All</button>
+  <div class="col-md-12">
+    <button *ngIf="showAll" class="btn-group btn-sm btn-success" (click)="showSelected()">Show Selected</button>
+    <button *ngIf="!showAll" class="btn-group btn-sm btn-primary" (click)="showSelected()">Show All</button>
+    <button class="btn-group btn-sm btn-danger" (click)="clearAll()">Clear All</button>
+  </div>
   <div class="row">
-    <table style="width:50%;" class="table table-responsive table-hover table-sm table-striped table-bordered">
-      <!-- <table style="width:50%;" *ngIf="showAll" class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
-      <thead class="thead-inverse">
-        <tr>
-          <th>No</th>
-          <th>Date</th>
-          <th>Name</th>
-          <!-- <th>Vch Type</th> -->
-          <th>Item</th>
-          <th>Size</th>
-          <th>Qty</th>
-          <th>Modify</th>
-          <th>Select</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- <tr class="col-xs-12"> -->
-        <!-- <tr *ngFor="let row of salesOrder; let i = index"> -->
-        <tr *ngFor="let row of salesOrder | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
-
-          <td>{{i+1}}</td>
-          <td>{{row.orderDate}}</td>
-
-          <td>{{row.company}}</td>
-          <td>{{row.item}}</td>
-          <td>{{row.size}}</td>
-          <td>{{row.qty}}</td>
-
-          <td>
-            <!-- Button trigger modal -->
-            <!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row)">View
+    <div class="col-lg-8" *ngIf="showAll">
+      <h5>All Sales Orders</h5>
+      <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+        <!-- <table style="width:50%;" *ngIf="showAll" class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+        <thead class="bg-success">
+          <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>Name</th>
+            <!-- <th>Vch Type</th> -->
+            <th>Item</th>
+            <th>Size(Inch)</th>
+            <th>Qty(Tons)</th>
+            <th>Modify</th>
+            <th>Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr class="col-xs-12"> -->
+          <!-- <tr *ngFor="let row of salesOrder; let i = index"> -->
+          <tr *ngFor="let row1 of salesOrder | paginate: { itemsPerPage: 50, currentPage: p1 }; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{row1.orderDate}}</td>
+            <td>{{row1.company}}</td>
+            <td>{{row1.item}}</td>
+            <td>{{row1.size}}</td>
+            <td>{{row1.qty}}</td>
+            <td>
+              <!-- Button trigger modal -->
+              <!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row1)">View
             </button> -->
-            <!-- <input #newQuantity flex placeholder="credit" type="text" maxlength="5" name="row-{{i}}" #credit="ngModel" [(ngModel)]="row.amount"> -->
-            <input #newQuantity type="number" maxlength="5" style="width:50px;" [id]="i" />
-          </td>
-          <td>
-            <!-- Button trigger delete  -->
-            <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row.voucherKey)">Hide
+              <!-- <input #newQuantity flex placeholder="credit" type="text" maxlength="5" name="row1-{{i}}" #credit="ngModel" [(ngModel)]="row1.amount"> -->
+              <input class="input-sm" #newQuantity type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" />
+            </td>
+            <td>
+              <!-- Button trigger delete  -->
+              <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row1.voucherKey)">Hide
               </button> -->
-            <!-- <div class="form-check"> -->
-            <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row,row.voucherKey,newQuantity.value)" />
-            <!-- <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row,newQuantity.value)"/> -->
-            <!-- <label class="form-check-label" for="defaultCheck1">
+              <!-- <div class="form-check"> -->
+                  <button type="button" class="btn btn-success btn-sm" (click)="selectFromAll(row1,row1.voucherKey,newQuantity.value)">Select
+                    </button>
+                    <!-- <input #myId type="checkbox" value="" id="defaultCheck3" (change)="selectFromAll(row1,row1.voucherKey,newQuantity.value)" /> -->
+              <!-- <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row1,newQuantity.value)"/> -->
+              <!-- <label class="form-check-label" for="defaultCheck1">
                     Select
                   </label> -->
-            <!-- </div> -->
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <table style="width:50%;" class="table table-responsive table-hover table-sm table-striped table-bordered">
-      <!-- <table style="width:50%;" *ngIf="!showAll"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
-      <thead class="thead-inverse">
-        <tr>
-          <th>No</th>
-          <th>Date</th>
-          <th>Name</th>
-          <th>Item</th>
-          <th>Size</th>
-          <th>Qty</th>
-          <!-- <th>Details</th> -->
-          <th>Select</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- <tr class="col-xs-12"> -->
-        <!-- <tr *ngFor="let row of salesOrder; let i = index"> -->
-        <tr *ngFor="let row of salesOrder_selected | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+              <!-- </div> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p1 = $event"></pagination-controls>
+    </div>
+    <div class="col-lg-8" *ngIf="!showAll">
+      <h5>Selected Sales Orders</h5>
+      <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+        <!-- <table style="width:50%;" *ngIf="!showAll"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+        <thead class="bg-primary">
+          <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Item</th>
+            <th>Size(Inch)</th>
+            <th>Qty(Tons)</th>
+            <!-- <th>Details</th> -->
+            <th>Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr class="col-xs-12"> -->
+          <!-- <tr *ngFor="let row1 of salesOrder; let i = index"> -->
+          <tr *ngFor="let row2 of salesOrder_selected | paginate: { itemsPerPage: 50, currentPage: p2 }; let i = index">
 
-          <td>{{i+1}}</td>
+            <td>{{i+1}}</td>
 
-          <td>{{row.orderDate}}</td>
+            <td>{{row2.orderDate}}</td>
 
-          <td>{{row.company}}</td>
-          <td>{{row.item}}</td>
-          <td>{{row.size}}</td>
-          <td>{{row.qty}}</td>
+            <td>{{row2.company}}</td>
+            <td>{{row2.item}}</td>
+            <td>{{row2.size}}</td>
+            <td>{{row2.qty}}</td>
 
-          <!-- <td> -->
-          <!-- <td>
-          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row)">View
+            <!-- <td> -->
+            <!-- <td>
+          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row2)">View
           </button>
         </td> -->
-          <td>
-            <!-- Button trigger delete  -->
-            <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row.voucherKey)">Hide
-                </button> -->
-            <!-- <div class="form-check"> -->
-            <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromSelected(row,row.voucherKey)">
-            <!-- <label class="form-check-label" for="defaultCheck1">
-                      Select
+            <td>
+              <!-- Button trigger delete  -->
+              <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row2.voucherKey)">Hide
+          </button> -->
+              <!-- <div class="form-check"> -->
+                  <button type="button" class="btn btn-warning btn-sm" (click)="selectFromSelected(row2,row2.voucherKey)">Remove
+                    </button>
+              <!-- <input type="checkbox" value="" id="defaultCheck2" (change)="selectFromSelected(row2,row2.voucherKey)"> -->
+              <!-- <label class="form-check-label" for="defaultCheck1">
+              Select
                     </label> -->
-            <!-- </div> -->
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              <!-- </div> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p2 = $event"></pagination-controls>
+    </div>
+    <div class="col-lg-4">
+        <div>
+            <h5>Group Items - Consolidated</h5>
+            <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+              <!-- <table style="width:50%;" *ngIf="!showAll"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+              <thead class="bg-warning">
+                <tr>
+                  <th>No</th>
+                  <th>Item (BF)</th>
+                  <th>Size</th>
+                  <th>Qty</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row3 of salesOrder_BF; let i = index">
+                <!-- <tr *ngFor="let row3 of salesOrder_BF| paginate: { itemsPerPage: 10, currentPage: p3 }; let i = index"> -->
+                  <td>{{i+1}}</td>
+                  <td>{{maskContent(row3.item)}}</td>
+                  <td>{{row3.size}}</td>
+                  <td>{{row3.qty}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+                <div>
+        <!-- <h5>Group Items by BF GSM</h5> -->
+        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+          <!-- <table style="width:50%;" *ngIf="!showAll"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+          <thead class="bg-warning">
+            <tr>
+              <th>No</th>
+              <th>Item (BF GSM)</th>
+              <!-- <th>Size</th> -->
+              <th>Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row5 of salesOrder_BFGSM; let i = index">
+            <!-- <tr *ngFor="let row5 of salesOrder_BFGSM | paginate: { itemsPerPage: 10, currentPage: p4 }; let i = index"> -->
+              <td>{{i+1}}</td>
+              <td>{{row5.item}}</td>
+              <!-- <td>{{row3.size}}</td> -->
+              <td>{{row5.qty}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div>
+        <!-- <h5>Group Items by BF GSM Size</h5> -->
+        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+          <!-- <table style="width:50%;" *ngIf="!showAll"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+          <thead class="bg-warning">
+            <tr>
+              <th>No</th>
+              <th>Item (BF GSM Size)</th>
+              <!-- <th>Size</th> -->
+              <th>Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row4 of salesOrder_BFGSMSize; let i = index">
+            <!-- <tr *ngFor="let row4 of salesOrder_BFGSMSize | paginate: { itemsPerPage: 10, currentPage: p5 }; let i = index"> -->
+              <td>{{i+1}}</td>
+              <td>{{row4.item}} {{row4.size}}</td>
+              <!-- <td>{{row4.size}}</td> -->
+              <td>{{row4.qty}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
   </div>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  
 </div>
 <!-- <div class="section1">
 2d
