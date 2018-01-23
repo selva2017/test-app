@@ -127,7 +127,7 @@
                 <tr>
                   <th>No</th>
                   <th>Item (BF)</th>
-                  <th>Size</th>
+                  <!-- <th>Size</th> -->
                   <th>Qty</th>
                 </tr>
               </thead>
@@ -136,7 +136,7 @@
                 <!-- <tr *ngFor="let row3 of salesOrder_BF| paginate: { itemsPerPage: 10, currentPage: p3 }; let i = index"> -->
                   <td>{{i+1}}</td>
                   <td>{{maskContent(row3.item)}}</td>
-                  <td>{{row3.size}}</td>
+                  <!-- <td>{{row3.size}}</td> -->
                   <td>{{row3.qty}}</td>
                 </tr>
               </tbody>
@@ -176,6 +176,7 @@
               <th>Item (BF GSM Size)</th>
               <!-- <th>Size</th> -->
               <th>Qty</th>
+              <th>Reel</th>
             </tr>
           </thead>
           <tbody>
@@ -185,6 +186,7 @@
               <td>{{row4.item}} {{row4.size}}</td>
               <!-- <td>{{row4.size}}</td> -->
               <td>{{row4.qty}}</td>
+              <td>{{convertReel(row4.qty,row4.size)}}</td>
             </tr>
           </tbody>
         </table>

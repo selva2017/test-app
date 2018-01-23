@@ -164,7 +164,7 @@ export class PlanComponent implements OnInit {
     if (newQuantity > 0) {
       key.qty = Number(newQuantity);
       this.salesOrder_modified.push(key);
-    } 
+    }
     //console.log(this.salesOrder_modified);
     //console.log("key..." + key);
     // //console.log("voucher number..." + voucherNumber)
@@ -227,6 +227,12 @@ export class PlanComponent implements OnInit {
         this.showLoader = false;
       })
     this.showLoader = false;
+  }
+  convertReel(qty, size) {
+    // var reel: Number;
+    return Math.round((qty * 1000) / (size * 10));
+    // return ((qty * 1000) / (size * 10)).toFixed(2);
+    // return reel;
   }
   maskContent(item) {
     var reg = new RegExp('[0-9]+ (BF)', 'g');
