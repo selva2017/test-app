@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ServerService } from './../../shared/server.service';
 import { ProdPlan } from './../../shared/prod_plan';
+import { forEach } from '@angular/router/src/utils/collection';
 // import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
@@ -22,6 +23,7 @@ export class PlanComponent implements OnInit {
   salesOrder_modified: ProdPlan[] = [];
   showLoader: boolean;
   showAll: boolean = true;
+  salesOrderUpdated: boolean = false;
   salesOrder_BFGSM: ProdPlan[] = [];
   salesOrder_BFGSMSize: ProdPlan[] = [];
   salesOrder_BF: ProdPlan[] = [];
@@ -43,8 +45,35 @@ export class PlanComponent implements OnInit {
     this.salesOrder_row = record;
   }
   showSelected() {
-    this.showAll = !this.showAll;
+    this.showAll = false;
+    // this.showAll = !this.showAll;
   }
+  confirmProduction() {
+    this.salesOrderUpdated = true;
+    this.showAll = true;
+    // Send the Completed orders
+    // this.salesOrder_selected.forEach(element => {
+      // console.log(element);
+      this.serverService.completedOrders(this.salesOrder_selected)
+      .subscribe(
+        (success) => {
+          console.log("success");
+        },
+        (error) => console.log(error)
+      );
+      // });
+      
+      // Send the Incompleted orders
+      // this.salesOrder_modified;
+      this.serverService.completedOrders(this.salesOrder_modified)
+      .subscribe(
+        (success) => {
+          console.log("success");
+        },
+        (error) => console.log(error)
+      );
+      this.salesOrderUpdated = false;
+    }
   clearAll() {
     this.salesOrder_selected = [];
     this.salesOrder_selected1 = [];
@@ -97,8 +126,8 @@ export class PlanComponent implements OnInit {
         }
 
       }
-      //console.log(this.salesOrder_BFGSM);
     }
+    console.log(this.salesOrder_BFGSM);
     // alert(this.salesOrder_BFGSM);
   }
   generateItemBFGMSSize() {
@@ -229,13 +258,36 @@ export class PlanComponent implements OnInit {
     this.showLoader = false;
   }
   convertReel(qty, size) {
-    // var reel: Number;
-    return Math.round((qty * 1000) / (size * 10));
-    // return ((qty * 1000) / (size * 10)).toFixed(2);
+    // var reel: any;
+    // reel = ((qty * 1000) / (size * 10));
+    // reel = (Math.round(reel * 2) / 2).toFixed(1)
+    // return reel;
+    // reel = Math.round(reel*2);
+    return ((qty * 1000) / (size * 10)).toFixed(3);
     // return reel;
   }
   maskContent(item) {
     var reg = new RegExp('[0-9]+ (BF)', 'g');
     return reg.exec(item.toString())[0];
+  }
+  reel(qty, size) {
+    // var reg = new RegExp('[0-9]+ (BF)', 'g');
+    // return reg.exec(qty.toString())[0];
+    // var reg = this.convertReel(qty,size);
+    // alert("rounded - " + Math.round(qty));
+    // alert(qty - Math.round(qty));
+    var reel: any;
+    reel = ((qty * 1000) / (size * 10));
+    // reel = (Math.round(reel * 2) / 2).toFixed(1);
+
+    if (reel > Math.round(reel)) {
+      // alert("rounded " + Math.round(qty));
+      return Math.round(reel);
+    }
+    else {
+      // alert("rounded " + Math.ceil(qty));
+      return Math.ceil(reel);
+    }
+
   }
 }
