@@ -23,9 +23,12 @@ export class PlanComponent implements OnInit {
   salesOrder_modified: ProdPlan[] = [];
   showLoader: boolean;
   showAll: boolean = true;
+  consolidatedReport: boolean = false;
   salesOrderUpdated: boolean = false;
   salesOrder_BFGSM: ProdPlan[] = [];
+  consolidatedBFGSM: ProdPlan[] = [];
   salesOrder_BFGSMSize: ProdPlan[] = [];
+  consolidatedBFGSMSize: ProdPlan[] = [];
   salesOrder_BF: ProdPlan[] = [];
   // salesOrder_BFGSM =[{item:String,reel:Number}];
   constructor(private serverService: ServerService) {
@@ -34,6 +37,8 @@ export class PlanComponent implements OnInit {
 
   ngOnInit() {
     this.refreshList();
+    this.getConsolidatedBFGSM();
+    this.getConsolidatedBFGSMSize();
     // //console.log(this.salesOrder);
   }
   displayINR(amount: number) {
@@ -45,8 +50,14 @@ export class PlanComponent implements OnInit {
     this.salesOrder_row = record;
   }
   showSelected() {
-    this.showAll = false;
-    // this.showAll = !this.showAll;
+    // this.showAll = false;
+    this.showAll = !this.showAll;
+    this.consolidatedReport=false;
+  }
+  showConsolidated(){
+    this.showAll=false;
+    this.salesOrderUpdated=false;
+    this.consolidatedReport = true;
   }
   confirmProduction() {
     this.salesOrderUpdated = true;
@@ -107,15 +118,15 @@ export class PlanComponent implements OnInit {
       // alert(this.salesOrder_BFGSM[0].item);
       for (var i = 0; i < this.salesOrder_selected1.length; i++) {
         var match: boolean = false;
-        // alert("salesOrder_selected " + i)
+        // alert("salesOrder_selected " + i)"
         for (var j = 0; j < this.salesOrder_BFGSM.length; j++) {
           // alert("salesOrder_BFGSM " + j)
-          if ((this.salesOrder_BFGSM[j].item).trim() === (this.salesOrder_selected1[i].item).trim()) {
+          if ((this.salesOrder_BFGSM[j].bf+""+this.salesOrder_BFGSM[j].gsm) === (this.salesOrder_selected1[i].bf+""+this.salesOrder_selected1[i].gsm)) {
             // alert("MAtches " + i + " "+j)
             // this.salesOrder_BFGSM[j].reel;
             // alert(this.salesOrder_BFGSM[j].item);
-            var sum = Number(Number(this.salesOrder_BFGSM[j].qty) + Number(this.salesOrder_selected1[i].qty)).toFixed(2);
-            this.salesOrder_BFGSM[j].qty = parseFloat(sum);
+            var sum = Number(Number(this.salesOrder_BFGSM[j].weight) + Number(this.salesOrder_selected1[i].weight)).toFixed(2);
+            this.salesOrder_BFGSM[j].weight = parseFloat(sum);
             // alert("break" + i + " "+j)
             match = true;
             break;
@@ -127,7 +138,7 @@ export class PlanComponent implements OnInit {
 
       }
     }
-    console.log(this.salesOrder_BFGSM);
+    // console.log(this.salesOrder_BFGSM);
     // alert(this.salesOrder_BFGSM);
   }
   generateItemBFGMSSize() {
@@ -138,10 +149,10 @@ export class PlanComponent implements OnInit {
       for (var i = 0; i < this.salesOrder_selected1.length; i++) {
         var match: boolean = false;
         for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
-          if ((this.salesOrder_BFGSMSize[j].item.concat(String(this.salesOrder_BFGSMSize[j].size))).trim() === (this.salesOrder_selected1[i].item.concat(String(this.salesOrder_selected1[i].size))).trim()) {
+          if (((this.salesOrder_BFGSMSize[j].bf+""+this.salesOrder_BFGSMSize[j].gsm).concat(String(this.salesOrder_BFGSMSize[j].size))).trim() === ((this.salesOrder_selected1[i].bf+""+this.salesOrder_selected1[i].gsm).concat(String(this.salesOrder_selected1[i].size))).trim()) {
             // this.salesOrder_BFGSMSize[j].reel;
-            var sum = Number(Number(this.salesOrder_BFGSMSize[j].qty) + Number(this.salesOrder_selected1[i].qty)).toFixed(2);
-            this.salesOrder_BFGSMSize[j].qty = parseFloat(sum)
+            var sum = Number(Number(this.salesOrder_BFGSMSize[j].weight) + Number(this.salesOrder_selected1[i].weight)).toFixed(2);
+            this.salesOrder_BFGSMSize[j].weight = parseFloat(sum)
             match = true;
             break;
           }
@@ -161,19 +172,20 @@ export class PlanComponent implements OnInit {
       for (var i = 0; i < this.salesOrder_selected1.length; i++) {
         var match: boolean = false;
         for (var j = 0; j < this.salesOrder_BF.length; j++) {
-          var reg = new RegExp('[0-9]+ (BF)', 'g');
-          var item = this.salesOrder_selected1[i].item;
+          // var reg = new RegExp('[0-9]+ (BF)', 'g');
+          var item = this.salesOrder_selected1[i].bf;
+          // var item = this.salesOrder_selected1[i].item;
           // while ((result = reg.exec(item.toString())) !== null) {
           //   result = JSON.stringify(result);
           // }
-          result = reg.exec(item.toString());
+          // result = reg.exec(item.toString());
           // alert(result);
           // alert(this.salesOrder_BF[j].item);
-          if (this.salesOrder_BF[j].item.includes(result[0])) {
+          if ((this.salesOrder_BF[j].bf) === this.salesOrder_selected1[i].bf) {
             // this.salesOrder_BF[j].reel;
             // alert("inside");
-            var sum = Number(Number(this.salesOrder_BF[j].qty) + Number(this.salesOrder_selected1[i].qty)).toFixed(2);
-            this.salesOrder_BF[j].qty = parseFloat(sum);
+            var sum = Number(Number(this.salesOrder_BF[j].weight) + Number(this.salesOrder_selected1[i].weight)).toFixed(2);
+            this.salesOrder_BF[j].weight = parseFloat(sum);
             match = true;
             break;
           }
@@ -191,7 +203,7 @@ export class PlanComponent implements OnInit {
     //  "Diff: " + (Number(key.voucherNumber)-Number(newQuantity)));
     //console.log("key..." + key);
     if (newQuantity > 0) {
-      key.qty = Number(newQuantity);
+      key.weight = Number(newQuantity);
       this.salesOrder_modified.push(key);
     }
     //console.log(this.salesOrder_modified);
@@ -204,7 +216,8 @@ export class PlanComponent implements OnInit {
     //console.log(this.salesOrder_selected.length);
     for (var i = 0; i < this.salesOrder.length; i++) {
       // alert(i);
-      if (this.salesOrder[i].voucherKey === voucherKey) {
+      if (this.salesOrder[i].id === voucherKey) {
+      // if (this.salesOrder[i].voucherKey === voucherKey) {
         // alert(this.salesOrder[i]);
         this.salesOrder.splice(i, 1);
         break;
@@ -236,7 +249,7 @@ export class PlanComponent implements OnInit {
     //console.log(this.salesOrder.length);
     for (var i = 0; i < this.salesOrder_selected.length; i++) {
       // alert(i);
-      if (this.salesOrder_selected[i].voucherKey === voucherKey) {
+      if (this.salesOrder_selected[i].id === voucherKey) {
         // alert(this.salesOrder_selected[i]);
         this.salesOrder_selected.splice(i, 1);
         break;
@@ -253,39 +266,56 @@ export class PlanComponent implements OnInit {
       subscribe(list => {
         this.salesOrder = list;
         // //console.log(this.salesOrder);
-        this.showLoader = false;
+        // this.showLoader = false;
       })
     this.showLoader = false;
   }
-  convertReel(qty, size) {
+  getConsolidatedBFGSM() {
+    this.subscription = this.serverService.getTotalBFGSM().
+      subscribe(list => {
+        // console.log(this.dataSource.data);
+        this.consolidatedBFGSM = list;
+      })
+    this.showLoader = false;
+  }
+  getConsolidatedBFGSMSize() {
+    this.subscription = this.serverService.getTotalBFGSMSize().
+      subscribe(list => {
+        // console.log(this.dataSource.data);
+        this.consolidatedBFGSMSize= list;
+      })
+    this.showLoader = false;
+  }
+    
+  convertReel(weight, size) {
     // var reel: any;
-    // reel = ((qty * 1000) / (size * 10));
+    // reel = ((weight * 1000) / (size * 10));
     // reel = (Math.round(reel * 2) / 2).toFixed(1)
     // return reel;
     // reel = Math.round(reel*2);
-    return ((qty * 1000) / (size * 10)).toFixed(3);
+    return ((weight * 1000) / (size * 10)).toFixed(3);
     // return reel;
   }
   maskContent(item) {
     var reg = new RegExp('[0-9]+ (BF)', 'g');
     return reg.exec(item.toString())[0];
   }
-  reel(qty, size) {
+  reel(weight, size) {
     // var reg = new RegExp('[0-9]+ (BF)', 'g');
-    // return reg.exec(qty.toString())[0];
-    // var reg = this.convertReel(qty,size);
-    // alert("rounded - " + Math.round(qty));
-    // alert(qty - Math.round(qty));
+    // return reg.exec(weight.toString())[0];
+    // var reg = this.convertReel(weight,size);
+    // alert("rounded - " + Math.round(weight));
+    // alert(weight - Math.round(weight));
     var reel: any;
-    reel = ((qty * 1000) / (size * 10));
+    reel = ((weight * 1000) / (size * 10));
     // reel = (Math.round(reel * 2) / 2).toFixed(1);
 
     if (reel > Math.round(reel)) {
-      // alert("rounded " + Math.round(qty));
+      // alert("rounded " + Math.round(weight));
       return Math.round(reel);
     }
     else {
-      // alert("rounded " + Math.ceil(qty));
+      // alert("rounded " + Math.ceil(weight));
       return Math.ceil(reel);
     }
 

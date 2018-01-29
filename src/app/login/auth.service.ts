@@ -17,7 +17,7 @@ export class AuthService {
         this.serviceAuth.authenticateUser(user)
             .subscribe(
             success => {
-                console.log(success);
+                // console.log(success);
 
                 if (success.statusMessage == "AUTH_SUCCESS") {
                     this.token = true;

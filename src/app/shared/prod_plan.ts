@@ -1,11 +1,13 @@
 export interface ProdPlan {
+    altered: String,
+    bf: String,
     company: String,
+    gsm: String,
     id: String,
-    item: String,
     orderDate: String,
     orderStatus: Number
-    qty: Number,
+    reel: String,
     size: Number,
-    totalQty: Number,
     voucherKey: Number,
+    weight: Number,
 };
