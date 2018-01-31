@@ -32,6 +32,7 @@
               <th>Reel</th>
               <!-- <th>Round</th> -->
               <th>Change Weight</th>
+              <th>Select</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -70,6 +71,10 @@
                   </label> -->
                 <!-- </div> -->
               </td>
+              <td>
+                <button type="button" class="btn btn-danger btn-sm" (click)="deleteSalesOrder(row1.id)">Delete
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -84,6 +89,7 @@
           <thead class="bg-primary">
             <tr>
               <th>No</th>
+              <th>Altered</th>
               <th>Date</th>
               <th>Order#</th>
               <th>Name</th>
@@ -100,6 +106,7 @@
             <tr *ngFor="let row2 of salesOrder_selected | paginate: { itemsPerPage: 50, currentPage: p2 }; let i = index">
 
               <td>{{i+1}}</td>
+              <td>{{row2.altered}}</td>
               <td>{{row2.orderDate | date : 'dd-MM-yyyy'}}</td>
               <td>{{row2.orderNumber}}</td>
               <td>{{row2.company}}</td>

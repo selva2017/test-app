@@ -52,11 +52,11 @@ export class PlanComponent implements OnInit {
   showSelected() {
     // this.showAll = false;
     this.showAll = !this.showAll;
-    this.consolidatedReport=false;
+    this.consolidatedReport = false;
   }
-  showConsolidated(){
-    this.showAll=false;
-    this.salesOrderUpdated=false;
+  showConsolidated() {
+    this.showAll = false;
+    this.salesOrderUpdated = false;
     this.consolidatedReport = true;
   }
   confirmProduction() {
@@ -64,27 +64,27 @@ export class PlanComponent implements OnInit {
     this.showAll = true;
     // Send the Completed orders
     // this.salesOrder_selected.forEach(element => {
-      // console.log(element);
-      this.serverService.completedOrders(this.salesOrder_selected)
+    // console.log(element);
+    this.serverService.completedOrders(this.salesOrder_selected)
       .subscribe(
-        (success) => {
-          console.log("success");
-        },
-        (error) => console.log(error)
+      (success) => {
+        console.log("success");
+      },
+      (error) => console.log(error)
       );
-      // });
-      
-      // Send the Incompleted orders
-      // this.salesOrder_modified;
-      this.serverService.completedOrders(this.salesOrder_modified)
+    // });
+
+    // Send the Incompleted orders
+    // this.salesOrder_modified;
+    this.serverService.completedOrders(this.salesOrder_modified)
       .subscribe(
-        (success) => {
-          console.log("success");
-        },
-        (error) => console.log(error)
+      (success) => {
+        console.log("success");
+      },
+      (error) => console.log(error)
       );
-      this.salesOrderUpdated = false;
-    }
+    this.salesOrderUpdated = false;
+  }
   clearAll() {
     this.salesOrder_selected = [];
     this.salesOrder_selected1 = [];
@@ -121,7 +121,7 @@ export class PlanComponent implements OnInit {
         // alert("salesOrder_selected " + i)"
         for (var j = 0; j < this.salesOrder_BFGSM.length; j++) {
           // alert("salesOrder_BFGSM " + j)
-          if ((this.salesOrder_BFGSM[j].bf+""+this.salesOrder_BFGSM[j].gsm) === (this.salesOrder_selected1[i].bf+""+this.salesOrder_selected1[i].gsm)) {
+          if ((this.salesOrder_BFGSM[j].bf + "" + this.salesOrder_BFGSM[j].gsm) === (this.salesOrder_selected1[i].bf + "" + this.salesOrder_selected1[i].gsm)) {
             // alert("MAtches " + i + " "+j)
             // this.salesOrder_BFGSM[j].reel;
             // alert(this.salesOrder_BFGSM[j].item);
@@ -149,7 +149,7 @@ export class PlanComponent implements OnInit {
       for (var i = 0; i < this.salesOrder_selected1.length; i++) {
         var match: boolean = false;
         for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
-          if (((this.salesOrder_BFGSMSize[j].bf+""+this.salesOrder_BFGSMSize[j].gsm).concat(String(this.salesOrder_BFGSMSize[j].size))).trim() === ((this.salesOrder_selected1[i].bf+""+this.salesOrder_selected1[i].gsm).concat(String(this.salesOrder_selected1[i].size))).trim()) {
+          if (((this.salesOrder_BFGSMSize[j].bf + "" + this.salesOrder_BFGSMSize[j].gsm).concat(String(this.salesOrder_BFGSMSize[j].size))).trim() === ((this.salesOrder_selected1[i].bf + "" + this.salesOrder_selected1[i].gsm).concat(String(this.salesOrder_selected1[i].size))).trim()) {
             // this.salesOrder_BFGSMSize[j].reel;
             var sum = Number(Number(this.salesOrder_BFGSMSize[j].weight) + Number(this.salesOrder_selected1[i].weight)).toFixed(2);
             this.salesOrder_BFGSMSize[j].weight = parseFloat(sum)
@@ -204,6 +204,7 @@ export class PlanComponent implements OnInit {
     //console.log("key..." + key);
     if (newQuantity > 0) {
       key.weight = Number(newQuantity);
+      key["altered"] = 1;
       this.salesOrder_modified.push(key);
     }
     //console.log(this.salesOrder_modified);
@@ -217,7 +218,7 @@ export class PlanComponent implements OnInit {
     for (var i = 0; i < this.salesOrder.length; i++) {
       // alert(i);
       if (this.salesOrder[i].id === voucherKey) {
-      // if (this.salesOrder[i].voucherKey === voucherKey) {
+        // if (this.salesOrder[i].voucherKey === voucherKey) {
         // alert(this.salesOrder[i]);
         this.salesOrder.splice(i, 1);
         break;
@@ -262,10 +263,11 @@ export class PlanComponent implements OnInit {
     //console.log(this.salesOrder.length);
   }
   refreshList() {
+    // this.showLoader = true;
     this.subscription = this.serverService.getSalesOrder().
       subscribe(list => {
         this.salesOrder = list;
-        // //console.log(this.salesOrder);
+        // console.log(this.salesOrder);
         // this.showLoader = false;
       })
     this.showLoader = false;
@@ -282,11 +284,11 @@ export class PlanComponent implements OnInit {
     this.subscription = this.serverService.getTotalBFGSMSize().
       subscribe(list => {
         // console.log(this.dataSource.data);
-        this.consolidatedBFGSMSize= list;
+        this.consolidatedBFGSMSize = list;
       })
     this.showLoader = false;
   }
-    
+
   convertReel(weight, size) {
     // var reel: any;
     // reel = ((weight * 1000) / (size * 10));
@@ -318,6 +320,16 @@ export class PlanComponent implements OnInit {
       // alert("rounded " + Math.ceil(weight));
       return Math.ceil(reel);
     }
+  }
 
+  deleteSalesOrder(id) {
+    this.showLoader=true;
+    this.serverService.updateSalesOrderStatus(id)
+    .subscribe(
+      (success) => {
+        this.refreshList();
+      },
+      (error) => console.log(error)
+      );
   }
 }
