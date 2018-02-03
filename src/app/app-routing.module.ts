@@ -57,8 +57,8 @@ const appRoutes: Routes = [
   // { path: 'admin', component: AdminComponent},
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'publish', component: PublishComponent, canActivate: [AuthGuard] },
-  { path: 'plan', component: PlanComponent, canActivate: [AuthGuard]  },
-  // { path: 'plan', component: PlanComponent },
+  // { path: 'plan', component: PlanComponent, canActivate: [AuthGuard]  },
+  { path: 'plan', component: PlanComponent },
   // { path: 'publish', component: PublishComponent },
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }

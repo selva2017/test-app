@@ -1,3 +1,4 @@
+import { Daybook } from './../../shared/daybook';
 // import { Item } from './../../shared/item.model';
 import { UserList } from './../../shared/user-list';
 import { Component, OnInit } from '@angular/core';
@@ -6,6 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ServerService } from './../../shared/server.service';
 import { ProdPlan } from './../../shared/prod_plan';
 import { forEach } from '@angular/router/src/utils/collection';
+import { Planned } from 'app/shared/planned';
 // import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
@@ -31,8 +33,35 @@ export class PlanComponent implements OnInit {
   consolidatedBFGSMSize: ProdPlan[] = [];
   salesOrder_BF: ProdPlan[] = [];
   // salesOrder_BFGSM =[{item:String,reel:Number}];
+  showPlanSubmitted: boolean=false;
+  submittedPlans: Planned[]=[];
+  planSubmitted: Planned[]=[];
+
+
+
   constructor(private serverService: ServerService) {
     this.showLoader = true;
+  //   this.planSubmitted= [
+  //     {
+  //         plannedDate: "2017-09-21",
+  //         batchNumber: "1",
+  //         items: [
+  //       {
+  //         id:"3381",
+  //       orderNumber:"1",
+  //       voucherKey:"185113090457664",
+  //       orderDate:"2018-01-01",
+  //       company:"AMBAL AGENCIES",
+  //       bf:"16",
+  //       gsm:"170",
+  //       size:"28.00",
+  //       weight:"0.84",
+  //       newWeight:"0.84",
+  //       reel:"3.00",
+  //       orderStatus:"0",
+  //       altered:"0"}
+  //         ]
+  //     }];
   }
 
   ngOnInit() {
@@ -76,13 +105,13 @@ export class PlanComponent implements OnInit {
 
     // Send the Incompleted orders
     // this.salesOrder_modified;
-    this.serverService.completedOrders(this.salesOrder_modified)
-      .subscribe(
-      (success) => {
-        console.log("success");
-      },
-      (error) => console.log(error)
-      );
+    // this.serverService.completedOrders(this.salesOrder_modified)
+    //   .subscribe(
+    //   (success) => {
+    //     console.log("success");
+    //   },
+    //   (error) => console.log(error)
+    //   );
     this.salesOrderUpdated = false;
   }
   clearAll() {
@@ -198,21 +227,25 @@ export class PlanComponent implements OnInit {
   }
 
   selectFromAll(key, voucherKey, newQuantity) {
+    this.consolidatedReport=false;
     // //console.log(newQuantity);
     // alert("newQuantity: " + newQuantity + "voucherKey: " + key.voucherKey +
     //  "Diff: " + (Number(key.voucherNumber)-Number(newQuantity)));
-    //console.log("key..." + key);
+    console.log("key..." + key.altered);
+    key["altered"] = 0;
     if (newQuantity > 0) {
+      var wt=Number(key["weight"])-Number(newQuantity);
       key.weight = Number(newQuantity);
       key["altered"] = 1;
+      key["newWeight"]= wt;
       this.salesOrder_modified.push(key);
     }
-    //console.log(this.salesOrder_modified);
+    // console.log(this.salesOrder_modified);
     //console.log("key..." + key);
     // //console.log("voucher number..." + voucherNumber)
     // this.salesOrder_row = key;
     this.salesOrder_selected.push(key);
-    // //console.log(this.salesOrder_selected);
+    console.log(this.salesOrder_selected);
     //console.log(this.salesOrder.length);
     //console.log(this.salesOrder_selected.length);
     for (var i = 0; i < this.salesOrder.length; i++) {
@@ -241,6 +274,7 @@ export class PlanComponent implements OnInit {
     //   );
   }
   selectFromSelected(key, voucherKey) {
+    this.consolidatedReport=false;
     //console.log("key..." + key.voucherKey)
     //console.log("voucher number..." + voucherKey)
     // this.salesOrder_row = key;
@@ -332,4 +366,38 @@ export class PlanComponent implements OnInit {
       (error) => console.log(error)
       );
   }
+  productionPlan(record){
+    this.showAll = false;
+    this.showPlanSubmitted=true;
+    this.submittedPlans = record;
+    console.log(this.submittedPlans);    
+    
+  }
+  dispatchInfo(){
+  }
+  onViewDetails(record){
+    console.log(record);    
+
+  }
+  dayBook: Daybook[];
+  dayBook_row: Daybook[] = [];
+  
+  displayProdOrders(){
+    this.consolidatedReport=true;
+    this.subscription = this.serverService.getTallyDaybook().
+    subscribe(list => {
+      this.dayBook = list;
+      console.log(this.dayBook);
+      this.showLoader = false;
+    })
 }
+onView(record) {
+  this.dayBook_row = record;
+}
+onViewDispatch(){
+
+}
+onClickPrint()
+{
+  window.print();
+}  }

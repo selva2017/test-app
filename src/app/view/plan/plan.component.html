@@ -12,6 +12,7 @@
     <button *ngIf="!showAll" class="btn-group btn-md btn-warning" (click)="confirmProduction()" data-toggle="modal" data-target="#exampleModalLong">Confirm</button>
     <button class="btn-group btn-md btn-info" (click)="showConsolidated()">Consolidated Report</button>
     <button class="btn-group btn-md btn-danger" (click)="clearAll()">Clear All</button>
+    <button class="btn-group btn-md btn-info" (click)="displayProdOrders()">Planned Report</button>
   </div>
   <div class="row">
     <ng-template [ngIf]="showAll && !salesOrderUpdated && !consolidatedReport">
@@ -299,3 +300,136 @@
     </div>
   </div>
 </div>
+
+<ng-template [ngIf]= "consolidatedReport">
+<div *ngIf="!showLoader">
+  <br>
+  <h3>Production Plan Reports</h3>
+  <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+    <thead class="thead-inverse">
+      <tr>
+        <th>No</th>
+        <th>Planned Date</th>
+        <th>Batch No</th>
+        <th>Vch Type</th>
+        <!-- <th>Vch No</th> -->
+        <!-- <th>Credit/Debit</th> -->
+        <th>Details</th>
+        <th>Report</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of dayBook | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+
+        <td>{{i+1}}</td>
+        <td>{{row.voucherDate}}</td>
+        <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST' || row.voucherType === 'Consumption Entry'">
+          <td>{{row.inventoryEntryVOs[0].stockItemName}}</td>
+          <td>{{row.voucherType}}</td>
+          <!-- <td>{{row.voucherNumber}}</td> -->
+          <!-- <td>{{row.inventoryEntryVOs[0].billedQuantity}}</td> -->
+        </ng-template>
+        <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal'
+        || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General'">
+          <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
+          <td>{{row.voucherType}}</td>
+          <!-- <td>{{row.voucherNumber}}</td> -->
+          <!-- <td>{{displayINR(row.ledgerEntryVOs[0].amount)}}</td> -->
+        </ng-template>
+        <td>
+          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong1" (click)="onView(row)">Production
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle1" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle1">Production plan Details</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <h5 class="blockquote blockquote-reverse">Selected Sales Orders</h5>
+                  <table class="w-100 p-3 table-striped table-bordered ">
+                    <tr>
+                      <td>Voucher Date</td>
+                      <td>{{dayBook_row.voucherDate}} </td>
+                    </tr>
+                    <tr>
+                      <td>Ledger Name</td>
+                      <td>{{dayBook_row.partyLedgerName}} </td>
+                    </tr>
+                    <tr>
+                      <td>Voucher Type</td>
+                      <td>{{dayBook_row.voucherType}} </td>
+                    </tr>
+                    <tr>
+                      <td>Voucher Number</td>
+                      <td>{{dayBook_row.voucherNumber}} </td>
+                    </tr>
+                    <tr>
+                      <td>Voucher Key</td>
+                      <td>{{dayBook_row.voucherKey}} </td>
+                    </tr>
+                  </table>
+                  <hr class="style2">
+                  <h5 *ngIf="dayBook_row.ledgerEntryVOs?.length > 0">Selected Total Details (BF GSM)</h5>
+                  <table *ngIf="dayBook_row.ledgerEntryVOs?.length > 0" class="w-100 p-3 table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let ledger of dayBook_row.ledgerEntryVOs">
+                        <td>{{ledger.ledgerName}} </td>
+                        <td>{{displayINR(ledger.amount) }} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <hr class="style2">
+
+                  <h5 *ngIf="dayBook_row.inventoryEntryVOs?.length > 0">Selected Total Details (BF GSM Size)</h5>
+
+                  <table *ngIf="dayBook_row.inventoryEntryVOs?.length > 0" class="w-100 p-3 table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Item Name</th>
+                        <th>Rate/ton</th>
+                        <th>Amount</th>
+                        <th>Billed Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
+                        <td>{{inventory.stockItemName}} </td>
+                        <td>{{displayINR(inventory.rate)}} </td>
+                        <td>{{displayINR(inventory.amount) }} </td>
+                        <td>{{inventory.billedQuantity}} </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onClickPrint()">Print</button>
+                  <!-- <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="onClickReviewed(dayBook_row.voucherKey)">Reviewed</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <td>
+            <!-- Button trigger delete  -->
+            <button type="button" class="btn btn-warning btn-sm" (click)="onViewDispatch(row)">Dispatch
+            </button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+</ng-template>
