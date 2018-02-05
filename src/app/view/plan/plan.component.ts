@@ -1,3 +1,4 @@
+import { SalesOrdersPlanned, SalesOrdersPlanned1 } from './../../shared/sales_orders_planned';
 import { Daybook } from './../../shared/daybook';
 // import { Item } from './../../shared/item.model';
 import { UserList } from './../../shared/user-list';
@@ -8,6 +9,7 @@ import { ServerService } from './../../shared/server.service';
 import { ProdPlan } from './../../shared/prod_plan';
 import { forEach } from '@angular/router/src/utils/collection';
 import { Planned } from 'app/shared/planned';
+import { DispatchReport } from 'app/shared/dispatch_report';
 // import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
@@ -36,8 +38,12 @@ export class PlanComponent implements OnInit {
   showPlanSubmitted: boolean=false;
   submittedPlans: Planned[]=[];
   planSubmitted: Planned[]=[];
-
-
+salesOrdersPlanned: SalesOrdersPlanned[]=[];
+salesOrdersPlanned_row1: SalesOrdersPlanned1[]=[];
+salesOrdersPlanned_row2: SalesOrdersPlanned1[]=[];
+salesOrdersPlanned_row: SalesOrdersPlanned[]=[];
+salesOrder_BFGSMSize1: SalesOrdersPlanned1[]=[];
+dispatchSalesOrders: DispatchReport[]=[];
 
   constructor(private serverService: ServerService) {
     this.showLoader = true;
@@ -94,6 +100,12 @@ export class PlanComponent implements OnInit {
     // Send the Completed orders
     // this.salesOrder_selected.forEach(element => {
     // console.log(element);
+    // console.log(this.salesOrder_selected);
+    // console.log(this.salesOrder_BFGSMSize);
+    // this.salesOrder_selected['consBfGSMSize']=JSON.stringify(this.salesOrder_BFGSMSize);
+    // this.salesOrder_selected['consBfGSM']=JSON.stringify(this.salesOrder_BFGSM);
+    // this.salesOrder_selected['consBf']=JSON.stringify(this.salesOrder_BF);
+    // console.log(this.salesOrder_selected);
     this.serverService.completedOrders(this.salesOrder_selected)
       .subscribe(
       (success) => {
@@ -238,6 +250,7 @@ export class PlanComponent implements OnInit {
       key.weight = Number(newQuantity);
       key["altered"] = 1;
       key["newWeight"]= wt;
+      key.reel = this.reel(key["newWeight"],key.size);
       this.salesOrder_modified.push(key);
     }
     // console.log(this.salesOrder_modified);
@@ -245,7 +258,7 @@ export class PlanComponent implements OnInit {
     // //console.log("voucher number..." + voucherNumber)
     // this.salesOrder_row = key;
     this.salesOrder_selected.push(key);
-    console.log(this.salesOrder_selected);
+    // console.log(this.salesOrder_selected);
     //console.log(this.salesOrder.length);
     //console.log(this.salesOrder_selected.length);
     for (var i = 0; i < this.salesOrder.length; i++) {
@@ -370,13 +383,13 @@ export class PlanComponent implements OnInit {
     this.showAll = false;
     this.showPlanSubmitted=true;
     this.submittedPlans = record;
-    console.log(this.submittedPlans);    
+    // console.log(this.submittedPlans);    
     
   }
   dispatchInfo(){
   }
   onViewDetails(record){
-    console.log(record);    
+    // console.log(record);    
 
   }
   dayBook: Daybook[];
@@ -384,20 +397,102 @@ export class PlanComponent implements OnInit {
   
   displayProdOrders(){
     this.consolidatedReport=true;
-    this.subscription = this.serverService.getTallyDaybook().
+    this.subscription = this.serverService.getSalesOrdersPlanned().
     subscribe(list => {
-      this.dayBook = list;
-      console.log(this.dayBook);
+      this.salesOrdersPlanned = list;
+      // console.log(this.salesOrdersPlanned);
       this.showLoader = false;
     })
 }
-onView(record) {
-  this.dayBook_row = record;
+onView(record1,record2,record3,record4) {
+  // console.log("record");
+  // console.log(record1);
+  this.salesOrdersPlanned_row1=[];
+  this.salesOrdersPlanned_row1 = record1;
+  // console.log(this.salesOrdersPlanned_row1);
+  this.salesOrder_BF=[];
+  this.salesOrder_BF=record2;
+  // console.log(this.salesOrder_BF);
+  this.salesOrder_BFGSM=[];
+  this.salesOrder_BFGSM=record3;
+  // console.log(this.salesOrder_BFGSM);
+  this.salesOrder_BFGSMSize=[];
+  this.salesOrder_BFGSMSize=record4;
+  // console.log(this.salesOrder_BFGSMSize);
+  // this.salesOrder_selected = this.salesOrdersPlanned_row1;
+  // this.generateItemBFGSM();
+  // this.generateItemBFGMSSize1();
+  // this.generateItemBF();
 }
-onViewDispatch(){
-
+onViewDispatch(batch_number){
+  this.consolidatedReport=true;
+  this.subscription = this.serverService.getSalesOrdersDispatch(batch_number).
+  subscribe(list => {
+    this.dispatchSalesOrders = list;
+    // console.log(list);
+    // console.log(this.dispatchSalesOrders);
+    this.showLoader = false;
+  })
 }
 onClickPrint()
 {
   window.print();
-}  }
+} 
+generateItemBFGMSSize1() {
+// console.log("in");
+// console.log(this.salesOrdersPlanned_row1);
+this.salesOrder_BFGSMSize1 = [];
+this.salesOrdersPlanned_row1 = this.salesOrdersPlanned_row2.map(x => Object.assign({}, x));
+    
+// console.log("this.salesOrdersPlanned_row1.length" + this.salesOrdersPlanned_row1.length);
+if (this.salesOrdersPlanned_row1.length >= 1) {
+  for (var i = 0; i < this.salesOrdersPlanned_row1.length; i++) {
+    // console.log("inside i");
+    // console.log("this.salesOrdersPlanned_row1"+this.salesOrdersPlanned_row1);
+    // console.log("this.salesOrder_BFGSMSize1"+this.salesOrder_BFGSMSize1);
+    // console.log("this.salesOrder_BFGSMSize1.length "+this.salesOrder_BFGSMSize1.length);
+    var match: boolean = false; 
+    for (var j = 0; j < this.salesOrder_BFGSMSize1.length; j++) {
+      if (((this.salesOrder_BFGSMSize1[j].bf + "" + this.salesOrder_BFGSMSize1[j].gsm).concat(String(this.salesOrder_BFGSMSize1[j].size))).trim() === ((this.salesOrdersPlanned_row1[i].bf + "" + this.salesOrdersPlanned_row1[i].gsm).concat(String(this.salesOrdersPlanned_row1[i].size))).trim()) {
+        // console.log("inside j");
+        // console.log("this.salesOrdersPlanned_row1"+JSON.stringify(this.salesOrdersPlanned_row1[i]));
+        // console.log("this.salesOrder_BFGSMSize1"+JSON.stringify(this.salesOrder_BFGSMSize1[j]));
+              // this.salesOrder_BFGSMSize[j].reel;
+          var sum = Number(Number(this.salesOrder_BFGSMSize1[j].weight) + Number(this.salesOrdersPlanned_row1[i].weight)).toFixed(2);
+          // console.log("this.salesOrder_BFGSMSize1[j] - before");
+          // console.log("salesOrder_BFGSMSize1 - weight"+ Number(Number(this.salesOrder_BFGSMSize1[j].weight)));
+          // console.log("salesOrdersPlanned_row1 - weight"+Number(this.salesOrdersPlanned_row1[i].weight));
+          // console.log("this.salesOrder_BFGSMSize1[j] - before modified");
+          // console.log("salesOrder_BFGSMSize1 - ['weight']"+ Number(Number(this.salesOrder_BFGSMSize1[j]['weight'])));
+          // console.log("salesOrdersPlanned_row1 - ['weight']"+Number(this.salesOrdersPlanned_row1[i]['weight']));
+          
+          // console.log("weight - sum - "+sum);
+          // console.log(this.salesOrder_BFGSMSize1[j].weight);
+          // console.log(JSON.stringify(this.salesOrder_BFGSMSize1[j]));
+          this.salesOrder_BFGSMSize1[j].weight = parseFloat(sum);
+          // console.log("this.salesOrder_BFGSMSize1[j] - after");
+          // console.log(this.salesOrder_BFGSMSize1[j].weight);
+          // console.log(JSON.stringify(this.salesOrder_BFGSMSize1[j]));
+          match = true;
+          // console.log("*************************");
+          break;
+        }
+      }
+      if (!match) {
+        // console.log("! match");
+        // console.log("this.salesOrdersPlanned_row1"+this.salesOrdersPlanned_row1);
+        // console.log("this.salesOrder_BFGSMSize1"+this.salesOrder_BFGSMSize1);
+    
+        this.salesOrder_BFGSMSize1.push(this.salesOrdersPlanned_row1[i]);
+        // console.log("! match- after");
+        // console.log("this.salesOrdersPlanned_row1"+this.salesOrdersPlanned_row1);
+        // console.log("this.salesOrder_BFGSMSize1"+this.salesOrder_BFGSMSize1);
+        // console.log("--------------------------");
+
+    }
+    }
+  }
+}
+}
+
+

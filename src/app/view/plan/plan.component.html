@@ -48,9 +48,9 @@
               <td>{{row1.bf}} BF {{row1.gsm}} GSM</td>
               <td>{{row1.size}}</td>
               <td>{{row1.weight}}</td>
-              <td bgcolor="springgreen">{{row1.reel}}</td>
+              <td>{{row1.reel}}</td>
               <!-- <td bgcolor="red">{{convertReel(row1.qty,row1.size)}}</td> -->
-              <!-- <td bgcolor="springgreen">{{reel(row1.qty,row1.size)}}</td> -->
+              <!-- <td>{{reel(row1.qty,row1.size)}}</td> -->
               <td>
                 <!-- Button trigger modal -->
                 <!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row1)">View
@@ -63,7 +63,7 @@
                 <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row1.voucherKey)">Hide
               </button> -->
                 <!-- <div class="form-check"> -->
-                <button type="button" class="btn btn-success btn-sm" (click)="selectFromAll(row1,row1.id,newQuantity.value)">Select
+                <button type="button" class="btn btn-success btn-sm" (click)="selectFromAll(row1,row1['id'],newQuantity.value)">Select
                 </button>
                 <!-- <input #myId type="checkbox" value="" id="defaultCheck3" (change)="selectFromAll(row1,row1.voucherKey,newQuantity.value)" /> -->
                 <!-- <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row1,newQuantity.value)"/> -->
@@ -90,7 +90,7 @@
           <thead class="bg-primary">
             <tr>
               <th>No</th>
-              <th>Altered</th>
+              <!-- <th>Altered</th> -->
               <th>Date</th>
               <th>Order#</th>
               <th>Name</th>
@@ -107,14 +107,14 @@
             <tr *ngFor="let row2 of salesOrder_selected | paginate: { itemsPerPage: 50, currentPage: p2 }; let i = index">
 
               <td>{{i+1}}</td>
-              <td>{{row2.altered}}</td>
+              <!-- <td>{{row2.altered}}</td> -->
               <td>{{row2.orderDate | date : 'dd-MM-yyyy'}}</td>
               <td>{{row2.orderNumber}}</td>
               <td>{{row2.company}}</td>
               <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
               <td>{{row2.size}}</td>
               <td>{{row2.weight}}</td>
-              <td bgcolor="springgreen">{{row2.reel}}</td>
+              <td>{{row2.reel}}</td>
               <!-- <td> -->
               <!-- <td>
           <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row2)">View
@@ -235,9 +235,9 @@
               <td>{{row5.bf}} BF {{row5.gsm}} GSM</td>
               <!-- <td>{{row3.size}}</td> -->
               <td>{{row5.weight}}</td>
-              <!-- <td bgcolor="springgreen">{{row5.reel}}</td> -->
+              <!-- <td>{{row5.reel}}</td> -->
               <!-- <td bgcolor="red">{{convertReel(row5.qty,row5.size)}}</td> -->
-              <!-- <td bgcolor="springgreen">{{reel(row5.qty,row5.size)}}</td> -->
+              <!-- <td>{{reel(row5.qty,row5.size)}}</td> -->
             </tr>
           </tbody>
         </table>
@@ -264,9 +264,9 @@
               <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
               <!-- <td>{{row4.size}}</td> -->
               <td>{{row4.weight}}</td>
-              <td bgcolor="springgreen">{{row4.reel}}</td>
+              <td>{{row4.reel}}</td>
               <!-- <td bgcolor="red">{{convertReel(row4.qty,row4.size)}}</td>
-              <td bgcolor="springgreen">{{reel(row4.qty,row4.size)}}</td> -->
+              <td>{{reel(row4.qty,row4.size)}}</td> -->
             </tr>
           </tbody>
         </table>
@@ -311,7 +311,7 @@
         <th>No</th>
         <th>Planned Date</th>
         <th>Batch No</th>
-        <th>Vch Type</th>
+        <!-- <th>Vch Type</th> -->
         <!-- <th>Vch No</th> -->
         <!-- <th>Credit/Debit</th> -->
         <th>Details</th>
@@ -319,113 +319,203 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let row of dayBook | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+      <tr *ngFor="let row of salesOrdersPlanned | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
 
         <td>{{i+1}}</td>
-        <td>{{row.voucherDate}}</td>
-        <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST' || row.voucherType === 'Consumption Entry'">
-          <td>{{row.inventoryEntryVOs[0].stockItemName}}</td>
-          <td>{{row.voucherType}}</td>
+        <td>{{row.createdDate}}</td>
+        <td>{{row.batchNumber}}</td>
+        <!-- <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST' || row.voucherType === 'Consumption Entry'"> -->
+          <!-- <td>{{row.inventoryEntryVOs[0].stockItemName}}</td> -->
+          <!-- <td>{{row.voucherType}}</td> -->
           <!-- <td>{{row.voucherNumber}}</td> -->
           <!-- <td>{{row.inventoryEntryVOs[0].billedQuantity}}</td> -->
-        </ng-template>
-        <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal'
-        || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General'">
-          <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
-          <td>{{row.voucherType}}</td>
+        <!-- </ng-template> -->
+        <!-- <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal' -->
+        <!-- || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General'"> -->
+          <!-- <td>{{row.ledgerEntryVOs[0].ledgerName}}</td> -->
+          <!-- <td>{{row.voucherType}}</td> -->
           <!-- <td>{{row.voucherNumber}}</td> -->
           <!-- <td>{{displayINR(row.ledgerEntryVOs[0].amount)}}</td> -->
-        </ng-template>
+        <!-- </ng-template> -->
         <td>
-          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong1" (click)="onView(row)">Production
+          <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong2" 
+          (click)="onView(row.salesOrderPlanneds,row.salesOrdersBf,row.salesOrdersBfGsm,row.salesOrdersBfGsmSize)">Production
           </button>
 
           <!-- Modal -->
-          <div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle1" aria-hidden="true">
+          <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle2" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle1">Production plan Details</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle2">Production plan Details</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
-
-                  <h5 class="blockquote blockquote-reverse">Selected Sales Orders</h5>
-                  <table class="w-100 p-3 table-striped table-bordered ">
-                    <tr>
-                      <td>Voucher Date</td>
-                      <td>{{dayBook_row.voucherDate}} </td>
-                    </tr>
-                    <tr>
-                      <td>Ledger Name</td>
-                      <td>{{dayBook_row.partyLedgerName}} </td>
-                    </tr>
-                    <tr>
-                      <td>Voucher Type</td>
-                      <td>{{dayBook_row.voucherType}} </td>
-                    </tr>
-                    <tr>
-                      <td>Voucher Number</td>
-                      <td>{{dayBook_row.voucherNumber}} </td>
-                    </tr>
-                    <tr>
-                      <td>Voucher Key</td>
-                      <td>{{dayBook_row.voucherKey}} </td>
-                    </tr>
-                  </table>
-                  <hr class="style2">
-                  <h5 *ngIf="dayBook_row.ledgerEntryVOs?.length > 0">Selected Total Details (BF GSM)</h5>
-                  <table *ngIf="dayBook_row.ledgerEntryVOs?.length > 0" class="w-100 p-3 table-striped table-bordered">
-                    <thead>
+                <div class="row">
+                <div class="col-lg-8">
+                  <h5>Sales Orders</h5>
+                  <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+                    <thead class="bg-primary">
                       <tr>
+                        <th>No</th>
+                        <!-- <th>Altered</th> -->
+                        <th>Date</th>
+                        <th>Order#</th>
                         <th>Name</th>
-                        <th>Amount</th>
+                        <th>Item</th>
+                        <th>Size (Inch)</th>
+                        <th>Weight (Tons)</th>
+                        <th>Reel</th>
+                        <!-- <th>Action</th> -->
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let ledger of dayBook_row.ledgerEntryVOs">
-                        <td>{{ledger.ledgerName}} </td>
-                        <td>{{displayINR(ledger.amount) }} </td>
+                      <tr *ngFor="let row2 of salesOrdersPlanned_row1; let i = index">
+              <td>{{i+1}}</td>
+                        <!-- <td>{{row2.altered}}</td> -->
+                        <td>{{row2.orderDate | date : 'dd-MM-yyyy'}}</td>
+                        <td>{{row2.orderNumber}}</td>
+                        <td>{{row2.company}}</td>
+                        <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
+                        <td>{{row2.size}}</td>
+                        <td>{{row2.weight}}</td>
+                        <td>{{row2.reel}}</td>
+                        <td>
+                          <!-- <button type="button" class="btn btn-warning btn-sm" (click)="selectFromSelected(row2,row2.id)">Remove
+                          </button> -->
+                        </td>
                       </tr>
                     </tbody>
                   </table>
-                  <hr class="style2">
-
-                  <h5 *ngIf="dayBook_row.inventoryEntryVOs?.length > 0">Selected Total Details (BF GSM Size)</h5>
-
-                  <table *ngIf="dayBook_row.inventoryEntryVOs?.length > 0" class="w-100 p-3 table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>Item Name</th>
-                        <th>Rate/ton</th>
-                        <th>Amount</th>
-                        <th>Billed Quantity</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let inventory of dayBook_row.inventoryEntryVOs">
-                        <td>{{inventory.stockItemName}} </td>
-                        <td>{{displayINR(inventory.rate)}} </td>
-                        <td>{{displayINR(inventory.amount) }} </td>
-                        <td>{{inventory.billedQuantity}} </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <pagination-controls (pageChange)="p2 = $event"></pagination-controls>
                 </div>
+                <div class="col-lg-4">
+                  <div>
+                    <h5>Selected Total</h5>
+                    <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+                      <thead class="bg-warning">
+                        <tr>
+                          <th>No</th>
+                          <th>Item (BF)</th>
+                          <th>Weight (Tons)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let row3 of salesOrder_BF; let i = index">
+                          <td>{{i+1}}</td>
+                          <td>{{row3.bf}}</td>
+                          <td>{{row3.weight}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+                      <thead class="bg-warning">
+                        <tr>
+                          <th>No</th>
+                          <th>Item (BF GSM)</th>
+                          <th>Weight (Tons)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let row5 of salesOrder_BFGSM; let i = index">
+                          <td>{{i+1}}</td>
+                          <td>{{row5.bf}} BF {{row5.gsm}} GSM</td>
+                          <td>{{row5.weight}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+            
+                  </div>
+                  <div>
+                    <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+                      <thead class="bg-warning">
+                        <tr>
+                          <th>No</th>
+                          <th>Item (BF GSM Size)</th>
+                          <th>Weight (Tons)</th>
+                          <th>Reel</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let row4 of salesOrder_BFGSMSize; let i = index">
+                          <td>{{i+1}}</td>
+                          <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
+                          <td>{{row4.weight}}</td>
+                          <td>{{row4.reel}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+            
+                </div>
+              </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
                   <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onClickPrint()">Print</button>
-                  <!-- <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="onClickReviewed(dayBook_row.voucherKey)">Reviewed</button> -->
                 </div>
               </div>
             </div>
           </div>
           <td>
             <!-- Button trigger delete  -->
-            <button type="button" class="btn btn-warning btn-sm" (click)="onViewDispatch(row)">Dispatch
+            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModalLong5" (click)="onViewDispatch(row.batchNumber)">Dispatch
             </button>
+            
+                     <!-- Modal -->
+          <div class="modal fade" id="exampleModalLong5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle5" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle5">Dispatch Report</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+<div *ngFor="let row5 of dispatchSalesOrders; let i = index">
+    <table class="w-100 p-3 table-striped table-bordered ">
+        <!-- <tr> -->
+          <!-- <td>Company</td> -->
+          <th>Order# {{row5.orderNumber}} Company - {{row5.company}}</th>
+          <!-- </tr> -->
+          <!-- <tr> -->
+            <!-- <td>Order No</td> -->
+            <!-- </tr> -->
+          </table>
+          
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Item</th>
+              <th>Size</th>
+              <th>Weight</th>
+              <th>Reel</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row6 of row5.salesOrderDispatchs; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{row6.bf}} BF {{row6.gsm}} GSM</td>
+              <td>{{row6.size}}</td>
+              <td>{{row6.weight}}</td>
+              <td>{{row6.reel}}</td>
+            </tr>
+            <tr>Total Reels<td></td><td></td><td></td>{{row5.totalReel}}</tr>
+          </tbody> 
+          <br>
+                    <div *ngFor="let row6 of dispatchSalesOrders.salesOrderDispatchs; let i = index">
+  </div>
+</div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onClickPrint()">Print</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           </td>
       </tr>
     </tbody>
