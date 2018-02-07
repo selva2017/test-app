@@ -18,7 +18,7 @@ import { DispatchReport } from 'app/shared/dispatch_report';
   styleUrls: ['./plan.component.css']
 })
 export class PlanComponent implements OnInit {
-
+test: String;
   subscription: Subscription;
   salesOrder: ProdPlan[];
   salesOrder_selected: ProdPlan[] = [];
@@ -110,6 +110,7 @@ dispatchSalesOrders: DispatchReport[]=[];
       .subscribe(
       (success) => {
         console.log("success");
+        this.clearAll();
       },
       (error) => console.log(error)
       );
@@ -125,6 +126,10 @@ dispatchSalesOrders: DispatchReport[]=[];
     //   (error) => console.log(error)
     //   );
     this.salesOrderUpdated = false;
+  }
+  testKeyup(reel){
+    this.test=reel;
+console.log(reel);
   }
   clearAll() {
     this.salesOrder_selected = [];
@@ -237,12 +242,26 @@ dispatchSalesOrders: DispatchReport[]=[];
       }
     }
   }
-
+  changeReel(reelInStock,row){
+console.log(reelInStock);
+var newReel =row.reel-reelInStock;
+for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
+  if (this.salesOrder_BFGSMSize[j].id === row.id) {
+    // this.salesOrder_BFGSMSize[j].reel;
+    console.log(this.salesOrder_BFGSMSize[j]);
+    this.salesOrder_BFGSMSize[j].reel = String(newReel);
+    console.log(this.salesOrder_BFGSMSize[j]);
+    break;
+  }
+}
+this.salesOrder_BFGSMSize.slice();
+}
   selectFromAll(key, voucherKey, newQuantity) {
     this.consolidatedReport=false;
     // //console.log(newQuantity);
     // alert("newQuantity: " + newQuantity + "voucherKey: " + key.voucherKey +
     //  "Diff: " + (Number(key.voucherNumber)-Number(newQuantity)));
+    console.log("key..." + key.reel);
     console.log("key..." + key.altered);
     key["altered"] = 0;
     if (newQuantity > 0) {
@@ -250,7 +269,11 @@ dispatchSalesOrders: DispatchReport[]=[];
       key.weight = Number(newQuantity);
       key["altered"] = 1;
       key["newWeight"]= wt;
-      key.reel = this.reel(key["newWeight"],key.size);
+      console.log(key["newWeight"]);
+      console.log(key["size"]);
+      key['reel'] = this.reel(newQuantity,key['size']);
+      console.log(key['reel']);
+      console.log(key.reel);
       this.salesOrder_modified.push(key);
     }
     // console.log(this.salesOrder_modified);

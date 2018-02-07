@@ -1,3 +1,4 @@
+import { QrcodeComponent } from './view/qrcode/qrcode.component';
 import { PlanComponent } from './view/plan/plan.component';
 import { PublishComponent } from './view/publish/publish.component';
 import { AdminComponent } from './view/admin/admin.component';
@@ -59,6 +60,8 @@ const appRoutes: Routes = [
   { path: 'publish', component: PublishComponent, canActivate: [AuthGuard] },
   { path: 'plan', component: PlanComponent, canActivate: [AuthGuard]  },
   // { path: 'plan', component: PlanComponent },
+  { path: 'qrcode', component: QrcodeComponent , canActivate: [AuthGuard]  },
+  // { path: 'qrcode', component: QrcodeComponent },
   // { path: 'publish', component: PublishComponent },
   { path: 'sales', component: SalesComponent },
   { path: 'about', component: AboutComponent }

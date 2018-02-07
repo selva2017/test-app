@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { DataTableModule } from 'angular-4-data-table';
 import { ChartModule } from 'angular2-chartjs';
+import { QrcodeComponent } from './view/qrcode/qrcode.component';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './core/header/header.component';
@@ -44,7 +45,7 @@ import { AdminComponent } from './view/admin/admin.component';
 import { PublishComponent } from './view/publish/publish.component';
 import { SignupComponent } from './login/signup/signup.component';
 import { PlanComponent } from './view/plan/plan.component';
-
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
   const dd = require('highcharts/modules/exporting');
@@ -80,7 +81,8 @@ declare var require: any;
     AdminComponent,
     PublishComponent,
     SignupComponent,
-    PlanComponent
+    PlanComponent,
+    QrcodeComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +95,8 @@ declare var require: any;
     DataTableModule,
     Ng2GoogleChartsModule,
     NgbModule.forRoot(),
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxQRCodeModule
   ],
   providers: [InventoryService, ServerService, AuthGuard, AuthService,
     {provide: LOCALE_ID, useValue: "en-IN"},

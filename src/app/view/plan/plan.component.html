@@ -29,10 +29,11 @@
               <!-- <th>Vch Type</th> -->
               <th>Item</th>
               <th>Size (Inch)</th>
-              <th>Weight (Tons)</th>
+              <th>Order Weight (Tons)</th>
+              <th>Plan Weight</th>
               <th>Reel</th>
+              <!-- <th>Change Reel</th> -->
               <!-- <th>Round</th> -->
-              <th>Change Weight</th>
               <th>Select</th>
               <th>Action</th>
             </tr>
@@ -48,16 +49,20 @@
               <td>{{row1.bf}} BF {{row1.gsm}} GSM</td>
               <td>{{row1.size}}</td>
               <td>{{row1.weight}}</td>
+              <td>
+                <input class="input-sm" #newQuantity type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" />
+              </td>
               <td>{{row1.reel}}</td>
+              <!-- <td>{{row1.reel}}</td> -->
               <!-- <td bgcolor="red">{{convertReel(row1.qty,row1.size)}}</td> -->
               <!-- <td>{{reel(row1.qty,row1.size)}}</td> -->
-              <td>
+              <!-- <td> -->
                 <!-- Button trigger modal -->
                 <!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row1)">View
             </button> -->
                 <!-- <input #newQuantity flex placeholder="credit" type="text" maxlength="5" name="row1-{{i}}" #credit="ngModel" [(ngModel)]="row1.amount"> -->
-                <input class="input-sm" #newQuantity type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" />
-              </td>
+                <!-- <input class="input-sm" #newReel type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" /> -->
+              <!-- </td> -->
               <td>
                 <!-- Button trigger delete  -->
                 <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row1.voucherKey)">Hide
@@ -98,6 +103,7 @@
               <th>Size (Inch)</th>
               <th>Weight (Tons)</th>
               <th>Reel</th>
+              <th>Reels in Stock</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -115,6 +121,9 @@
               <td>{{row2.size}}</td>
               <td>{{row2.weight}}</td>
               <td>{{row2.reel}}</td>
+              <td>
+                  <input class="input-sm" #reelInStock (keyup)="changeReel(reelInStock.value,row2)" type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" />
+                </td>
               <!-- <td> -->
               <!-- <td>
           <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row2)">View
@@ -474,36 +483,37 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-<div *ngFor="let row5 of dispatchSalesOrders; let i = index">
-    <table class="w-100 p-3 table-striped table-bordered ">
+<div >
+    <table *ngFor="let row5 of dispatchSalesOrders; let i = index" class="w-100 p-3 table-striped table-bordered ">
         <!-- <tr> -->
           <!-- <td>Company</td> -->
-          <th>Order# {{row5.orderNumber}} Company - {{row5.company}}</th>
+          <h3>Order# {{row5.orderNumber}} Company - {{row5.company}}</h3>
+          <ngx-qrcode qrc-element-type="url" qrc-value="{{row5.orderNumber}}{{row5.company}}"></ngx-qrcode>
           <!-- </tr> -->
           <!-- <tr> -->
             <!-- <td>Order No</td> -->
             <!-- </tr> -->
+            
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Item</th>
+                <th>Size</th>
+                <th>Weight</th>
+                <th>Reel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row6 of row5.salesOrderDispatchs; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{row6.bf}} BF {{row6.gsm}} GSM</td>
+                <td>{{row6.size}}</td>
+                <td>{{row6.weight}}</td>
+                <td>{{row6.reel}}</td>
+              </tr>
+              <tr>Total Reels<td></td><td></td><td></td>{{row5.totalReel}}</tr>
+            </tbody> 
           </table>
-          
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Item</th>
-              <th>Size</th>
-              <th>Weight</th>
-              <th>Reel</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row6 of row5.salesOrderDispatchs; let i = index">
-              <td>{{i+1}}</td>
-              <td>{{row6.bf}} BF {{row6.gsm}} GSM</td>
-              <td>{{row6.size}}</td>
-              <td>{{row6.weight}}</td>
-              <td>{{row6.reel}}</td>
-            </tr>
-            <tr>Total Reels<td></td><td></td><td></td>{{row5.totalReel}}</tr>
-          </tbody> 
           <br>
                     <div *ngFor="let row6 of dispatchSalesOrders.salesOrderDispatchs; let i = index">
   </div>
