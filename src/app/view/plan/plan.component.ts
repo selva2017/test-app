@@ -18,7 +18,7 @@ import { DispatchReport } from 'app/shared/dispatch_report';
   styleUrls: ['./plan.component.css']
 })
 export class PlanComponent implements OnInit {
-test: String;
+  test: String;
   subscription: Subscription;
   salesOrder: ProdPlan[];
   salesOrder_selected: ProdPlan[] = [];
@@ -46,7 +46,7 @@ salesOrder_BFGSMSize1: SalesOrdersPlanned1[]=[];
 dispatchSalesOrders: DispatchReport[]=[];
 
   constructor(private serverService: ServerService) {
-    this.showLoader = true;
+    // this.showLoader = true;
   //   this.planSubmitted= [
   //     {
   //         plannedDate: "2017-09-21",
@@ -71,6 +71,7 @@ dispatchSalesOrders: DispatchReport[]=[];
   }
 
   ngOnInit() {
+    this.showLoader=true;
     this.refreshList();
     this.getConsolidatedBFGSM();
     this.getConsolidatedBFGSMSize();
@@ -129,7 +130,7 @@ dispatchSalesOrders: DispatchReport[]=[];
   }
   testKeyup(reel){
     this.test=reel;
-console.log(reel);
+// console.log(reel);
   }
   clearAll() {
     this.salesOrder_selected = [];
@@ -243,37 +244,42 @@ console.log(reel);
     }
   }
   changeReel(reelInStock,row){
-console.log(reelInStock);
+// console.log(reelInStock);
 var newReel =row.reel-reelInStock;
 for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
   if (this.salesOrder_BFGSMSize[j].id === row.id) {
     // this.salesOrder_BFGSMSize[j].reel;
-    console.log(this.salesOrder_BFGSMSize[j]);
+    // console.log(this.salesOrder_BFGSMSize[j]);
     this.salesOrder_BFGSMSize[j].reel = String(newReel);
-    console.log(this.salesOrder_BFGSMSize[j]);
+    // console.log(this.salesOrder_BFGSMSize[j]);
     break;
   }
 }
 this.salesOrder_BFGSMSize.slice();
+}
+checkWeight(weight,newQuantity){
+  if ((newQuantity) && (Number(newQuantity) > Number(weight))){
+    alert("Your Weight should be less than Order weight: "+ weight + "tons");
+  }
 }
   selectFromAll(key, voucherKey, newQuantity) {
     this.consolidatedReport=false;
     // //console.log(newQuantity);
     // alert("newQuantity: " + newQuantity + "voucherKey: " + key.voucherKey +
     //  "Diff: " + (Number(key.voucherNumber)-Number(newQuantity)));
-    console.log("key..." + key.reel);
-    console.log("key..." + key.altered);
+    // console.log("key..." + key.reel);
+    // console.log("key..." + key.altered);
     key["altered"] = 0;
     if (newQuantity > 0) {
       var wt=Number(key["weight"])-Number(newQuantity);
       key.weight = Number(newQuantity);
       key["altered"] = 1;
       key["newWeight"]= wt;
-      console.log(key["newWeight"]);
-      console.log(key["size"]);
+      // console.log(key["newWeight"]);
+      // console.log(key["size"]);
       key['reel'] = this.reel(newQuantity,key['size']);
-      console.log(key['reel']);
-      console.log(key.reel);
+      // console.log(key['reel']);
+      // console.log(key.reel);
       this.salesOrder_modified.push(key);
     }
     // console.log(this.salesOrder_modified);
@@ -340,7 +346,7 @@ this.salesOrder_BFGSMSize.slice();
         // console.log(this.salesOrder);
         // this.showLoader = false;
       })
-    this.showLoader = false;
+      this.showLoader = false;
   }
   getConsolidatedBFGSM() {
     this.subscription = this.serverService.getTotalBFGSM().

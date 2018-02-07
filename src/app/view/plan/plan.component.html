@@ -1,8 +1,11 @@
-<div *ngIf="showLoader" align="center">
-  <br>
-  <br>
-  <img src="./assets/loading-2.gif">
-</div>
+<div class="container-fluid">
+
+<div class="content">
+    <div *ngIf="showLoader" align="center">
+        <br>
+        <br>
+        <img src="./assets/loading-2.gif">
+      </div>
 <div *ngIf="!showLoader">
   <br>
   <h3>Production Planning</h3>
@@ -29,6 +32,7 @@
               <!-- <th>Vch Type</th> -->
               <th>Item</th>
               <th>Size (Inch)</th>
+              <th>Size (Cm)</th>
               <th>Order Weight (Tons)</th>
               <th>Plan Weight</th>
               <th>Reel</th>
@@ -48,9 +52,11 @@
               <td>{{row1.company}}</td>
               <td>{{row1.bf}} BF {{row1.gsm}} GSM</td>
               <td>{{row1.size}}</td>
+              <td>{{(row1.size)*2.54 | number: '1.0-0'}}</td>
               <td>{{row1.weight}}</td>
               <td>
-                <input class="input-sm" #newQuantity type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" />
+                <input class="input-sm" #newQuantity type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" 
+                (keyup)="checkWeight(row1.weight,newQuantity.value)"/>
               </td>
               <td>{{row1.reel}}</td>
               <!-- <td>{{row1.reel}}</td> -->
@@ -101,6 +107,7 @@
               <th>Name</th>
               <th>Item</th>
               <th>Size (Inch)</th>
+              <th>Size (Cm)</th>
               <th>Weight (Tons)</th>
               <th>Reel</th>
               <th>Reels in Stock</th>
@@ -119,6 +126,7 @@
               <td>{{row2.company}}</td>
               <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
               <td>{{row2.size}}</td>
+              <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
               <td>{{row2.weight}}</td>
               <td>{{row2.reel}}</td>
               <td>
@@ -158,6 +166,7 @@
               <th>BF</th>
               <th>GSM</th>
               <th>Size (Inch)</th>
+              <th>Size (Cm)</th>
               <th>Weight (Tons)</th>
             </tr>
           </thead>
@@ -168,6 +177,7 @@
               <td>{{row2.bf}} BF </td>
               <td>{{row2.gsm}} GSM</td>
               <td>{{row2.size}}</td>
+              <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
               <td>{{row2.weight}}</td>
             </tr>
           </tbody>
@@ -285,6 +295,7 @@
   </div>
 
 </div>
+</div>
 <!-- <div class="section1">
 2d
 </div>
@@ -353,8 +364,8 @@
 
           <!-- Modal -->
           <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle2" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
+            <div class="modal-dialog modal-lg" role="document" style="width:1000px;height:auto">
+              <div class="modal-content" style="width:1000px;height:auto">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLongTitle2">Production plan Details</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -374,6 +385,7 @@
                         <th>Name</th>
                         <th>Item</th>
                         <th>Size (Inch)</th>
+                        <th>Size (Cm)</th>
                         <th>Weight (Tons)</th>
                         <th>Reel</th>
                         <!-- <th>Action</th> -->
@@ -388,12 +400,13 @@
                         <td>{{row2.company}}</td>
                         <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
                         <td>{{row2.size}}</td>
+                        <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
                         <td>{{row2.weight}}</td>
                         <td>{{row2.reel}}</td>
-                        <td>
+                        <!-- <td> -->
                           <!-- <button type="button" class="btn btn-warning btn-sm" (click)="selectFromSelected(row2,row2.id)">Remove
                           </button> -->
-                        </td>
+                        <!-- </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -475,30 +488,35 @@
             
                      <!-- Modal -->
           <div class="modal fade" id="exampleModalLong5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle5" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
+            <div class="modal-dialog modal-lg" role="document" style="width:auto;height:auto">
+              <div class="modal-content" style="width:auto;height:auto">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLongTitle5">Dispatch Report</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-<div >
-    <table *ngFor="let row5 of dispatchSalesOrders; let i = index" class="w-100 p-3 table-striped table-bordered ">
+<div>
+  <div *ngFor="let row5 of dispatchSalesOrders; let i = index" class="w-100 p-3 table-striped table-bordered ">
+   
+  <table class="col-lg-8">
         <!-- <tr> -->
           <!-- <td>Company</td> -->
-          <h3>Order# {{row5.orderNumber}} Company - {{row5.company}}</h3>
-          <ngx-qrcode qrc-element-type="url" qrc-value="{{row5.orderNumber}}{{row5.company}}"></ngx-qrcode>
+          <!-- <ngx-qrcode qrc-element-type="url" qrc-value="{{row5.orderNumber}}{{row5.company}}"></ngx-qrcode> -->
           <!-- </tr> -->
           <!-- <tr> -->
             <!-- <td>Order No</td> -->
             <!-- </tr> -->
-            
+                 
             <thead>
-              <tr>
+            <tr>
+              <th colspan="6">Company - {{row5.company}} Order# {{row5.orderNumber}}</th>
+              </tr> 
+                 <tr>
                 <th>No</th>
                 <th>Item</th>
-                <th>Size</th>
+                <th>Size (Inch)</th>
+                <th>Size (Cm)</th>
                 <th>Weight</th>
                 <th>Reel</th>
               </tr>
@@ -508,15 +526,23 @@
                 <td>{{i+1}}</td>
                 <td>{{row6.bf}} BF {{row6.gsm}} GSM</td>
                 <td>{{row6.size}}</td>
+                <td>{{(row6.size)*2.54 | number: '1.0-0'}}</td>
                 <td>{{row6.weight}}</td>
                 <td>{{row6.reel}}</td>
               </tr>
-              <tr>Total Reels<td></td><td></td><td></td>{{row5.totalReel}}</tr>
             </tbody> 
+            <tfoot>
+                <tr>
+                    <th id="total" colspan="5">Total Reels :</th>
+                    <td>{{row5.totalReel}}</td>
+                  </tr>
+            </tfoot>
           </table>
           <br>
                     <div *ngFor="let row6 of dispatchSalesOrders.salesOrderDispatchs; let i = index">
   </div>
+  </div>
+
 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
@@ -533,3 +559,4 @@
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 </ng-template>
+</div>
