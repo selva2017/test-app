@@ -1,6 +1,6 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid"> -->
 
-<div class="content">
+<!-- <div class="content"> -->
     <div *ngIf="showLoader" align="center">
         <br>
         <br>
@@ -10,6 +10,7 @@
   <br>
   <h3>Production Planning</h3>
   <div class="col-md-12">
+  <!-- <div class="col-md-12"> -->
     <button *ngIf="showAll" class="btn-group btn-md btn-success" (click)="showSelected()">Show Selected</button>
     <button *ngIf="!showAll" class="btn-group btn-md btn-primary" (click)="showSelected()">Show All</button>
     <button *ngIf="!showAll" class="btn-group btn-md btn-warning" (click)="confirmProduction()" data-toggle="modal" data-target="#exampleModalLong">Confirm</button>
@@ -25,7 +26,7 @@
           <!-- <table style="width:50%;" *ngIf="showAll" class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
           <thead class="bg-success">
             <tr>
-              <th>No</th>
+              <!-- <th>No</th> -->
               <th>Date</th>
               <th>Order#</th>
               <th>Name</th>
@@ -33,10 +34,10 @@
               <th>Item</th>
               <th>Size (Inch)</th>
               <th>Size (Cm)</th>
-              <th>Order Weight (Tons)</th>
-              <th>Plan Weight</th>
-              <th>Reel</th>
-              <!-- <th>Change Reel</th> -->
+              <th>Weight (Tons)</th>
+              <th>Weight Plan</th>
+              <th>Reel Order</th>
+              <!-- <th>Reel Plan</th> -->
               <!-- <th>Round</th> -->
               <th>Select</th>
               <th>Action</th>
@@ -46,7 +47,7 @@
             <!-- <tr class="col-xs-12"> -->
             <!-- <tr *ngFor="let row of salesOrder; let i = index"> -->
             <tr *ngFor="let row1 of salesOrder | paginate: { itemsPerPage: 50, currentPage: p1 }; let i = index">
-              <td>{{i+1}}</td>
+              <!-- <td>{{i+1}}</td> -->
               <td>{{row1.orderDate | date : 'dd-MM-yyyy'}}</td>
               <td>{{row1.orderNumber}}</td>
               <td>{{row1.company}}</td>
@@ -55,10 +56,18 @@
               <td>{{(row1.size)*2.54 | number: '1.0-0'}}</td>
               <td>{{row1.weight}}</td>
               <td>
-                <input class="input-sm" #newQuantity type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" 
-                (keyup)="checkWeight(row1.weight,newQuantity.value)"/>
+                <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" 
+                [(ngModel)]="row1.newWeight"/>
+                
+                <!-- <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" 
+                (keyup)="changeWeight(row1,newWeight.value,row1.size)"/> -->
+                <!-- (keyup)="changeWeight(row1.weight,newWeight.value)"/> -->
               </td>
-              <td>{{row1.reel}}</td>
+              <td>
+                  <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" 
+                  [(ngModel)]="row1.reel" (keyup)="modifyReel(row1,reel.value)"/>
+              </td>
+              <!-- <td>{{row1.reel}}</td> -->
               <!-- <td>{{row1.reel}}</td> -->
               <!-- <td bgcolor="red">{{convertReel(row1.qty,row1.size)}}</td> -->
               <!-- <td>{{reel(row1.qty,row1.size)}}</td> -->
@@ -66,18 +75,19 @@
                 <!-- Button trigger modal -->
                 <!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row1)">View
             </button> -->
-                <!-- <input #newQuantity flex placeholder="credit" type="text" maxlength="5" name="row1-{{i}}" #credit="ngModel" [(ngModel)]="row1.amount"> -->
-                <!-- <input class="input-sm" #newReel type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" /> -->
+                <!-- <input #newWeight flex placeholder="credit" type="text" maxlength="5" name="row1-{{i}}" #credit="ngModel" [(ngModel)]="row1.amount"> -->
+                <!-- <input class="input-sm" #newReel [ngModel]="((newWeight.value)*1000)/(row1.size*10)" type="text" pattern="[0-9]" maxlength="2" style="width:35px;" [id]="i" /> -->
+                <!-- <input class="input-sm" #newReel [ngModel]="((newWeight.value)*1000)/(row1.size*10)" type="text" pattern="[0-9]" maxlength="2" style="width:35px;" [id]="i" /> -->
               <!-- </td> -->
               <td>
                 <!-- Button trigger delete  -->
                 <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row1.voucherKey)">Hide
               </button> -->
                 <!-- <div class="form-check"> -->
-                <button type="button" class="btn btn-success btn-sm" (click)="selectFromAll(row1,row1['id'],newQuantity.value)">Select
+                <button type="button" class="btn btn-success btn-sm" (click)="selectFromAll(row1,row1['id'],newWeight.value)">Select
                 </button>
-                <!-- <input #myId type="checkbox" value="" id="defaultCheck3" (change)="selectFromAll(row1,row1.voucherKey,newQuantity.value)" /> -->
-                <!-- <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row1,newQuantity.value)"/> -->
+                <!-- <input #myId type="checkbox" value="" id="defaultCheck3" (change)="selectFromAll(row1,row1.voucherKey,newWeight.value)" /> -->
+                <!-- <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row1,newWeight.value)"/> -->
                 <!-- <label class="form-check-label" for="defaultCheck1">
                     Select
                   </label> -->
@@ -130,7 +140,8 @@
               <td>{{row2.weight}}</td>
               <td>{{row2.reel}}</td>
               <td>
-                  <input class="input-sm" #reelInStock (keyup)="changeReel(reelInStock.value,row2)" type="text" pattern="[0-9]" maxlength="5" style="width:50px;" [id]="i" />
+                  <input class="input-sm" #reelInStock (keyup)="stockReel(reelInStock.value,row2)" type="text" pattern="[0-9]" maxlength="2" style="width:35px;" [id]="i" 
+                  [(ngModel)]="row2.reelInStock" />
                 </td>
               <!-- <td> -->
               <!-- <td>
@@ -211,7 +222,7 @@
     </ng-template>
     <div *ngIf="!consolidatedReport"class="col-lg-4">
       <div>
-        <h5>Selected Total</h5>
+        <h5>Items Selected for Planning</h5>
         <table class="table table-responsive table-hover table-sm table-striped table-bordered">
           <!-- <table style="width:50%;" *ngIf="!showAll"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
           <thead class="bg-warning">
@@ -295,7 +306,7 @@
   </div>
 
 </div>
-</div>
+<!-- </div> -->
 <!-- <div class="section1">
 2d
 </div>
@@ -388,6 +399,7 @@
                         <th>Size (Cm)</th>
                         <th>Weight (Tons)</th>
                         <th>Reel</th>
+                        <th>Reel In Stock</th>
                         <!-- <th>Action</th> -->
                       </tr>
                     </thead>
@@ -403,6 +415,7 @@
                         <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
                         <td>{{row2.weight}}</td>
                         <td>{{row2.reel}}</td>
+                        <td>{{row2.reelInStock}}</td>
                         <!-- <td> -->
                           <!-- <button type="button" class="btn btn-warning btn-sm" (click)="selectFromSelected(row2,row2.id)">Remove
                           </button> -->
@@ -414,7 +427,7 @@
                 </div>
                 <div class="col-lg-4">
                   <div>
-                    <h5>Selected Total</h5>
+                    <h5>Items Selected for Planning</h5>
                     <table class="table table-responsive table-hover table-sm table-striped table-bordered">
                       <thead class="bg-warning">
                         <tr>
@@ -458,6 +471,7 @@
                           <th>No</th>
                           <th>Item (BF GSM Size)</th>
                           <th>Weight (Tons)</th>
+                          <th>Reel</th>
                           <th>Reel</th>
                         </tr>
                       </thead>
@@ -510,7 +524,7 @@
                  
             <thead>
             <tr>
-              <th colspan="6">Company - {{row5.company}} Order# {{row5.orderNumber}}</th>
+              <th colspan="7">Company - {{row5.company}} Order# {{row5.orderNumber}}</th>
               </tr> 
                  <tr>
                 <th>No</th>
@@ -519,6 +533,7 @@
                 <th>Size (Cm)</th>
                 <th>Weight</th>
                 <th>Reel</th>
+                <th>Reel In Stock</th>
               </tr>
             </thead>
             <tbody>
@@ -529,6 +544,7 @@
                 <td>{{(row6.size)*2.54 | number: '1.0-0'}}</td>
                 <td>{{row6.weight}}</td>
                 <td>{{row6.reel}}</td>
+                <td>{{row6.reelInStock}}</td>
               </tr>
             </tbody> 
             <tfoot>
@@ -559,4 +575,4 @@
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
 </ng-template>
-</div>
+<!-- </div> -->

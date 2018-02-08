@@ -22,5 +22,6 @@ export interface DispatchReport
             size: Number,
             voucherKey: Number,
             weight: Number
+            reelInStock: String,
         }];
 }

@@ -10,4 +10,5 @@ export interface ProdPlan {
     size: Number,
     voucherKey: Number,
     weight: Number,
+    reelInStock: String,
 };

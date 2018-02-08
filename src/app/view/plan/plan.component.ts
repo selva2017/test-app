@@ -18,6 +18,7 @@ import { DispatchReport } from 'app/shared/dispatch_report';
   styleUrls: ['./plan.component.css']
 })
 export class PlanComponent implements OnInit {
+  calcReel: Number;
   test: String;
   subscription: Subscription;
   salesOrder: ProdPlan[];
@@ -243,7 +244,7 @@ dispatchSalesOrders: DispatchReport[]=[];
       }
     }
   }
-  changeReel(reelInStock,row){
+  stockReel(reelInStock,row){
 // console.log(reelInStock);
 var newReel =row.reel-reelInStock;
 for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
@@ -257,27 +258,40 @@ for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
 }
 this.salesOrder_BFGSMSize.slice();
 }
-checkWeight(weight,newQuantity){
-  if ((newQuantity) && (Number(newQuantity) > Number(weight))){
-    alert("Your Weight should be less than Order weight: "+ weight + "tons");
-  }
+changeWeight(row1,newWeight,size){
+  row1.newReel=this.calcReel;
+  this.calcReel = this.reel(newWeight,size);
+  // if ((newWeight) && (Number(newWeight) > Number(weight))){
+  //   alert("Your Weight should be less than Order weight: "+ weight + "tons");
+  // }
 }
-  selectFromAll(key, voucherKey, newQuantity) {
+modifyReel(row,reel){
+  if (reel > 0) {
+    this.salesOrder_selected[row.id]['reel']=reel;
+  }
+  // console.log(this.salesOrder_modified);
+  //console.log("key..." + key);
+  // //console.log("voucher number..." + voucherNumber)
+  // this.salesOrder_row = key;
+
+}
+  selectFromAll(key, voucherKey, newWeight) {
     this.consolidatedReport=false;
-    // //console.log(newQuantity);
-    // alert("newQuantity: " + newQuantity + "voucherKey: " + key.voucherKey +
-    //  "Diff: " + (Number(key.voucherNumber)-Number(newQuantity)));
-    // console.log("key..." + key.reel);
-    // console.log("key..." + key.altered);
+    // //console.log(newWeight);
+    // alert("newWeight: " + newWeight + "voucherKey: " + key.voucherKey +
+    //  "Diff: " + (Number(key.voucherNumber)-Number(newWeight)));
+    console.log("key..." + key.reel);
+    console.log("key...weight" + key.weight);
+    console.log("key...new weight" + key.newWeight);
     key["altered"] = 0;
-    if (newQuantity > 0) {
-      var wt=Number(key["weight"])-Number(newQuantity);
-      key.weight = Number(newQuantity);
+    if (newWeight > 0) {
+      var wt=Number(key["weight"])-Number(newWeight);
+      key.weight = Number(newWeight);
       key["altered"] = 1;
       key["newWeight"]= wt;
       // console.log(key["newWeight"]);
       // console.log(key["size"]);
-      key['reel'] = this.reel(newQuantity,key['size']);
+      key['reel'] = this.reel(newWeight,key['size']);
       // console.log(key['reel']);
       // console.log(key.reel);
       this.salesOrder_modified.push(key);

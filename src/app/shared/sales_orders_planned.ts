@@ -20,6 +20,7 @@ export interface SalesOrdersPlanned {
             size: Number,
             voucherKey: Number,
             weight: Number
+            reelInStock: String,
         }];
 }
 
