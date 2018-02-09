@@ -7,8 +7,8 @@ import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './login.component.html?v=${new Date().getTime()}',
+  styleUrls: ['./login.component.css?v=${new Date().getTime()}']
 })
 export class LoginComponent implements OnInit {
   error_msg: string;

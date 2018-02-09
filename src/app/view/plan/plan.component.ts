@@ -280,9 +280,9 @@ modifyReel(row,reel){
     // //console.log(newWeight);
     // alert("newWeight: " + newWeight + "voucherKey: " + key.voucherKey +
     //  "Diff: " + (Number(key.voucherNumber)-Number(newWeight)));
-    console.log("key..." + key.reel);
-    console.log("key...weight" + key.weight);
-    console.log("key...new weight" + key.newWeight);
+    // console.log("key..." + key.reel);
+    // console.log("key...weight" + key.weight);
+    // console.log("key...new weight" + key.newWeight);
     key["altered"] = 0;
     if (newWeight > 0) {
       var wt=Number(key["weight"])-Number(newWeight);
@@ -447,7 +447,7 @@ modifyReel(row,reel){
       this.showLoader = false;
     })
 }
-onView(record1,record2,record3,record4) {
+onViewProductionReport(record1,record2,record3,record4) {
   // console.log("record");
   // console.log(record1);
   this.salesOrdersPlanned_row1=[];

@@ -26,7 +26,7 @@
           <!-- <table style="width:50%;" *ngIf="showAll" class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
           <thead class="bg-success">
             <tr>
-              <!-- <th>No</th> -->
+              <th>No</th>
               <th>Date</th>
               <th>Order#</th>
               <th>Name</th>
@@ -36,7 +36,7 @@
               <th>Size (Cm)</th>
               <th>Weight (Tons)</th>
               <th>Weight Plan</th>
-              <th>Reel Order</th>
+              <th>Reel</th>
               <!-- <th>Reel Plan</th> -->
               <!-- <th>Round</th> -->
               <th>Select</th>
@@ -47,7 +47,7 @@
             <!-- <tr class="col-xs-12"> -->
             <!-- <tr *ngFor="let row of salesOrder; let i = index"> -->
             <tr *ngFor="let row1 of salesOrder | paginate: { itemsPerPage: 50, currentPage: p1 }; let i = index">
-              <!-- <td>{{i+1}}</td> -->
+              <td>{{i+1}}</td>
               <td>{{row1.orderDate | date : 'dd-MM-yyyy'}}</td>
               <td>{{row1.orderNumber}}</td>
               <td>{{row1.company}}</td>
@@ -335,9 +335,9 @@
 <ng-template [ngIf]= "consolidatedReport">
 <div *ngIf="!showLoader">
   <br>
-  <h3>Production Plan Reports</h3>
+  <h5>Production Plan Reports</h5>
   <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-    <thead class="thead-inverse">
+    <thead class="bg-primary">
       <tr>
         <th>No</th>
         <th>Planned Date</th>
@@ -370,15 +370,18 @@
         <!-- </ng-template> -->
         <td>
           <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong2" 
-          (click)="onView(row.salesOrderPlanneds,row.salesOrdersBf,row.salesOrdersBfGsm,row.salesOrdersBfGsmSize)">Production
+          (click)="onViewProductionReport(row.salesOrderPlanneds,row.salesOrdersBf,row.salesOrdersBfGsm,row.salesOrdersBfGsmSize)">Production
           </button>
 
           <!-- Modal -->
           <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle2" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document" style="width:1000px;height:auto">
-              <div class="modal-content" style="width:1000px;height:auto">
+            <!-- <div class="modal-dialog modal-lg" role="document"> -->
+            <div class="modal-dialog modal-lg" role="document" style="position:absolute;width:auto;height:auto">
+              <!-- <div class="modal-content"> -->
+              <div class="modal-content" style="width:1200px;height:auto">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle2">Production plan Details</h5>
+                  <h5>Production plan Details</h5>
+                  <!-- <h5 class="modal-title" id="exampleModalLongTitle2">Production plan Details</h5> -->
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -423,7 +426,7 @@
                       </tr>
                     </tbody>
                   </table>
-                  <pagination-controls (pageChange)="p2 = $event"></pagination-controls>
+                  <!-- <pagination-controls (pageChange)="p2 = $event"></pagination-controls> -->
                 </div>
                 <div class="col-lg-4">
                   <div>
@@ -472,7 +475,7 @@
                           <th>Item (BF GSM Size)</th>
                           <th>Weight (Tons)</th>
                           <th>Reel</th>
-                          <th>Reel</th>
+                          <th>Reel In Stock</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -481,6 +484,7 @@
                           <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
                           <td>{{row4.weight}}</td>
                           <td>{{row4.reel}}</td>
+                          <td>{{row4.reelInStock}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -503,7 +507,7 @@
                      <!-- Modal -->
           <div class="modal fade" id="exampleModalLong5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle5" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document" style="width:auto;height:auto">
-              <div class="modal-content" style="width:auto;height:auto">
+              <div class="modal-content" style="position:absolute;width:auto;height:auto">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLongTitle5">Dispatch Report</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -513,7 +517,8 @@
 <div>
   <div *ngFor="let row5 of dispatchSalesOrders; let i = index" class="w-100 p-3 table-striped table-bordered ">
    
-  <table class="col-lg-8">
+  <table>
+  <!-- <table class="col-lg-8"> -->
         <!-- <tr> -->
           <!-- <td>Company</td> -->
           <!-- <ngx-qrcode qrc-element-type="url" qrc-value="{{row5.orderNumber}}{{row5.company}}"></ngx-qrcode> -->
@@ -523,10 +528,10 @@
             <!-- </tr> -->
                  
             <thead>
-            <tr>
-              <th colspan="7">Company - {{row5.company}} Order# {{row5.orderNumber}}</th>
+            <tr class="bg-success">
+              <th colspan="7">Order# {{row5.orderNumber}} - {{row5.company}}</th>
               </tr> 
-                 <tr>
+                 <tr class="bg-primary">
                 <th>No</th>
                 <th>Item</th>
                 <th>Size (Inch)</th>
@@ -550,7 +555,8 @@
             <tfoot>
                 <tr>
                     <th id="total" colspan="5">Total Reels :</th>
-                    <td>{{row5.totalReel}}</td>
+                    <th>{{row5.totalReel}}</th>
+                    <th id="total" colspan="6">{{row5.reelInStock}}</th>
                   </tr>
             </tfoot>
           </table>
