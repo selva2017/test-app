@@ -58,14 +58,16 @@
               <td>
                 <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" 
                 [(ngModel)]="row1.newWeight"/>
-                
                 <!-- <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" 
                 (keyup)="changeWeight(row1,newWeight.value,row1.size)"/> -->
                 <!-- (keyup)="changeWeight(row1.weight,newWeight.value)"/> -->
               </td>
               <td>
-                  <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" 
-                  [(ngModel)]="row1.reel" (keyup)="modifyReel(row1,reel.value)"/>
+                <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;"
+                [ngModel]="row1.reel | number: '1.0-0'" (ngModelChange)="row1.reel=$event"
+                onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                  <!-- <input class="input-sm" #reel type="text" pattern="[0-9]" step="1" maxlength="5" style="width:45px;" [id]="i" 
+                  [(ngModel)]="row1.reel" (keyup)="modifyReel(row1,reel.value)"/> -->
               </td>
               <!-- <td>{{row1.reel}}</td> -->
               <!-- <td>{{row1.reel}}</td> -->
@@ -138,10 +140,13 @@
               <td>{{row2.size}}</td>
               <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
               <td>{{row2.weight}}</td>
-              <td>{{row2.reel}}</td>
+              <td>{{row2.reel | number: '1.0-0'}}</td>
               <td>
-                  <input class="input-sm" #reelInStock (keyup)="stockReel(reelInStock.value,row2)" type="text" pattern="[0-9]" maxlength="2" style="width:35px;" [id]="i" 
-                  [(ngModel)]="row2.reelInStock" />
+                  <input class="input-sm" #reelInStock type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [id]="i" 
+                  [ngModel]="row2.reelInStock | number: '1.0-0'" (ngModelChange)="row2.reelInStock=$event" (keyup)="stockReel(reelInStock.value,row2)"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                  <!-- <input class="input-sm" #reelInStock (keyup)="stockReel(reelInStock.value,row2)" type="text" pattern="[0-9]" step="1" maxlength="5" style="width:35px;" [id]="i" 
+                  [(ngModel)]="row2.reelInStock " /> -->
                 </td>
               <!-- <td> -->
               <!-- <td>
@@ -284,6 +289,7 @@
               <!-- <th>Size</th> -->
               <th>Weight (Tons)</th>
               <th>Reel</th>
+              <th *ngIf="!showAll">Reel In Stock</th>
               <!-- <th>Round</th> -->
             </tr>
           </thead>
@@ -294,7 +300,8 @@
               <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
               <!-- <td>{{row4.size}}</td> -->
               <td>{{row4.weight}}</td>
-              <td>{{row4.reel}}</td>
+              <td>{{row4.reel| number: '1.0-0'}}</td>
+              <td *ngIf="!showAll">{{row4.reelInStock | number: '1.0-0'}}</td>
               <!-- <td bgcolor="red">{{convertReel(row4.qty,row4.size)}}</td>
               <td>{{reel(row4.qty,row4.size)}}</td> -->
             </tr>
@@ -353,7 +360,7 @@
       <tr *ngFor="let row of salesOrdersPlanned | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
 
         <td>{{i+1}}</td>
-        <td>{{row.createdDate}}</td>
+        <td>{{row.createdDate | date: 'dd-MM-yyyy'}}</td>
         <td>{{row.batchNumber}}</td>
         <!-- <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST' || row.voucherType === 'Consumption Entry'"> -->
           <!-- <td>{{row.inventoryEntryVOs[0].stockItemName}}</td> -->
@@ -391,6 +398,9 @@
                   <h5>Sales Orders</h5>
                   <table class="table table-responsive table-hover table-sm table-striped table-bordered">
                     <thead class="bg-primary">
+<tr>
+    <th colspan="6">Date: {{row.createdDate| date: 'dd-MM-yyyy'}}</th><th colspan="5"> BatchNo:{{row.batchNumber}}</th>
+</tr>
                       <tr>
                         <th>No</th>
                         <!-- <th>Altered</th> -->
@@ -403,7 +413,7 @@
                         <th>Weight (Tons)</th>
                         <th>Reel</th>
                         <th>Reel In Stock</th>
-                        <!-- <th>Action</th> -->
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -417,12 +427,20 @@
                         <td>{{row2.size}}</td>
                         <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
                         <td>{{row2.weight}}</td>
-                        <td>{{row2.reel}}</td>
-                        <td>{{row2.reelInStock}}</td>
-                        <!-- <td> -->
-                          <!-- <button type="button" class="btn btn-warning btn-sm" (click)="selectFromSelected(row2,row2.id)">Remove
-                          </button> -->
-                        <!-- </td> -->
+                        <!-- <td>{{row2.reel}}</td> -->
+                        <td>
+                          <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;"
+                  [ngModel]="row2.reel | number: '1.0-0'" (ngModelChange)="row2.reel=$event" (keyup)="modifyReel(row1,reel.value)"
+                  onkeypress="return event.charCode >= 48 && event.charCode <= 57"/>
+                        <!-- <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="5" style="width:45px;" [id]="i" 
+                        [(ngModel)]="row2.reel"/> -->
+                    </td>
+                        <td>{{row2.reelInStock  | number: '1.0-0' }}</td>
+                        <td>
+                          <button type="button" class="btn btn-warning btn-sm" (click)="updatePlannedSalesOrder(row2.id,row2.reel)"
+                          data-dismiss="modal">Update
+                          </button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -474,7 +492,7 @@
                           <th>No</th>
                           <th>Item (BF GSM Size)</th>
                           <th>Weight (Tons)</th>
-                          <th>Reel</th>
+                          <th>Prod Reel</th>
                           <th>Reel In Stock</th>
                         </tr>
                       </thead>
@@ -483,8 +501,8 @@
                           <td>{{i+1}}</td>
                           <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
                           <td>{{row4.weight}}</td>
-                          <td>{{row4.reel}}</td>
-                          <td>{{row4.reelInStock}}</td>
+                          <td>{{row4.reel| number: '1.0-0'}}</td>
+                          <td>{{row4.reelInStock| number: '1.0-0'}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -537,7 +555,7 @@
                 <th>Size (Inch)</th>
                 <th>Size (Cm)</th>
                 <th>Weight</th>
-                <th>Reel</th>
+                <th>Prod Reel</th>
                 <th>Reel In Stock</th>
               </tr>
             </thead>
@@ -547,16 +565,21 @@
                 <td>{{row6.bf}} BF {{row6.gsm}} GSM</td>
                 <td>{{row6.size}}</td>
                 <td>{{(row6.size)*2.54 | number: '1.0-0'}}</td>
-                <td>{{row6.weight}}</td>
-                <td>{{row6.reel}}</td>
-                <td>{{row6.reelInStock}}</td>
+                <td>{{row6.weight  | number: '1.2-2'}}</td>
+                <td>{{row6.reel  | number: '1.0-0'}}</td>
+                <td>{{row6.reelInStock  | number: '1.0-0'}}</td>
               </tr>
             </tbody> 
             <tfoot>
                 <tr>
-                    <th id="total" colspan="5">Total Reels :</th>
-                    <th>{{row5.totalReel}}</th>
-                    <th id="total" colspan="6">{{row5.reelInStock}}</th>
+                    <th id="total" colspan="4">Total :</th>
+                    <th>{{row5.totalWeight  | number: '1.2-2'}}</th>
+                    <th>{{row5.totalReel  | number: '1.0-0'}}</th>
+                    <th>{{row5.totalReelInStock  | number: '1.0-0'}}</th>
+                  </tr>
+                  <tr>
+                    <th colspan="5">Total (Reels for Production + Reels In Stock)</th>
+                    <th colspan="2">{{sumReels(row5.totalReel,row5.totalReelInStock) | number: '1.0-0'}}</th>
                   </tr>
             </tfoot>
           </table>

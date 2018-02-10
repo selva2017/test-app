@@ -3,6 +3,9 @@ export interface DispatchReport
 {
     company: string;
     orderNumber: string;
+    totalReel: Number;
+    totalReelInStock: Number;
+    totalWeight: Number;
     salesOrderDispatchs: [
         {
             altered: String,

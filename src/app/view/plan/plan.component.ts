@@ -14,8 +14,8 @@ import { DispatchReport } from 'app/shared/dispatch_report';
 
 @Component({
   selector: 'app-plan',
-  templateUrl: './plan.component.html',
-  styleUrls: ['./plan.component.css']
+  templateUrl: './plan.component.html?v=${new Date().getTime()}',
+  styleUrls: ['./plan.component.css?v=${new Date().getTime()}']
 })
 export class PlanComponent implements OnInit {
   calcReel: Number;
@@ -252,6 +252,7 @@ for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
     // this.salesOrder_BFGSMSize[j].reel;
     // console.log(this.salesOrder_BFGSMSize[j]);
     this.salesOrder_BFGSMSize[j].reel = String(newReel);
+    this.salesOrder_BFGSMSize[j].reelInStock = String(reelInStock);
     // console.log(this.salesOrder_BFGSMSize[j]);
     break;
   }
@@ -273,6 +274,23 @@ modifyReel(row,reel){
   //console.log("key..." + key);
   // //console.log("voucher number..." + voucherNumber)
   // this.salesOrder_row = key;
+
+}
+sumReels(reel,reelInstock){
+return(Number(reel)+Number(reelInstock));
+}
+updatePlannedSalesOrder(id,reel){
+// console.log(id,reel);
+this.serverService.updatePlannedSalesOrderReel(id,reel)
+      .subscribe(
+      // (res: Daybook) => console.log(res),
+      (success) => {
+        // console.log("success");
+        this.displayProdOrders();
+        // this.refreshList();
+      },
+      (error) => console.log(error)
+      );
 
 }
   selectFromAll(key, voucherKey, newWeight) {
@@ -353,6 +371,7 @@ modifyReel(row,reel){
     //console.log(this.salesOrder.length);
   }
   refreshList() {
+    this.salesOrder = [];
     // this.showLoader = true;
     this.subscription = this.serverService.getSalesOrder().
       subscribe(list => {
@@ -439,6 +458,7 @@ modifyReel(row,reel){
   dayBook_row: Daybook[] = [];
   
   displayProdOrders(){
+    this.salesOrdersPlanned=[];
     this.consolidatedReport=true;
     this.subscription = this.serverService.getSalesOrdersPlanned().
     subscribe(list => {

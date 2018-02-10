@@ -16,7 +16,7 @@ export interface SalesOrdersPlanned {
             orderDate: String,
             orderNumber: Number,
             orderStatus: Number,
-            reel: String,
+            reel: Number,
             size: Number,
             voucherKey: Number,
             weight: Number
