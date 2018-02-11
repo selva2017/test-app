@@ -27,52 +27,54 @@ export class PlanComponent implements OnInit {
   salesOrder_row: ProdPlan[] = [];
   salesOrder_modified: ProdPlan[] = [];
   showLoader: boolean;
-  showAll: boolean = true;
-  consolidatedReport: boolean = false;
-  salesOrderUpdated: boolean = false;
   salesOrder_BFGSM: ProdPlan[] = [];
   consolidatedBFGSM: ProdPlan[] = [];
   salesOrder_BFGSMSize: ProdPlan[] = [];
   consolidatedBFGSMSize: ProdPlan[] = [];
   salesOrder_BF: ProdPlan[] = [];
   // salesOrder_BFGSM =[{item:String,reel:Number}];
-  showPlanSubmitted: boolean=false;
-  submittedPlans: Planned[]=[];
-  planSubmitted: Planned[]=[];
-salesOrdersPlanned: SalesOrdersPlanned[]=[];
-salesOrdersPlanned_row1: SalesOrdersPlanned1[]=[];
-salesOrdersPlanned_row2: SalesOrdersPlanned1[]=[];
-salesOrdersPlanned_row: SalesOrdersPlanned[]=[];
-salesOrder_BFGSMSize1: SalesOrdersPlanned1[]=[];
-dispatchSalesOrders: DispatchReport[]=[];
+  showAllSalesOrders: boolean = true;
+  showSelectedOrders: boolean = false;
+  showConsolidatedReports: boolean = false;
+  // salesOrderUpdated: boolean = false;
+  showPlannedReports: boolean = false;
+  submittedPlans: Planned[] = [];
+  planSubmitted: Planned[] = [];
+  salesOrdersPlanned: SalesOrdersPlanned[] = [];
+  salesOrdersPlanned_row1: SalesOrdersPlanned1[] = [];
+  salesOrdersPlanned_row2: SalesOrdersPlanned1[] = [];
+  salesOrdersPlanned_row: SalesOrdersPlanned[] = [];
+  salesOrder_BFGSMSize1: SalesOrdersPlanned1[] = [];
+  dispatchSalesOrders: DispatchReport[] = [];
+  dispatchHeader: string;
 
   constructor(private serverService: ServerService) {
-    // this.showLoader = true;
-  //   this.planSubmitted= [
-  //     {
-  //         plannedDate: "2017-09-21",
-  //         batchNumber: "1",
-  //         items: [
-  //       {
-  //         id:"3381",
-  //       orderNumber:"1",
-  //       voucherKey:"185113090457664",
-  //       orderDate:"2018-01-01",
-  //       company:"AMBAL AGENCIES",
-  //       bf:"16",
-  //       gsm:"170",
-  //       size:"28.00",
-  //       weight:"0.84",
-  //       newWeight:"0.84",
-  //       reel:"3.00",
-  //       orderStatus:"0",
-  //       altered:"0"}
-  //         ]
-  //     }];
+    this.showLoader = true;
+    //   this.planSubmitted= [
+    //     {
+    //         plannedDate: "2017-09-21",
+    //         batchNumber: "1",
+    //         items: [
+    //       {
+    //         id:"3381",
+    //       orderNumber:"1",
+    //       voucherKey:"185113090457664",
+    //       orderDate:"2018-01-01",
+    //       company:"AMBAL AGENCIES",
+    //       bf:"16",
+    //       gsm:"170",
+    //       size:"28.00",
+    //       weight:"0.84",
+    //       newWeight:"0.84",
+    //       reel:"3.00",
+    //       orderStatus:"0",
+    //       altered:"0"}
+    //         ]
+    //     }];
   }
 
   ngOnInit() {
-    this.showLoader=true;
+    // this.showLoader=true;
     this.refreshList();
     this.getConsolidatedBFGSM();
     this.getConsolidatedBFGSMSize();
@@ -86,19 +88,34 @@ dispatchSalesOrders: DispatchReport[]=[];
   onClickView(record) {
     this.salesOrder_row = record;
   }
+  showAll() {
+    // this.showAllSalesOrders = false;
+    this.showAllSalesOrders = true;
+    this.showSelectedOrders = false;
+    this.showConsolidatedReports = false;
+    this.showPlannedReports = false;
+  }
   showSelected() {
-    // this.showAll = false;
-    this.showAll = !this.showAll;
-    this.consolidatedReport = false;
+    // this.showAllSalesOrders = false;
+    this.showSelectedOrders = true;
+    this.showAllSalesOrders = false;
+    this.showConsolidatedReports = false;
+    this.showPlannedReports = false;
   }
   showConsolidated() {
-    this.showAll = false;
-    this.salesOrderUpdated = false;
-    this.consolidatedReport = true;
+    this.showConsolidatedReports = true;
+    this.showAllSalesOrders = false;
+    this.showSelectedOrders = false;
+    this.showPlannedReports = false;
+    // this.salesOrderUpdated = false;
   }
   confirmProduction() {
-    this.salesOrderUpdated = true;
-    this.showAll = true;
+    // this.salesOrderUpdated = true;
+    this.showAllSalesOrders = true;
+    this.showConsolidatedReports = false;
+    this.showSelectedOrders = false;
+    this.showPlannedReports = false;
+
     // Send the Completed orders
     // this.salesOrder_selected.forEach(element => {
     // console.log(element);
@@ -127,11 +144,11 @@ dispatchSalesOrders: DispatchReport[]=[];
     //   },
     //   (error) => console.log(error)
     //   );
-    this.salesOrderUpdated = false;
+    // this.salesOrderUpdated = false;
   }
-  testKeyup(reel){
-    this.test=reel;
-// console.log(reel);
+  testKeyup(reel) {
+    this.test = reel;
+    // console.log(reel);
   }
   clearAll() {
     this.salesOrder_selected = [];
@@ -141,7 +158,7 @@ dispatchSalesOrders: DispatchReport[]=[];
     this.salesOrder_BF = [];
     this.salesOrder_modified = [];
     this.refreshList();
-    this.showAll = true;
+    this.showAllSalesOrders = true;
     // this.generateItemBFGSM();
     // this.extractModified();
     // //console.log(this.salesOrder_selected);
@@ -244,44 +261,44 @@ dispatchSalesOrders: DispatchReport[]=[];
       }
     }
   }
-  stockReel(reelInStock,row){
-// console.log(reelInStock);
-var newReel =row.reel-reelInStock;
-for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
-  if (this.salesOrder_BFGSMSize[j].id === row.id) {
-    // this.salesOrder_BFGSMSize[j].reel;
-    // console.log(this.salesOrder_BFGSMSize[j]);
-    this.salesOrder_BFGSMSize[j].reel = String(newReel);
-    this.salesOrder_BFGSMSize[j].reelInStock = String(reelInStock);
-    // console.log(this.salesOrder_BFGSMSize[j]);
-    break;
+  stockReel(reelInStock, row) {
+    // console.log(reelInStock);
+    var newReel = row.reel - reelInStock;
+    for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
+      if (this.salesOrder_BFGSMSize[j].id === row.id) {
+        // this.salesOrder_BFGSMSize[j].reel;
+        // console.log(this.salesOrder_BFGSMSize[j]);
+        this.salesOrder_BFGSMSize[j].reel = String(newReel);
+        this.salesOrder_BFGSMSize[j].reelInStock = String(reelInStock);
+        // console.log(this.salesOrder_BFGSMSize[j]);
+        break;
+      }
+    }
+    this.salesOrder_BFGSMSize.slice();
   }
-}
-this.salesOrder_BFGSMSize.slice();
-}
-changeWeight(row1,newWeight,size){
-  row1.newReel=this.calcReel;
-  this.calcReel = this.reel(newWeight,size);
-  // if ((newWeight) && (Number(newWeight) > Number(weight))){
-  //   alert("Your Weight should be less than Order weight: "+ weight + "tons");
-  // }
-}
-modifyReel(row,reel){
-  if (reel > 0) {
-    this.salesOrder_selected[row.id]['reel']=reel;
+  changeWeight(row1, newWeight, size) {
+    row1.newReel = this.calcReel;
+    this.calcReel = this.reel(newWeight, size);
+    // if ((newWeight) && (Number(newWeight) > Number(weight))){
+    //   alert("Your Weight should be less than Order weight: "+ weight + "tons");
+    // }
   }
-  // console.log(this.salesOrder_modified);
-  //console.log("key..." + key);
-  // //console.log("voucher number..." + voucherNumber)
-  // this.salesOrder_row = key;
+  modifyReel(row, reel) {
+    if (reel > 0) {
+      this.salesOrder_selected[row.id]['reel'] = reel;
+    }
+    // console.log(this.salesOrder_modified);
+    //console.log("key..." + key);
+    // //console.log("voucher number..." + voucherNumber)
+    // this.salesOrder_row = key;
 
-}
-sumReels(reel,reelInstock){
-return(Number(reel)+Number(reelInstock));
-}
-updatePlannedSalesOrder(id,reel){
-// console.log(id,reel);
-this.serverService.updatePlannedSalesOrderReel(id,reel)
+  }
+  sumReels(reel, reelInstock) {
+    return (Number(reel) + Number(reelInstock));
+  }
+  updatePlannedSalesOrder(id, reel) {
+    // console.log(id,reel);
+    this.serverService.updatePlannedSalesOrderReel(id, reel)
       .subscribe(
       // (res: Daybook) => console.log(res),
       (success) => {
@@ -292,9 +309,9 @@ this.serverService.updatePlannedSalesOrderReel(id,reel)
       (error) => console.log(error)
       );
 
-}
+  }
   selectFromAll(key, voucherKey, newWeight) {
-    this.consolidatedReport=false;
+    this.showConsolidatedReports = false;
     // //console.log(newWeight);
     // alert("newWeight: " + newWeight + "voucherKey: " + key.voucherKey +
     //  "Diff: " + (Number(key.voucherNumber)-Number(newWeight)));
@@ -303,13 +320,13 @@ this.serverService.updatePlannedSalesOrderReel(id,reel)
     // console.log("key...new weight" + key.newWeight);
     key["altered"] = 0;
     if (newWeight > 0) {
-      var wt=Number(key["weight"])-Number(newWeight);
+      var wt = Number(key["weight"]) - Number(newWeight);
       key.weight = Number(newWeight);
       key["altered"] = 1;
-      key["newWeight"]= wt;
+      key["newWeight"] = wt;
       // console.log(key["newWeight"]);
       // console.log(key["size"]);
-      key['reel'] = this.reel(newWeight,key['size']);
+      key['reel'] = this.reel(newWeight, key['size']);
       // console.log(key['reel']);
       // console.log(key.reel);
       this.salesOrder_modified.push(key);
@@ -348,7 +365,7 @@ this.serverService.updatePlannedSalesOrderReel(id,reel)
     //   );
   }
   selectFromSelected(key, voucherKey) {
-    this.consolidatedReport=false;
+    this.showConsolidatedReports = false;
     //console.log("key..." + key.voucherKey)
     //console.log("voucher number..." + voucherKey)
     // this.salesOrder_row = key;
@@ -379,7 +396,7 @@ this.serverService.updatePlannedSalesOrderReel(id,reel)
         // console.log(this.salesOrder);
         // this.showLoader = false;
       })
-      this.showLoader = false;
+    this.showLoader = false;
   }
   getConsolidatedBFGSM() {
     this.subscription = this.serverService.getTotalBFGSM().
@@ -387,7 +404,7 @@ this.serverService.updatePlannedSalesOrderReel(id,reel)
         // console.log(this.dataSource.data);
         this.consolidatedBFGSM = list;
       })
-    this.showLoader = false;
+    // this.showLoader = false;
   }
   getConsolidatedBFGSMSize() {
     this.subscription = this.serverService.getTotalBFGSMSize().
@@ -395,7 +412,7 @@ this.serverService.updatePlannedSalesOrderReel(id,reel)
         // console.log(this.dataSource.data);
         this.consolidatedBFGSMSize = list;
       })
-    this.showLoader = false;
+    // this.showLoader = false;
   }
 
   convertReel(weight, size) {
@@ -432,130 +449,132 @@ this.serverService.updatePlannedSalesOrderReel(id,reel)
   }
 
   deleteSalesOrder(id) {
-    this.showLoader=true;
+    // this.showLoader=true;
     this.serverService.updateSalesOrderStatus(id)
-    .subscribe(
+      .subscribe(
       (success) => {
         this.refreshList();
       },
       (error) => console.log(error)
       );
   }
-  productionPlan(record){
-    this.showAll = false;
-    this.showPlanSubmitted=true;
+  productionPlan(record) {
+    this.showAllSalesOrders = false;
+    this.showPlannedReports = true;
     this.submittedPlans = record;
     // console.log(this.submittedPlans);    
-    
+
   }
-  dispatchInfo(){
+  dispatchInfo() {
   }
-  onViewDetails(record){
+  onViewDetails(record) {
     // console.log(record);    
 
   }
   dayBook: Daybook[];
   dayBook_row: Daybook[] = [];
-  
-  displayProdOrders(){
-    this.salesOrdersPlanned=[];
-    this.consolidatedReport=true;
+
+  displayProdOrders() {
+    this.showPlannedReports = true;
+    this.showConsolidatedReports = false;
+    this.showAllSalesOrders = false;
+    this.showSelectedOrders = false;
+
+    this.salesOrdersPlanned = [];
     this.subscription = this.serverService.getSalesOrdersPlanned().
-    subscribe(list => {
-      this.salesOrdersPlanned = list;
-      // console.log(this.salesOrdersPlanned);
-      this.showLoader = false;
-    })
-}
-onViewProductionReport(record1,record2,record3,record4) {
-  // console.log("record");
-  // console.log(record1);
-  this.salesOrdersPlanned_row1=[];
-  this.salesOrdersPlanned_row1 = record1;
-  // console.log(this.salesOrdersPlanned_row1);
-  this.salesOrder_BF=[];
-  this.salesOrder_BF=record2;
-  // console.log(this.salesOrder_BF);
-  this.salesOrder_BFGSM=[];
-  this.salesOrder_BFGSM=record3;
-  // console.log(this.salesOrder_BFGSM);
-  this.salesOrder_BFGSMSize=[];
-  this.salesOrder_BFGSMSize=record4;
-  // console.log(this.salesOrder_BFGSMSize);
-  // this.salesOrder_selected = this.salesOrdersPlanned_row1;
-  // this.generateItemBFGSM();
-  // this.generateItemBFGMSSize1();
-  // this.generateItemBF();
-}
-onViewDispatch(batch_number){
-  this.consolidatedReport=true;
-  this.subscription = this.serverService.getSalesOrdersDispatch(batch_number).
-  subscribe(list => {
-    this.dispatchSalesOrders = list;
-    // console.log(list);
-    // console.log(this.dispatchSalesOrders);
-    this.showLoader = false;
-  })
-}
-onClickPrint()
-{
-  window.print();
-} 
-generateItemBFGMSSize1() {
-// console.log("in");
-// console.log(this.salesOrdersPlanned_row1);
-this.salesOrder_BFGSMSize1 = [];
-this.salesOrdersPlanned_row1 = this.salesOrdersPlanned_row2.map(x => Object.assign({}, x));
-    
-// console.log("this.salesOrdersPlanned_row1.length" + this.salesOrdersPlanned_row1.length);
-if (this.salesOrdersPlanned_row1.length >= 1) {
-  for (var i = 0; i < this.salesOrdersPlanned_row1.length; i++) {
-    // console.log("inside i");
-    // console.log("this.salesOrdersPlanned_row1"+this.salesOrdersPlanned_row1);
-    // console.log("this.salesOrder_BFGSMSize1"+this.salesOrder_BFGSMSize1);
-    // console.log("this.salesOrder_BFGSMSize1.length "+this.salesOrder_BFGSMSize1.length);
-    var match: boolean = false; 
-    for (var j = 0; j < this.salesOrder_BFGSMSize1.length; j++) {
-      if (((this.salesOrder_BFGSMSize1[j].bf + "" + this.salesOrder_BFGSMSize1[j].gsm).concat(String(this.salesOrder_BFGSMSize1[j].size))).trim() === ((this.salesOrdersPlanned_row1[i].bf + "" + this.salesOrdersPlanned_row1[i].gsm).concat(String(this.salesOrdersPlanned_row1[i].size))).trim()) {
-        // console.log("inside j");
-        // console.log("this.salesOrdersPlanned_row1"+JSON.stringify(this.salesOrdersPlanned_row1[i]));
-        // console.log("this.salesOrder_BFGSMSize1"+JSON.stringify(this.salesOrder_BFGSMSize1[j]));
-              // this.salesOrder_BFGSMSize[j].reel;
-          var sum = Number(Number(this.salesOrder_BFGSMSize1[j].weight) + Number(this.salesOrdersPlanned_row1[i].weight)).toFixed(2);
-          // console.log("this.salesOrder_BFGSMSize1[j] - before");
-          // console.log("salesOrder_BFGSMSize1 - weight"+ Number(Number(this.salesOrder_BFGSMSize1[j].weight)));
-          // console.log("salesOrdersPlanned_row1 - weight"+Number(this.salesOrdersPlanned_row1[i].weight));
-          // console.log("this.salesOrder_BFGSMSize1[j] - before modified");
-          // console.log("salesOrder_BFGSMSize1 - ['weight']"+ Number(Number(this.salesOrder_BFGSMSize1[j]['weight'])));
-          // console.log("salesOrdersPlanned_row1 - ['weight']"+Number(this.salesOrdersPlanned_row1[i]['weight']));
-          
-          // console.log("weight - sum - "+sum);
-          // console.log(this.salesOrder_BFGSMSize1[j].weight);
-          // console.log(JSON.stringify(this.salesOrder_BFGSMSize1[j]));
-          this.salesOrder_BFGSMSize1[j].weight = parseFloat(sum);
-          // console.log("this.salesOrder_BFGSMSize1[j] - after");
-          // console.log(this.salesOrder_BFGSMSize1[j].weight);
-          // console.log(JSON.stringify(this.salesOrder_BFGSMSize1[j]));
-          match = true;
-          // console.log("*************************");
-          break;
+      subscribe(list => {
+        this.salesOrdersPlanned = list;
+        // console.log(this.salesOrdersPlanned);
+        // this.showLoader = false;
+      })
+  }
+  onViewProductionReport(record1, record2, record3, record4) {
+    // console.log("record");
+    // console.log(record1);
+    this.salesOrdersPlanned_row1 = [];
+    this.salesOrdersPlanned_row1 = record1;
+    // console.log(this.salesOrdersPlanned_row1);
+    this.salesOrder_BF = [];
+    this.salesOrder_BF = record2;
+    // console.log(this.salesOrder_BF);
+    this.salesOrder_BFGSM = [];
+    this.salesOrder_BFGSM = record3;
+    // console.log(this.salesOrder_BFGSM);
+    this.salesOrder_BFGSMSize = [];
+    this.salesOrder_BFGSMSize = record4;
+    // console.log(this.salesOrder_BFGSMSize);
+    // this.salesOrder_selected = this.salesOrdersPlanned_row1;
+    // this.generateItemBFGSM();
+    // this.generateItemBFGMSSize1();
+    // this.generateItemBF();
+  }
+  onViewDispatch(batch_number, createdDate) {
+    this.dispatchHeader = "Production Planned Date : " + createdDate + "     Batch No : " + batch_number;
+    this.showConsolidatedReports = true;
+    this.subscription = this.serverService.getSalesOrdersDispatch(batch_number).
+      subscribe(list => {
+        this.dispatchSalesOrders = list;
+        // console.log(list);
+        // console.log(this.dispatchSalesOrders);
+        // this.showLoader = false;
+      })
+  }
+  onClickPrint() {
+    window.print();
+  }
+  generateItemBFGMSSize1() {
+    // console.log("in");
+    // console.log(this.salesOrdersPlanned_row1);
+    this.salesOrder_BFGSMSize1 = [];
+    this.salesOrdersPlanned_row1 = this.salesOrdersPlanned_row2.map(x => Object.assign({}, x));
+
+    // console.log("this.salesOrdersPlanned_row1.length" + this.salesOrdersPlanned_row1.length);
+    if (this.salesOrdersPlanned_row1.length >= 1) {
+      for (var i = 0; i < this.salesOrdersPlanned_row1.length; i++) {
+        // console.log("inside i");
+        // console.log("this.salesOrdersPlanned_row1"+this.salesOrdersPlanned_row1);
+        // console.log("this.salesOrder_BFGSMSize1"+this.salesOrder_BFGSMSize1);
+        // console.log("this.salesOrder_BFGSMSize1.length "+this.salesOrder_BFGSMSize1.length);
+        var match: boolean = false;
+        for (var j = 0; j < this.salesOrder_BFGSMSize1.length; j++) {
+          if (((this.salesOrder_BFGSMSize1[j].bf + "" + this.salesOrder_BFGSMSize1[j].gsm).concat(String(this.salesOrder_BFGSMSize1[j].size))).trim() === ((this.salesOrdersPlanned_row1[i].bf + "" + this.salesOrdersPlanned_row1[i].gsm).concat(String(this.salesOrdersPlanned_row1[i].size))).trim()) {
+            // console.log("inside j");
+            // console.log("this.salesOrdersPlanned_row1"+JSON.stringify(this.salesOrdersPlanned_row1[i]));
+            // console.log("this.salesOrder_BFGSMSize1"+JSON.stringify(this.salesOrder_BFGSMSize1[j]));
+            // this.salesOrder_BFGSMSize[j].reel;
+            var sum = Number(Number(this.salesOrder_BFGSMSize1[j].weight) + Number(this.salesOrdersPlanned_row1[i].weight)).toFixed(2);
+            // console.log("this.salesOrder_BFGSMSize1[j] - before");
+            // console.log("salesOrder_BFGSMSize1 - weight"+ Number(Number(this.salesOrder_BFGSMSize1[j].weight)));
+            // console.log("salesOrdersPlanned_row1 - weight"+Number(this.salesOrdersPlanned_row1[i].weight));
+            // console.log("this.salesOrder_BFGSMSize1[j] - before modified");
+            // console.log("salesOrder_BFGSMSize1 - ['weight']"+ Number(Number(this.salesOrder_BFGSMSize1[j]['weight'])));
+            // console.log("salesOrdersPlanned_row1 - ['weight']"+Number(this.salesOrdersPlanned_row1[i]['weight']));
+
+            // console.log("weight - sum - "+sum);
+            // console.log(this.salesOrder_BFGSMSize1[j].weight);
+            // console.log(JSON.stringify(this.salesOrder_BFGSMSize1[j]));
+            this.salesOrder_BFGSMSize1[j].weight = parseFloat(sum);
+            // console.log("this.salesOrder_BFGSMSize1[j] - after");
+            // console.log(this.salesOrder_BFGSMSize1[j].weight);
+            // console.log(JSON.stringify(this.salesOrder_BFGSMSize1[j]));
+            match = true;
+            // console.log("*************************");
+            break;
+          }
+        }
+        if (!match) {
+          // console.log("! match");
+          // console.log("this.salesOrdersPlanned_row1"+this.salesOrdersPlanned_row1);
+          // console.log("this.salesOrder_BFGSMSize1"+this.salesOrder_BFGSMSize1);
+
+          this.salesOrder_BFGSMSize1.push(this.salesOrdersPlanned_row1[i]);
+          // console.log("! match- after");
+          // console.log("this.salesOrdersPlanned_row1"+this.salesOrdersPlanned_row1);
+          // console.log("this.salesOrder_BFGSMSize1"+this.salesOrder_BFGSMSize1);
+          // console.log("--------------------------");
+
         }
       }
-      if (!match) {
-        // console.log("! match");
-        // console.log("this.salesOrdersPlanned_row1"+this.salesOrdersPlanned_row1);
-        // console.log("this.salesOrder_BFGSMSize1"+this.salesOrder_BFGSMSize1);
-    
-        this.salesOrder_BFGSMSize1.push(this.salesOrdersPlanned_row1[i]);
-        // console.log("! match- after");
-        // console.log("this.salesOrdersPlanned_row1"+this.salesOrdersPlanned_row1);
-        // console.log("this.salesOrder_BFGSMSize1"+this.salesOrder_BFGSMSize1);
-        // console.log("--------------------------");
-
-    }
     }
   }
 }
-}
-
-

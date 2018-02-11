@@ -43,5 +43,6 @@ export interface SalesOrdersPlanned1
             reel: String,
             size: Number,
             voucherKey: Number,
-            weight: Number
+            weight: Number,
+            disable: boolean;
 }
