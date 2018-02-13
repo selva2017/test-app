@@ -38,6 +38,8 @@ export class PlanComponent implements OnInit {
   showConsolidatedReports: boolean = false;
   // salesOrderUpdated: boolean = false;
   showPlannedReports: boolean = false;
+  modifyPlanReports: boolean = false;
+  editPlannedReports: boolean = false;
   submittedPlans: Planned[] = [];
   planSubmitted: Planned[] = [];
   salesOrdersPlanned: SalesOrdersPlanned[] = [];
@@ -488,6 +490,40 @@ export class PlanComponent implements OnInit {
         // this.showLoader = false;
       })
   }
+  onEditPlannedReports() {
+    this.editPlannedReports = true;
+    this.showConsolidatedReports = false;
+    this.showSelectedOrders = false;
+    this.showAllSalesOrders = false;
+    this.showPlannedReports = false;
+    this.subscription = this.serverService.getSalesOrdersPlanned().
+      subscribe(list => {
+        this.salesOrdersPlanned = list;
+        // console.log(this.salesOrdersPlanned);
+        // this.showLoader = false;
+      })
+  }
+  onModifyPlannedReports(record1, record2, record3, record4, createdDate, batch_number) {
+    this.dispatchHeader = "Production Planned Date : " + createdDate + "     Batch No : " + batch_number;
+   
+    this.modifyPlanReports = true;
+    this.editPlannedReports = false;
+    this.showConsolidatedReports = false;
+    this.showSelectedOrders = false;
+    this.showAllSalesOrders = false;
+    this.showPlannedReports = false;
+    this.salesOrdersPlanned_row1 = [];
+    this.salesOrdersPlanned_row1 = record1;
+    // console.log(this.salesOrdersPlanned_row1);
+    this.salesOrder_BF = [];
+    this.salesOrder_BF = record2;
+    // console.log(this.salesOrder_BF);
+    this.salesOrder_BFGSM = [];
+    this.salesOrder_BFGSM = record3;
+    // console.log(this.salesOrder_BFGSM);
+    this.salesOrder_BFGSMSize = [];
+    this.salesOrder_BFGSMSize = record4;
+  }
   onViewProductionReport(record1, record2, record3, record4) {
     // console.log("record");
     // console.log(record1);
@@ -507,6 +543,12 @@ export class PlanComponent implements OnInit {
     // this.generateItemBFGSM();
     // this.generateItemBFGMSSize1();
     // this.generateItemBF();
+  }
+  onDeletePlannedSalesOrder(id, reel) {
+
+  }
+  onAddSalesOrder(a, b, c) {
+    console.log(a);
   }
   onViewDispatch(batch_number, createdDate) {
     this.dispatchHeader = "Production Planned Date : " + createdDate + "     Batch No : " + batch_number;
