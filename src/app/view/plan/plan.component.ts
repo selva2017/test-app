@@ -547,6 +547,9 @@ export class PlanComponent implements OnInit {
   onDeletePlannedSalesOrder(id, reel) {
 
   }
+  onclick(){
+console.log("inside")
+  }
   onAddSalesOrder(a, b, c) {
     console.log(a);
   }
