@@ -30,9 +30,9 @@
   }
   
   /* active tab color */
-  .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  .nav-tabs>li.active>a {
 	color: #fff;
-	background-color: #666;
+	background-color: rgb(163, 23, 23);
 	border: 1px solid #888888;
   }
   
@@ -41,6 +41,32 @@
 	border-color: #000000;
 	background-color: #111111;
   }
+  
+
+/* .nav-tabs>li>button {
+	background-color: #f09a0f; 
+	border-color: #777777;
+	color:#fff;
+  }
+.tab-content{
+    background-color:#303136;
+    color:#fff;
+    padding:5px
+}
+  /* active tab color */
+  /* .nav-tabs>li:active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+	border-color: #000000;
+	background-color: #111111;
+    color:#fff;
+	border: 1px solid #888888;
+  } */
+  
+  /* hover tab color */
+  /* .nav-tabs>li>a:hover {
+	border-color: #000000;
+	background-color: #111111;
+    color:#fff;
+  } */ 
 /* .nav {
     background-color: rgb(226, 171, 21) !important;
 }

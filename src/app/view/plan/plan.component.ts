@@ -481,7 +481,8 @@ export class PlanComponent implements OnInit {
     this.showConsolidatedReports = false;
     this.showAllSalesOrders = false;
     this.showSelectedOrders = false;
-
+    this.modifyPlanReports = false;
+    this.editPlannedReports = false;
     this.salesOrdersPlanned = [];
     this.subscription = this.serverService.getSalesOrdersPlanned().
       subscribe(list => {
@@ -505,7 +506,7 @@ export class PlanComponent implements OnInit {
   }
   onModifyPlannedReports(record1, record2, record3, record4, createdDate, batch_number) {
     this.dispatchHeader = "Production Planned Date : " + createdDate + "     Batch No : " + batch_number;
-   
+
     this.modifyPlanReports = true;
     this.editPlannedReports = false;
     this.showConsolidatedReports = false;
@@ -547,8 +548,14 @@ export class PlanComponent implements OnInit {
   onDeletePlannedSalesOrder(id, reel) {
 
   }
-  onclick(){
-console.log("inside")
+  onRestoreSalesReports(){
+
+  }
+  onDeleteSalesOrders(){
+    
+  }
+  onclick() {
+    console.log("inside")
   }
   onAddSalesOrder(a, b, c) {
     console.log(a);

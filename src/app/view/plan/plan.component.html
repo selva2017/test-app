@@ -9,608 +9,515 @@
 <div *ngIf="!showLoader">
   <br>
   <h3>Production Planning</h3>
-  <div class="col-md-12">
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link active" (click)="showAll()">All Sales Orders</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" (click)="showSelected()">Selected Orders</a>
-      </li>
-      <li class="nav-item">
-        <a *ngIf="showSelectedOrders" class="btn-group btn-md btn-warning" (click)="confirmProduction()" data-toggle="modal"
-        data-target="#exampleModalLong">Confirm</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" (click)="showConsolidated()">Consolidated Report</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" (click)="clearAll()">Clear All</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" (click)="displayProdOrders()">Planned Report</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" (click)="onEditPlannedReports()">Add/Remove Planned Report</a>
-      </li>
-
-    </ul>
+  <div class="col-sm-12">
+      
+<div class="col-md-12">
+    <!-- <div class="col-md-12"> -->
+    <button class="btn-group btn-md btn-primary" (click)="showAll()">All Sales Orders</button>
+    <button class="btn-group btn-md btn-success" (click)="showSelected()">Selected Orders</button>
+    <button *ngIf="showSelectedOrders" class="btn-group btn-md btn-warning" (click)="confirmProduction()" data-toggle="modal"
+      data-target="#exampleModalLong">Confirm</button>
+    <button class="btn-group btn-md btn-info" (click)="showConsolidated()">Sales Order Group Report</button>
+    <button class="btn-group btn-md btn-danger" (click)="clearAll()">Clear All</button>
+    <button class="btn-group btn-md btn-info" (click)="displayProdOrders()">Plans in Production</button>
+    <button class="btn-group btn-md btn-info" (click)="onEditPlannedReports()">Add/Remove Planned Report</button>
+    <button class="dropdown-item" class="btn-group btn-md btn-warning" (click)="onDeleteSalesOrders()">Delete Sales Orders</button>
+    <button class="btn-group btn-md btn-warning" (click)="onRestoreSalesReports()">Restore Sales Orders</button>
   </div>
-  <div class="row">
-    <ng-template [ngIf]="showAllSalesOrders">
-      <div class="col-lg-8" *ngIf="showAllSalesOrders">
-        <h5>All Sales Orders</h5>
-        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-          <!-- <table style="width:50%;" *ngIf="showAllSalesOrders" class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
-          <thead class="bg-success">
-            <tr>
-              <th>No</th>
-              <th>Date</th>
-              <th>Order#</th>
-              <th>Name</th>
-              <!-- <th>Vch Type</th> -->
-              <th>Item</th>
-              <th>Size (Inch)</th>
-              <th>Size (Cm)</th>
-              <th>Weight (Tons)</th>
-              <th>Weight Plan</th>
-              <th>Reel</th>
-              <!-- <th>Reel Plan</th> -->
-              <!-- <th>Round</th> -->
-              <th>Select</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- <tr class="col-xs-12"> -->
-            <!-- <tr *ngFor="let row of salesOrder; let i = index"> -->
-            <tr *ngFor="let row1 of salesOrder | paginate: { itemsPerPage: 50, currentPage: p1 }; let i = index">
-              <td>{{i+1}}</td>
-              <td>{{row1.orderDate | date : 'dd-MM-yyyy'}}</td>
-              <td>{{row1.orderNumber}}</td>
-              <td>{{row1.company}}</td>
-              <td>{{row1.bf}} BF {{row1.gsm}} GSM</td>
-              <td>{{row1.size}}</td>
-              <td>{{(row1.size)*2.54 | number: '1.0-0'}}</td>
-              <td>{{row1.weight}}</td>
-              <td>
-                <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" [(ngModel)]="row1.newWeight"
-                />
-                <!-- <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" 
+    </div>
+    <div class="row">
+      <ng-template [ngIf]="showAllSalesOrders">
+        <div class="col-lg-8" *ngIf="showAllSalesOrders">
+          <h5>All Sales Orders</h5>
+          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+            <!-- <table style="width:50%;" *ngIf="showAllSalesOrders" class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+            <thead class="bg-success">
+              <tr>
+                <th>No</th>
+                <th>Date</th>
+                <th>Order#</th>
+                <th>Name</th>
+                <!-- <th>Vch Type</th> -->
+                <th>Item</th>
+                <th>Size (Inch)</th>
+                <th>Size (Cm)</th>
+                <th>Weight (Tons)</th>
+                <th>Weight Plan</th>
+                <th>Reel</th>
+                <!-- <th>Reel Plan</th> -->
+                <!-- <th>Round</th> -->
+                <th>Select</th>
+                <!-- <th>Action</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr class="col-xs-12"> -->
+              <!-- <tr *ngFor="let row of salesOrder; let i = index"> -->
+              <tr *ngFor="let row1 of salesOrder | paginate: { itemsPerPage: 50, currentPage: p1 }; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{row1.orderDate | date : 'dd-MM-yyyy'}}</td>
+                <td>{{row1.orderNumber}}</td>
+                <td>{{row1.company}}</td>
+                <td>{{row1.bf}} BF {{row1.gsm}} GSM</td>
+                <td>{{row1.size}}</td>
+                <td>{{(row1.size)*2.54 | number: '1.0-0'}}</td>
+                <td>{{row1.weight}}</td>
+                <td>
+                  <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" [(ngModel)]="row1.newWeight"
+                  />
+                  <!-- <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" 
                 (keyup)="changeWeight(row1,newWeight.value,row1.size)"/> -->
-                <!-- (keyup)="changeWeight(row1.weight,newWeight.value)"/> -->
-              </td>
-              <td>
-                <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row1.reel | number: '1.0-0'"
-                  (ngModelChange)="row1.reel=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-                <!-- <input class="input-sm" #reel type="text" pattern="[0-9]" step="1" maxlength="5" style="width:45px;" [id]="i" 
+                  <!-- (keyup)="changeWeight(row1.weight,newWeight.value)"/> -->
+                </td>
+                <td>
+                  <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row1.reel | number: '1.0-0'"
+                    (ngModelChange)="row1.reel=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                  <!-- <input class="input-sm" #reel type="text" pattern="[0-9]" step="1" maxlength="5" style="width:45px;" [id]="i" 
                   [(ngModel)]="row1.reel" (keyup)="modifyReel(row1,reel.value)"/> -->
-              </td>
-              <!-- <td>{{row1.reel}}</td> -->
-              <!-- <td>{{row1.reel}}</td> -->
-              <!-- <td bgcolor="red">{{convertReel(row1.qty,row1.size)}}</td> -->
-              <!-- <td>{{reel(row1.qty,row1.size)}}</td> -->
-              <!-- <td> -->
-              <!-- Button trigger modal -->
-              <!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row1)">View
+                </td>
+                <!-- <td>{{row1.reel}}</td> -->
+                <!-- <td>{{row1.reel}}</td> -->
+                <!-- <td bgcolor="red">{{convertReel(row1.qty,row1.size)}}</td> -->
+                <!-- <td>{{reel(row1.qty,row1.size)}}</td> -->
+                <!-- <td> -->
+                <!-- Button trigger modal -->
+                <!-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row1)">View
             </button> -->
-              <!-- <input #newWeight flex placeholder="credit" type="text" maxlength="5" name="row1-{{i}}" #credit="ngModel" [(ngModel)]="row1.amount"> -->
-              <!-- <input class="input-sm" #newReel [ngModel]="((newWeight.value)*1000)/(row1.size*10)" type="text" pattern="[0-9]" maxlength="2" style="width:35px;" [id]="i" /> -->
-              <!-- <input class="input-sm" #newReel [ngModel]="((newWeight.value)*1000)/(row1.size*10)" type="text" pattern="[0-9]" maxlength="2" style="width:35px;" [id]="i" /> -->
-              <!-- </td> -->
-              <td>
-                <!-- Button trigger delete  -->
-                <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row1.voucherKey)">Hide
+                <!-- <input #newWeight flex placeholder="credit" type="text" maxlength="5" name="row1-{{i}}" #credit="ngModel" [(ngModel)]="row1.amount"> -->
+                <!-- <input class="input-sm" #newReel [ngModel]="((newWeight.value)*1000)/(row1.size*10)" type="text" pattern="[0-9]" maxlength="2" style="width:35px;" [id]="i" /> -->
+                <!-- <input class="input-sm" #newReel [ngModel]="((newWeight.value)*1000)/(row1.size*10)" type="text" pattern="[0-9]" maxlength="2" style="width:35px;" [id]="i" /> -->
+                <!-- </td> -->
+                <td>
+                  <!-- Button trigger delete  -->
+                  <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row1.voucherKey)">Hide
               </button> -->
-                <!-- <div class="form-check"> -->
-                <button type="button" class="btn btn-success btn-sm" (click)="selectFromAll(row1,row1['id'],newWeight.value)">Select
-                </button>
-                <!-- <input #myId type="checkbox" value="" id="defaultCheck3" (change)="selectFromAll(row1,row1.voucherKey,newWeight.value)" /> -->
-                <!-- <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row1,newWeight.value)"/> -->
-                <!-- <label class="form-check-label" for="defaultCheck1">
+                  <!-- <div class="form-check"> -->
+                  <button type="button" class="btn btn-success btn-sm" (click)="selectFromAll(row1,row1['id'],newWeight.value)">Select
+                  </button>
+                  <!-- <input #myId type="checkbox" value="" id="defaultCheck3" (change)="selectFromAll(row1,row1.voucherKey,newWeight.value)" /> -->
+                  <!-- <input type="checkbox" value="" id="defaultCheck1" (change)="selectFromAll(row1,newWeight.value)"/> -->
+                  <!-- <label class="form-check-label" for="defaultCheck1">
                     Select
                   </label> -->
-                <!-- </div> -->
-              </td>
-              <td>
-                <button type="button" class="btn btn-danger btn-sm" (click)="deleteSalesOrder(row1.id)">Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <pagination-controls (pageChange)="p1 = $event"></pagination-controls>
-      </div>
-    </ng-template>
-    <ng-template [ngIf]="showSelectedOrders">
-      <div class="col-lg-8">
-        <h5>Selected Sales Orders</h5>
-        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-          <!-- <table style="width:50%;" *ngIf="!showAllSalesOrders"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
-          <thead class="bg-primary">
-            <tr>
-              <th>No</th>
-              <!-- <th>Altered</th> -->
-              <th>Date</th>
-              <th>Order#</th>
-              <th>Name</th>
-              <th>Item</th>
-              <th>Size (Inch)</th>
-              <th>Size (Cm)</th>
-              <th>Weight (Tons)</th>
-              <th>Reel</th>
-              <th>Reels in Stock</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- <tr class="col-xs-12"> -->
-            <!-- <tr *ngFor="let row1 of salesOrder; let i = index"> -->
-            <tr *ngFor="let row2 of salesOrder_selected | paginate: { itemsPerPage: 50, currentPage: p2 }; let i = index">
+                  <!-- </div> -->
+                </td>
+                <!-- <td>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="deleteSalesOrder(row1.id)">Delete
+                  </button>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p1 = $event"></pagination-controls>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="showSelectedOrders">
+        <div class="col-lg-8">
+          <h5>Selected Sales Orders</h5>
+          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+            <!-- <table style="width:50%;" *ngIf="!showAllSalesOrders"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+            <thead class="bg-primary">
+              <tr>
+                <th>No</th>
+                <!-- <th>Altered</th> -->
+                <th>Date</th>
+                <th>Order#</th>
+                <th>Name</th>
+                <th>Item</th>
+                <th>Size (Inch)</th>
+                <th>Size (Cm)</th>
+                <th>Weight (Tons)</th>
+                <th>Reel</th>
+                <th>Reels in Stock</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr class="col-xs-12"> -->
+              <!-- <tr *ngFor="let row1 of salesOrder; let i = index"> -->
+              <tr *ngFor="let row2 of salesOrder_selected | paginate: { itemsPerPage: 50, currentPage: p2 }; let i = index">
 
-              <td>{{i+1}}</td>
-              <!-- <td>{{row2.altered}}</td> -->
-              <td>{{row2.orderDate | date : 'dd-MM-yyyy'}}</td>
-              <td>{{row2.orderNumber}}</td>
-              <td>{{row2.company}}</td>
-              <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
-              <td>{{row2.size}}</td>
-              <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
-              <td>{{row2.weight}}</td>
-              <td>{{row2.reel | number: '1.0-0'}}</td>
-              <td>
-                <input class="input-sm" #reelInStock type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [id]="i" [ngModel]="row2.reelInStock | number: '1.0-0'"
-                  (ngModelChange)="row2.reelInStock=$event" (keyup)="stockReel(reelInStock.value,row2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                />
-                <!-- <input class="input-sm" #reelInStock (keyup)="stockReel(reelInStock.value,row2)" type="text" pattern="[0-9]" step="1" maxlength="5" style="width:35px;" [id]="i" 
+                <td>{{i+1}}</td>
+                <!-- <td>{{row2.altered}}</td> -->
+                <td>{{row2.orderDate | date : 'dd-MM-yyyy'}}</td>
+                <td>{{row2.orderNumber}}</td>
+                <td>{{row2.company}}</td>
+                <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
+                <td>{{row2.size}}</td>
+                <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
+                <td>{{row2.weight}}</td>
+                <td>{{row2.reel | number: '1.0-0'}}</td>
+                <td>
+                  <input class="input-sm" #reelInStock type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [id]="i" [ngModel]="row2.reelInStock | number: '1.0-0'"
+                    (ngModelChange)="row2.reelInStock=$event" (keyup)="stockReel(reelInStock.value,row2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                  />
+                  <!-- <input class="input-sm" #reelInStock (keyup)="stockReel(reelInStock.value,row2)" type="text" pattern="[0-9]" step="1" maxlength="5" style="width:35px;" [id]="i" 
                   [(ngModel)]="row2.reelInStock " /> -->
-              </td>
-              <!-- <td> -->
-              <!-- <td>
+                </td>
+                <!-- <td> -->
+                <!-- <td>
           <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong" (click)="onClickView(row2)">View
           </button>
         </td> -->
-              <td>
-                <!-- Button trigger delete  -->
-                <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row2.voucherKey)">Hide
+                <td>
+                  <!-- Button trigger delete  -->
+                  <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row2.voucherKey)">Hide
           </button> -->
-                <!-- <div class="form-check"> -->
-                <button type="button" class="btn btn-warning btn-sm" (click)="selectFromSelected(row2,row2.id)">Remove
-                </button>
-                <!-- <input type="checkbox" value="" id="defaultCheck2" (change)="selectFromSelected(row2,row2.voucherKey)"> -->
-                <!-- <label class="form-check-label" for="defaultCheck1">
+                  <!-- <div class="form-check"> -->
+                  <button type="button" class="btn btn-warning btn-sm" (click)="selectFromSelected(row2,row2.id)">Remove
+                  </button>
+                  <!-- <input type="checkbox" value="" id="defaultCheck2" (change)="selectFromSelected(row2,row2.voucherKey)"> -->
+                  <!-- <label class="form-check-label" for="defaultCheck1">
               Select
                     </label> -->
-                <!-- </div> -->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <pagination-controls (pageChange)="p2 = $event"></pagination-controls>
-      </div>
-    </ng-template>
-    <ng-template [ngIf]="showConsolidatedReports">
-      <div class="col-lg-6">
-        <h5>Consolidated Orders - BF GSM Size</h5>
-        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-          <thead class="bg-info">
-            <tr>
-              <th>No</th>
-              <th>BF</th>
-              <th>GSM</th>
-              <th>Size (Inch)</th>
-              <th>Size (Cm)</th>
-              <th>Weight (Tons)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row2 of consolidatedBFGSMSize; let i = index">
-              <!-- <tr *ngFor="let row2 of consolidatedBFGSMSize | paginate: { itemsPerPage: 50, currentPage: p2 }; let i = index"> -->
-              <td>{{i+1}}</td>
-              <td>{{row2.bf}} BF </td>
-              <td>{{row2.gsm}} GSM</td>
-              <td>{{row2.size}}</td>
-              <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
-              <td>{{row2.weight}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- <pagination-controls (pageChange)="p2 = $event"></pagination-controls> -->
-      </div>
-      <div class="col-lg-6">
-        <h5>Consolidated Orders - BF GSM </h5>
-        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-          <thead class="bg-info">
-            <tr>
-              <th>No</th>
-              <th>BF</th>
-              <th>GSM</th>
-              <th>Weight (Tons)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row2 of consolidatedBFGSM ; let i = index">
-              <!-- <tr *ngFor="let row2 of consolidatedBFGSM | paginate: { itemsPerPage: 50, currentPage: p2 }; let i = index"> -->
-              <td>{{i+1}}</td>
-              <td>{{row2.bf}} BF </td>
-              <td>{{row2.gsm}} GSM</td>
-              <td>{{row2.weight}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <!-- <pagination-controls (pageChange)="p2 = $event"></pagination-controls> -->
-      </div>
+                  <!-- </div> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <pagination-controls (pageChange)="p2 = $event"></pagination-controls>
+        </div>
+      </ng-template>
+      <ng-template [ngIf]="showConsolidatedReports">
+        <div class="col-lg-6">
+          <h5>Consolidated Orders - BF GSM Size</h5>
+          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+            <thead class="bg-info">
+              <tr>
+                <th>No</th>
+                <th>BF</th>
+                <th>GSM</th>
+                <th>Size (Inch)</th>
+                <th>Size (Cm)</th>
+                <th>Weight (Tons)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row2 of consolidatedBFGSMSize; let i = index">
+                <!-- <tr *ngFor="let row2 of consolidatedBFGSMSize | paginate: { itemsPerPage: 50, currentPage: p2 }; let i = index"> -->
+                <td>{{i+1}}</td>
+                <td>{{row2.bf}} BF </td>
+                <td>{{row2.gsm}} GSM</td>
+                <td>{{row2.size}}</td>
+                <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
+                <td>{{row2.weight}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- <pagination-controls (pageChange)="p2 = $event"></pagination-controls> -->
+        </div>
+        <div class="col-lg-6">
+          <h5>Consolidated Orders - BF GSM </h5>
+          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+            <thead class="bg-info">
+              <tr>
+                <th>No</th>
+                <th>BF</th>
+                <th>GSM</th>
+                <th>Weight (Tons)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row2 of consolidatedBFGSM ; let i = index">
+                <!-- <tr *ngFor="let row2 of consolidatedBFGSM | paginate: { itemsPerPage: 50, currentPage: p2 }; let i = index"> -->
+                <td>{{i+1}}</td>
+                <td>{{row2.bf}} BF </td>
+                <td>{{row2.gsm}} GSM</td>
+                <td>{{row2.weight}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- <pagination-controls (pageChange)="p2 = $event"></pagination-controls> -->
+        </div>
 
-    </ng-template>
-    <div *ngIf="showAllSalesOrders || showSelectedOrders" class="col-lg-4">
-      <div>
-        <h5>Items Selected for Planning</h5>
-        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-          <!-- <table style="width:50%;" *ngIf="!showAllSalesOrders"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
-          <thead class="bg-warning">
-            <tr>
-              <th>No</th>
-              <th>Item (BF)</th>
-              <!-- <th>Size</th> -->
-              <th>Weight (Tons)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row3 of salesOrder_BF; let i = index">
-              <!-- <tr *ngFor="let row3 of salesOrder_BF| paginate: { itemsPerPage: 10, currentPage: p3 }; let i = index"> -->
-              <td>{{i+1}}</td>
-              <td>{{row3.bf}}</td>
-              <!-- <td>{{maskContent(row3.weight)}}</td> -->
-              <!-- <td>{{row3.size}}</td> -->
-              <td>{{row3.weight}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <!-- <h5>Group Items by BF GSM</h5> -->
-        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-          <!-- <table style="width:50%;" *ngIf="!showAllSalesOrders"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
-          <thead class="bg-warning">
-            <tr>
-              <th>No</th>
-              <th>Item (BF GSM)</th>
-              <th>Weight (Tons)</th>
-              <!-- <th>Reel</th> -->
-              <!-- <th>Round</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row5 of salesOrder_BFGSM; let i = index">
-              <!-- <tr *ngFor="let row5 of salesOrder_BFGSM | paginate: { itemsPerPage: 10, currentPage: p4 }; let i = index"> -->
-              <td>{{i+1}}</td>
-              <td>{{row5.bf}} BF {{row5.gsm}} GSM</td>
-              <!-- <td>{{row3.size}}</td> -->
-              <td>{{row5.weight}}</td>
-              <!-- <td>{{row5.reel}}</td> -->
-              <!-- <td bgcolor="red">{{convertReel(row5.qty,row5.size)}}</td> -->
-              <!-- <td>{{reel(row5.qty,row5.size)}}</td> -->
-            </tr>
-          </tbody>
-        </table>
+      </ng-template>
+      <div *ngIf="showAllSalesOrders || showSelectedOrders" class="col-lg-4">
+        <div>
+          <h5>Items Selected for Planning</h5>
+          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+            <!-- <table style="width:50%;" *ngIf="!showAllSalesOrders"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+            <thead class="bg-warning">
+              <tr>
+                <th>No</th>
+                <th>Item (BF)</th>
+                <!-- <th>Size</th> -->
+                <th>Weight (Tons)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row3 of salesOrder_BF; let i = index">
+                <!-- <tr *ngFor="let row3 of salesOrder_BF| paginate: { itemsPerPage: 10, currentPage: p3 }; let i = index"> -->
+                <td>{{i+1}}</td>
+                <td>{{row3.bf}}</td>
+                <!-- <td>{{maskContent(row3.weight)}}</td> -->
+                <!-- <td>{{row3.size}}</td> -->
+                <td>{{row3.weight}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <!-- <h5>Group Items by BF GSM</h5> -->
+          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+            <!-- <table style="width:50%;" *ngIf="!showAllSalesOrders"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+            <thead class="bg-warning">
+              <tr>
+                <th>No</th>
+                <th>Item (BF GSM)</th>
+                <th>Weight (Tons)</th>
+                <!-- <th>Reel</th> -->
+                <!-- <th>Round</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row5 of salesOrder_BFGSM; let i = index">
+                <!-- <tr *ngFor="let row5 of salesOrder_BFGSM | paginate: { itemsPerPage: 10, currentPage: p4 }; let i = index"> -->
+                <td>{{i+1}}</td>
+                <td>{{row5.bf}} BF {{row5.gsm}} GSM</td>
+                <!-- <td>{{row3.size}}</td> -->
+                <td>{{row5.weight}}</td>
+                <!-- <td>{{row5.reel}}</td> -->
+                <!-- <td bgcolor="red">{{convertReel(row5.qty,row5.size)}}</td> -->
+                <!-- <td>{{reel(row5.qty,row5.size)}}</td> -->
+              </tr>
+            </tbody>
+          </table>
 
-      </div>
-      <div>
-        <!-- <h5>Group Items by BF GSM Size</h5> -->
-        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-          <!-- <table style="width:50%;" *ngIf="!showAllSalesOrders"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
-          <thead class="bg-warning">
-            <tr>
-              <th>No</th>
-              <th>Item (BF GSM Size)</th>
-              <!-- <th>Size</th> -->
-              <th>Weight (Tons)</th>
-              <th>Reel</th>
-              <th *ngIf="!showAllSalesOrders">Reel In Stock</th>
-              <!-- <th>Round</th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row4 of salesOrder_BFGSMSize; let i = index">
-              <!-- <tr *ngFor="let row4 of salesOrder_BFGSMSize | paginate: { itemsPerPage: 10, currentPage: p5 }; let i = index"> -->
-              <td>{{i+1}}</td>
-              <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
-              <!-- <td>{{row4.size}}</td> -->
-              <td>{{row4.weight}}</td>
-              <td>{{row4.reel| number: '1.0-0'}}</td>
-              <td *ngIf="!showAllSalesOrders">{{row4.reelInStock | number: '1.0-0'}}</td>
-              <!-- <td bgcolor="red">{{convertReel(row4.qty,row4.size)}}</td>
+        </div>
+        <div>
+          <!-- <h5>Group Items by BF GSM Size</h5> -->
+          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+            <!-- <table style="width:50%;" *ngIf="!showAllSalesOrders"  class="table table-responsive table-hover table-sm table-striped table-bordered"> -->
+            <thead class="bg-warning">
+              <tr>
+                <th>No</th>
+                <th>Item (BF GSM Size)</th>
+                <!-- <th>Size</th> -->
+                <th>Weight (Tons)</th>
+                <th>Reel</th>
+                <th *ngIf="!showAllSalesOrders">Reel In Stock</th>
+                <!-- <th>Round</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row4 of salesOrder_BFGSMSize; let i = index">
+                <!-- <tr *ngFor="let row4 of salesOrder_BFGSMSize | paginate: { itemsPerPage: 10, currentPage: p5 }; let i = index"> -->
+                <td>{{i+1}}</td>
+                <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
+                <!-- <td>{{row4.size}}</td> -->
+                <td>{{row4.weight}}</td>
+                <td>{{row4.reel| number: '1.0-0'}}</td>
+                <td *ngIf="!showAllSalesOrders">{{row4.reelInStock | number: '1.0-0'}}</td>
+                <!-- <td bgcolor="red">{{convertReel(row4.qty,row4.size)}}</td>
               <td>{{reel(row4.qty,row4.size)}}</td> -->
-            </tr>
-          </tbody>
-        </table>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
-
     </div>
-  </div>
 
-  <!-- </div> -->
-  <!-- </div> -->
-  <!-- <div class="section1">
+    <!-- </div> -->
+    <!-- </div> -->
+    <!-- <div class="section1">
 2d
 </div>
 <div class="section2">
 3d
 </div> -->
-  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Message</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Order Status has been updated successfully</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Order Status has been updated successfully</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <ng-template [ngIf]="showPlannedReports">
-    <div>
-      <!-- <div *ngIf="!showLoader"> -->
-      <br>
-      <h5>Production Plan Reports</h5>
-      <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-        <thead class="bg-primary">
-          <tr>
-            <th>No</th>
-            <th>Planned Date</th>
-            <th>Batch No</th>
-            <!-- <th>Vch Type</th> -->
-            <!-- <th>Vch No</th> -->
-            <!-- <th>Credit/Debit</th> -->
-            <th>Details</th>
-            <th>Report</th>
-            <!-- <th>Action</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of salesOrdersPlanned | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+    <ng-template [ngIf]="showPlannedReports">
+      <div>
+        <!-- <div *ngIf="!showLoader"> -->
+        <br>
+        <h5>Production Plan Reports</h5>
+        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+          <thead class="bg-primary">
+            <tr>
+              <th>No</th>
+              <th>Planned Date</th>
+              <th>Batch No</th>
+              <!-- <th>Vch Type</th> -->
+              <!-- <th>Vch No</th> -->
+              <!-- <th>Credit/Debit</th> -->
+              <th>Details</th>
+              <th>Report</th>
+              <!-- <th>Action</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of salesOrdersPlanned | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
 
-            <td>{{i+1}}</td>
-            <td>{{row.createdDate | date: 'dd-MM-yyyy'}}</td>
-            <td>{{row.batchNumber}}</td>
-            <!-- <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST' || row.voucherType === 'Consumption Entry'"> -->
-            <!-- <td>{{row.inventoryEntryVOs[0].stockItemName}}</td> -->
-            <!-- <td>{{row.voucherType}}</td> -->
-            <!-- <td>{{row.voucherNumber}}</td> -->
-            <!-- <td>{{row.inventoryEntryVOs[0].billedQuantity}}</td> -->
-            <!-- </ng-template> -->
-            <!-- <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal' -->
-            <!-- || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General'"> -->
-            <!-- <td>{{row.ledgerEntryVOs[0].ledgerName}}</td> -->
-            <!-- <td>{{row.voucherType}}</td> -->
-            <!-- <td>{{row.voucherNumber}}</td> -->
-            <!-- <td>{{displayINR(row.ledgerEntryVOs[0].amount)}}</td> -->
-            <!-- </ng-template> -->
-            <td>
-              <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong2" (click)="onViewProductionReport(row.salesOrderPlanneds,row.salesOrdersBf,row.salesOrdersBfGsm,row.salesOrdersBfGsmSize)">Production
-              </button>
-
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle2" aria-hidden="true">
-                <!-- <div class="modal-dialog modal-lg" role="document"> -->
-                <div class="modal-dialog modal-lg" role="document" style="position:absolute;width:auto;height:auto">
-                  <!-- <div class="modal-content"> -->
-                  <div class="modal-content" style="width:1200px;height:auto">
-                    <div class="modal-header">
-                      <h5>Production plan Details</h5>
-                      <!-- <h5 class="modal-title" id="exampleModalLongTitle2">Production plan Details</h5> -->
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-8">
-                        <h5>Sales Orders</h5>
-                        <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-                          <thead class="bg-primary">
-                            <tr>
-                              <th colspan="6">Date: {{row.createdDate| date: 'dd-MM-yyyy'}}</th>
-                              <th colspan="5"> BatchNo:{{row.batchNumber}}</th>
-                            </tr>
-                            <tr>
-                              <th>No</th>
-                              <!-- <th>Altered</th> -->
-                              <th>Date</th>
-                              <th>Order#</th>
-                              <th>Name</th>
-                              <th>Item</th>
-                              <th>Size (Inch)</th>
-                              <th>Size (Cm)</th>
-                              <th>Weight (Tons)</th>
-                              <th>Reel</th>
-                              <th>Reel In Stock</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let row2 of salesOrdersPlanned_row1; let i = index">
-                              <td>{{i+1}}</td>
-                              <!-- <td>{{row2.altered}}</td> -->
-                              <td>{{row2.orderDate | date : 'dd-MM-yyyy'}}</td>
-                              <td>{{row2.orderNumber}}</td>
-                              <td>{{row2.company}}</td>
-                              <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
-                              <td>{{row2.size}}</td>
-                              <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
-                              <td>{{row2.weight}}</td>
-                              <!-- <td>{{row2.reel}}</td> -->
-                              <td>
-                                <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row2.reel | number: '1.0-0'"
-                                  (ngModelChange)="row2.reel=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-                                />
-                                <!-- <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row2.reel | number: '1.0-0'"
-                                  (ngModelChange)="row2.reel=$event" (keyup)="modifyReel(row1,reel.value)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/> -->
-                                <!-- <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="5" style="width:45px;" [id]="i" 
-                        [(ngModel)]="row2.reel"/> -->
-                              </td>
-                              <td>{{row2.reelInStock | number: '1.0-0' }}</td>
-                              <td>
-                                <button type="button" class="btn btn-warning btn-sm" (click)="updatePlannedSalesOrder(row2.id,row2.reel)" data-dismiss="modal">Update
-                                </button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <!-- <pagination-controls (pageChange)="p2 = $event"></pagination-controls> -->
-                      </div>
-                      <div class="col-lg-4">
-                        <div>
-                          <h5>Items Selected for Planning</h5>
-                          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-                            <thead class="bg-warning">
-                              <tr>
-                                <th>No</th>
-                                <th>Item (BF)</th>
-                                <th>Weight (Tons)</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr *ngFor="let row3 of salesOrder_BF; let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{row3.bf}}</td>
-                                <td>{{row3.weight}}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div>
-                          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-                            <thead class="bg-warning">
-                              <tr>
-                                <th>No</th>
-                                <th>Item (BF GSM)</th>
-                                <th>Weight (Tons)</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr *ngFor="let row5 of salesOrder_BFGSM; let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{row5.bf}} BF {{row5.gsm}} GSM</td>
-                                <td>{{row5.weight}}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-
-                        </div>
-                        <div>
-                          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-                            <thead class="bg-warning">
-                              <tr>
-                                <th>No</th>
-                                <th>Item (BF GSM Size)</th>
-                                <th>Weight (Tons)</th>
-                                <th>Prod Reel</th>
-                                <th>Reel In Stock</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr *ngFor="let row4 of salesOrder_BFGSMSize; let i = index">
-                                <td>{{i+1}}</td>
-                                <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
-                                <td>{{row4.weight}}</td>
-                                <td>{{row4.reel| number: '1.0-0'}}</td>
-                                <td>{{row4.reelInStock| number: '1.0-0'}}</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onClickPrint()">Print</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <td>{{i+1}}</td>
+              <td>{{row.createdDate | date: 'dd-MM-yyyy'}}</td>
+              <td>{{row.batchNumber}}</td>
+              <!-- <ng-template [ngIf]="row.voucherType ==='Stock Journal Fg' || row.voucherType ==='Delivery Note GST' || row.voucherType === 'Consumption Entry'"> -->
+              <!-- <td>{{row.inventoryEntryVOs[0].stockItemName}}</td> -->
+              <!-- <td>{{row.voucherType}}</td> -->
+              <!-- <td>{{row.voucherNumber}}</td> -->
+              <!-- <td>{{row.inventoryEntryVOs[0].billedQuantity}}</td> -->
+              <!-- </ng-template> -->
+              <!-- <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal' -->
+              <!-- || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General'"> -->
+              <!-- <td>{{row.ledgerEntryVOs[0].ledgerName}}</td> -->
+              <!-- <td>{{row.voucherType}}</td> -->
+              <!-- <td>{{row.voucherNumber}}</td> -->
+              <!-- <td>{{displayINR(row.ledgerEntryVOs[0].amount)}}</td> -->
+              <!-- </ng-template> -->
               <td>
-                <!-- Button trigger delete  -->
-                <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModalLong5" (click)="onViewDispatch(row.batchNumber,row.createdDate)">Dispatch
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong2" (click)="onViewProductionReport(row.salesOrderPlanneds,row.salesOrdersBf,row.salesOrdersBfGsm,row.salesOrdersBfGsmSize)">Production
                 </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModalLong5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle5" aria-hidden="true">
-                  <div class="modal-dialog modal-lg" role="document" style="width:auto;height:auto">
-                    <div class="modal-content" style="position:absolute;width:auto;height:auto">
+                <div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle2" aria-hidden="true">
+                  <!-- <div class="modal-dialog modal-lg" role="document"> -->
+                  <div class="modal-dialog modal-lg" role="document" style="position:absolute;width:auto;height:auto">
+                    <!-- <div class="modal-content"> -->
+                    <div class="modal-content" style="width:1200px;height:auto">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle5">Dispatch Report</h5>
+                        <h5>Production plan Details</h5>
+                        <!-- <h5 class="modal-title" id="exampleModalLongTitle2">Production plan Details</h5> -->
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
-                      <div>
-                        <h6 align="center">{{dispatchHeader}}</h6>
-                      </div>
-                      <div>
-                        <div *ngFor="let row5 of dispatchSalesOrders; let i = index" class="w-100 p-3 table-striped table-bordered ">
-
-                          <table>
-                            <!-- <table class="col-lg-8"> -->
-                            <!-- <tr> -->
-                            <!-- <td>Company</td> -->
-                            <!-- <ngx-qrcode qrc-element-type="url" qrc-value="{{row5.orderNumber}}{{row5.company}}"></ngx-qrcode> -->
-                            <!-- </tr> -->
-                            <!-- <tr> -->
-                            <!-- <td>Order No</td> -->
-                            <!-- </tr> -->
-
-                            <thead>
-                              <tr class="bg-success">
-                                <th colspan="7">Order# {{row5.orderNumber}} - {{row5.company}}</th>
+                      <div class="row">
+                        <div class="col-lg-8">
+                          <h5>Sales Orders</h5>
+                          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+                            <thead class="bg-primary">
+                              <tr>
+                                <th colspan="6">Date: {{row.createdDate| date: 'dd-MM-yyyy'}}</th>
+                                <th colspan="5"> BatchNo:{{row.batchNumber}}</th>
                               </tr>
-                              <tr class="bg-primary">
+                              <tr>
                                 <th>No</th>
+                                <!-- <th>Altered</th> -->
+                                <th>Date</th>
+                                <th>Order#</th>
+                                <th>Name</th>
                                 <th>Item</th>
                                 <th>Size (Inch)</th>
                                 <th>Size (Cm)</th>
-                                <th>Weight</th>
-                                <th>Prod Reel</th>
+                                <th>Weight (Tons)</th>
+                                <th>Reel</th>
                                 <th>Reel In Stock</th>
+                                <th>Action</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr *ngFor="let row6 of row5.salesOrderDispatchs; let i = index">
+                              <tr *ngFor="let row2 of salesOrdersPlanned_row1; let i = index">
                                 <td>{{i+1}}</td>
-                                <td>{{row6.bf}} BF {{row6.gsm}} GSM</td>
-                                <td>{{row6.size}}</td>
-                                <td>{{(row6.size)*2.54 | number: '1.0-0'}}</td>
-                                <td>{{row6.weight | number: '1.2-2'}}</td>
-                                <td>{{row6.reel | number: '1.0-0'}}</td>
-                                <td>{{row6.reelInStock | number: '1.0-0'}}</td>
+                                <!-- <td>{{row2.altered}}</td> -->
+                                <td>{{row2.orderDate | date : 'dd-MM-yyyy'}}</td>
+                                <td>{{row2.orderNumber}}</td>
+                                <td>{{row2.company}}</td>
+                                <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
+                                <td>{{row2.size}}</td>
+                                <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
+                                <td>{{row2.weight}}</td>
+                                <!-- <td>{{row2.reel}}</td> -->
+                                <td>
+                                  <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row2.reel | number: '1.0-0'"
+                                    (ngModelChange)="row2.reel=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                                  />
+                                  <!-- <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row2.reel | number: '1.0-0'"
+                                  (ngModelChange)="row2.reel=$event" (keyup)="modifyReel(row1,reel.value)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/> -->
+                                  <!-- <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="5" style="width:45px;" [id]="i" 
+                        [(ngModel)]="row2.reel"/> -->
+                                </td>
+                                <td>{{row2.reelInStock | number: '1.0-0' }}</td>
+                                <td>
+                                  <button type="button" class="btn btn-warning btn-sm" (click)="updatePlannedSalesOrder(row2.id,row2.reel)" data-dismiss="modal">Update
+                                  </button>
+                                </td>
                               </tr>
                             </tbody>
-                            <tfoot>
-                              <tr>
-                                <th id="total" colspan="4">Total :</th>
-                                <th>{{row5.totalWeight | number: '1.2-2'}}</th>
-                                <th>{{row5.totalReel | number: '1.0-0'}}</th>
-                                <th>{{row5.totalReelInStock | number: '1.0-0'}}</th>
-                              </tr>
-                              <tr>
-                                <th colspan="5">Total (Reels for Production + Reels In Stock)</th>
-                                <th colspan="2" class="text-center">{{sumReels(row5.totalReel,row5.totalReelInStock) | number: '1.0-0'}}</th>
-                              </tr>
-                            </tfoot>
                           </table>
-                          <br>
-                          <div *ngFor="let row6 of dispatchSalesOrders.salesOrderDispatchs; let i = index">
-                          </div>
+                          <!-- <pagination-controls (pageChange)="p2 = $event"></pagination-controls> -->
                         </div>
+                        <div class="col-lg-4">
+                          <div>
+                            <h5>Items Selected for Planning</h5>
+                            <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+                              <thead class="bg-warning">
+                                <tr>
+                                  <th>No</th>
+                                  <th>Item (BF)</th>
+                                  <th>Weight (Tons)</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let row3 of salesOrder_BF; let i = index">
+                                  <td>{{i+1}}</td>
+                                  <td>{{row3.bf}}</td>
+                                  <td>{{row3.weight}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div>
+                            <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+                              <thead class="bg-warning">
+                                <tr>
+                                  <th>No</th>
+                                  <th>Item (BF GSM)</th>
+                                  <th>Weight (Tons)</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let row5 of salesOrder_BFGSM; let i = index">
+                                  <td>{{i+1}}</td>
+                                  <td>{{row5.bf}} BF {{row5.gsm}} GSM</td>
+                                  <td>{{row5.weight}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
 
+                          </div>
+                          <div>
+                            <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+                              <thead class="bg-warning">
+                                <tr>
+                                  <th>No</th>
+                                  <th>Item (BF GSM Size)</th>
+                                  <th>Weight (Tons)</th>
+                                  <th>Prod Reel</th>
+                                  <th>Reel In Stock</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let row4 of salesOrder_BFGSMSize; let i = index">
+                                  <td>{{i+1}}</td>
+                                  <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
+                                  <td>{{row4.weight}}</td>
+                                  <td>{{row4.reel| number: '1.0-0'}}</td>
+                                  <td>{{row4.reelInStock| number: '1.0-0'}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+
+                        </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
@@ -619,215 +526,296 @@
                     </div>
                   </div>
                 </div>
+                <td>
+                  <!-- Button trigger delete  -->
+                  <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModalLong5" (click)="onViewDispatch(row.batchNumber,row.createdDate)">Dispatch
+                  </button>
 
-              </td>
-              <!-- <td>
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModalLong5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle5" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document" style="width:auto;height:auto">
+                      <div class="modal-content" style="position:absolute;width:auto;height:auto">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLongTitle5">Dispatch Report</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div>
+                          <h6 align="center">{{dispatchHeader}}</h6>
+                        </div>
+                        <div>
+                          <div *ngFor="let row5 of dispatchSalesOrders; let i = index" class="w-100 p-3 table-striped table-bordered ">
+
+                            <table>
+                              <!-- <table class="col-lg-8"> -->
+                              <!-- <tr> -->
+                              <!-- <td>Company</td> -->
+                              <!-- <ngx-qrcode qrc-element-type="url" qrc-value="{{row5.orderNumber}}{{row5.company}}"></ngx-qrcode> -->
+                              <!-- </tr> -->
+                              <!-- <tr> -->
+                              <!-- <td>Order No</td> -->
+                              <!-- </tr> -->
+
+                              <thead>
+                                <tr class="bg-success">
+                                  <th colspan="7">Order# {{row5.orderNumber}} - {{row5.company}}</th>
+                                </tr>
+                                <tr class="bg-primary">
+                                  <th>No</th>
+                                  <th>Item</th>
+                                  <th>Size (Inch)</th>
+                                  <th>Size (Cm)</th>
+                                  <th>Weight</th>
+                                  <th>Prod Reel</th>
+                                  <th>Reel In Stock</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let row6 of row5.salesOrderDispatchs; let i = index">
+                                  <td>{{i+1}}</td>
+                                  <td>{{row6.bf}} BF {{row6.gsm}} GSM</td>
+                                  <td>{{row6.size}}</td>
+                                  <td>{{(row6.size)*2.54 | number: '1.0-0'}}</td>
+                                  <td>{{row6.weight | number: '1.2-2'}}</td>
+                                  <td>{{row6.reel | number: '1.0-0'}}</td>
+                                  <td>{{row6.reelInStock | number: '1.0-0'}}</td>
+                                </tr>
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <th id="total" colspan="4">Total :</th>
+                                  <th>{{row5.totalWeight | number: '1.2-2'}}</th>
+                                  <th>{{row5.totalReel | number: '1.0-0'}}</th>
+                                  <th>{{row5.totalReelInStock | number: '1.0-0'}}</th>
+                                </tr>
+                                <tr>
+                                  <th colspan="5">Total (Reels for Production + Reels In Stock)</th>
+                                  <th colspan="2" class="text-center">{{sumReels(row5.totalReel,row5.totalReelInStock) | number: '1.0-0'}}</th>
+                                </tr>
+                              </tfoot>
+                            </table>
+                            <br>
+                            <div *ngFor="let row6 of dispatchSalesOrders.salesOrderDispatchs; let i = index">
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onClickPrint()">Print</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </td>
+                <!-- <td>
                 <button type="button" class="btn btn-danger btn-sm" (click)="onClickModify()">Modify Plans
                 </button>
               </td> -->
-          </tr>
-        </tbody>
-      </table>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
-  </ng-template>
-  <ng-template [ngIf]="editPlannedReports">
-    <div>
-      <br>
-      <h5>Edit Production Plan Reports</h5>
-      <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-        <thead class="bg-primary">
-          <tr>
-            <th>No</th>
-            <th>Planned Date</th>
-            <th>Batch No</th>
-            <th>Edit</th>
-            <!-- <th>Report</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of salesOrdersPlanned | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
-            <td>{{i+1}}</td>
-            <td>{{row.createdDate | date: 'dd-MM-yyyy'}}</td>
-            <td>{{row.batchNumber}}</td>
-            <td>
-              <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong2" (click)="onModifyPlannedReports(row.salesOrderPlanneds,row.salesOrdersBf,row.salesOrdersBfGsm,row.salesOrdersBfGsmSize,row.createdDate,row.batchNumber)">
-                Modify
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </ng-template>
-  <ng-template [ngIf]="modifyPlanReports">
-    <div class="row">
-      <div class="col-lg-8">
-        <h5>Add/Delete Sales Orders</h5>
-        <h6 align="center">{{dispatchHeader}}</h6>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="editPlannedReports">
+      <div>
+        <br>
+        <h5>Edit Production Plan Reports</h5>
         <table class="table table-responsive table-hover table-sm table-striped table-bordered">
           <thead class="bg-primary">
-            <!-- <tr>
-              <th colspan="6">Date: {{row.createdDate| date: 'dd-MM-yyyy'}}</th>
-              <th colspan="5"> BatchNo:{{row.batchNumber}}</th>
-            </tr> -->
             <tr>
               <th>No</th>
-              <!-- <th>Altered</th> -->
-              <th>Date</th>
-              <th>Order#</th>
-              <th>Name</th>
-              <th>Item</th>
-              <th>Size (Inch)</th>
-              <th>Size (Cm)</th>
-              <th>Weight (Tons)</th>
-              <th>Reel</th>
-              <th>Reel In Stock</th>
-              <th>Action</th>
+              <th>Planned Date</th>
+              <th>Batch No</th>
+              <th>Edit</th>
+              <!-- <th>Report</th> -->
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let row2 of salesOrdersPlanned_row1; let i = index">
+            <tr *ngFor="let row of salesOrdersPlanned | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
               <td>{{i+1}}</td>
-              <!-- <td>{{row2.altered}}</td> -->
-              <td>{{row2.orderDate | date : 'dd-MM-yyyy'}}</td>
-              <td>{{row2.orderNumber}}</td>
-              <td>{{row2.company}}</td>
-              <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
-              <td>{{row2.size}}</td>
-              <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
-              <td>{{row2.weight}}</td>
-              <td>{{row2.reel}}</td>
-              <!-- <td>
-                <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row2.reel | number: '1.0-0'"
-                  (ngModelChange)="row2.reel=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-              </td> -->
-              <td>{{row2.reelInStock | number: '1.0-0' }}</td>
+              <td>{{row.createdDate | date: 'dd-MM-yyyy'}}</td>
+              <td>{{row.batchNumber}}</td>
               <td>
-                <button type="button" class="btn btn-danger btn-sm" (click)="onDeletePlannedSalesOrder(row2.id)" data-dismiss="modal">Delete
+                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalLong2" (click)="onModifyPlannedReports(row.salesOrderPlanneds,row.salesOrdersBf,row.salesOrdersBfGsm,row.salesOrdersBfGsmSize,row.createdDate,row.batchNumber)">
+                  Modify
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
-        <!-- <pagination-controls (pageChange)="p2 = $event"></pagination-controls> -->
       </div>
-      <div class="col-lg-4">
-        <div>
-          <h5>Items Selected for Planning</h5>
+    </ng-template>
+    <ng-template [ngIf]="modifyPlanReports">
+      <div class="row">
+        <div class="col-lg-8">
+          <h5>Add/Delete Sales Orders</h5>
+          <h6 align="center">{{dispatchHeader}}</h6>
           <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-            <thead class="bg-warning">
+            <thead class="bg-primary">
+              <!-- <tr>
+              <th colspan="6">Date: {{row.createdDate| date: 'dd-MM-yyyy'}}</th>
+              <th colspan="5"> BatchNo:{{row.batchNumber}}</th>
+            </tr> -->
               <tr>
                 <th>No</th>
-                <th>Item (BF)</th>
+                <!-- <th>Altered</th> -->
+                <th>Date</th>
+                <th>Order#</th>
+                <th>Name</th>
+                <th>Item</th>
+                <th>Size (Inch)</th>
+                <th>Size (Cm)</th>
                 <th>Weight (Tons)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let row3 of salesOrder_BF; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{row3.bf}}</td>
-                <td>{{row3.weight}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div>
-          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-            <thead class="bg-warning">
-              <tr>
-                <th>No</th>
-                <th>Item (BF GSM)</th>
-                <th>Weight (Tons)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let row5 of salesOrder_BFGSM; let i = index">
-                <td>{{i+1}}</td>
-                <td>{{row5.bf}} BF {{row5.gsm}} GSM</td>
-                <td>{{row5.weight}}</td>
-              </tr>
-            </tbody>
-          </table>
-
-        </div>
-        <div>
-          <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-            <thead class="bg-warning">
-              <tr>
-                <th>No</th>
-                <th>Item (BF GSM Size)</th>
-                <th>Weight (Tons)</th>
-                <th>Prod Reel</th>
+                <th>Reel</th>
                 <th>Reel In Stock</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let row4 of salesOrder_BFGSMSize; let i = index">
+              <tr *ngFor="let row2 of salesOrdersPlanned_row1; let i = index">
                 <td>{{i+1}}</td>
-                <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
-                <td>{{row4.weight}}</td>
-                <td>{{row4.reel| number: '1.0-0'}}</td>
-                <td>{{row4.reelInStock| number: '1.0-0'}}</td>
+                <!-- <td>{{row2.altered}}</td> -->
+                <td>{{row2.orderDate | date : 'dd-MM-yyyy'}}</td>
+                <td>{{row2.orderNumber}}</td>
+                <td>{{row2.company}}</td>
+                <td>{{row2.bf}} BF {{row2.gsm}} GSM</td>
+                <td>{{row2.size}}</td>
+                <td>{{(row2.size)*2.54 | number: '1.0-0'}}</td>
+                <td>{{row2.weight}}</td>
+                <td>{{row2.reel}}</td>
+                <!-- <td>
+                <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row2.reel | number: '1.0-0'"
+                  (ngModelChange)="row2.reel=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+              </td> -->
+                <td>{{row2.reelInStock | number: '1.0-0' }}</td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm" (click)="onDeletePlannedSalesOrder(row2.id)" data-dismiss="modal">Delete
+                  </button>
+                </td>
               </tr>
             </tbody>
           </table>
+          <!-- <pagination-controls (pageChange)="p2 = $event"></pagination-controls> -->
+              <h5>Add - All Sales Orders</h5>
+              <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+                <thead class="bg-success">
+                  <tr>
+                    <th>No</th>
+                    <th>Date</th>
+                    <th>Order#</th>
+                    <th>Name</th>
+                    <th>Item</th>
+                    <th>Size (Inch)</th>
+                    <th>Size (Cm)</th>
+                    <th>Weight (Tons)</th>
+                    <th>Weight Plan</th>
+                    <th>Reel</th>
+                    <th>Reel In stock</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row1 of salesOrder | paginate: { itemsPerPage: 50, currentPage: p1 }; let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{row1.orderDate | date : 'dd-MM-yyyy'}}</td>
+                    <td>{{row1.orderNumber}}</td>
+                    <td>{{row1.company}}</td>
+                    <td>{{row1.bf}} BF {{row1.gsm}} GSM</td>
+                    <td>{{row1.size}}</td>
+                    <td>{{(row1.size)*2.54 | number: '1.0-0'}}</td>
+                    <td>{{row1.weight}}</td>
+                    <td>
+                      <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" [(ngModel)]="row1.newWeight"
+                      />
+                    </td>
+                    <td>
+                      <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row1.reel | number: '1.0-0'"
+                        (ngModelChange)="row1.reel=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
+                    </td>
+                    <td>
+                      <input class="input-sm" #reelInStock type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [id]="i" [ngModel]="row1.reelInStock | number: '1.0-0'"
+                        (ngModelChange)="row1.reelInStock=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+                      />
+                      <!-- (ngModelChange)="row1.reelInStock=$event" (keyup)="stockReel(reelInStock.value,row2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/> -->
+                    </td>
+      
+                    <td>
+                      <button type="button" class="btn btn-success btn-sm" (click)="onAddSalesOrder(row1,row1['id'],newWeight.value)">Add
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <pagination-controls (pageChange)="p1 = $event"></pagination-controls>
+        </div>
+        <div class="col-lg-4">
+          <div>
+            <h5>Items Selected for Planning</h5>
+            <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+              <thead class="bg-warning">
+                <tr>
+                  <th>No</th>
+                  <th>Item (BF)</th>
+                  <th>Weight (Tons)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row3 of salesOrder_BF; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{row3.bf}}</td>
+                  <td>{{row3.weight}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+              <thead class="bg-warning">
+                <tr>
+                  <th>No</th>
+                  <th>Item (BF GSM)</th>
+                  <th>Weight (Tons)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row5 of salesOrder_BFGSM; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{row5.bf}} BF {{row5.gsm}} GSM</td>
+                  <td>{{row5.weight}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <div>
+            <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+              <thead class="bg-warning">
+                <tr>
+                  <th>No</th>
+                  <th>Item (BF GSM Size)</th>
+                  <th>Weight (Tons)</th>
+                  <th>Prod Reel</th>
+                  <th>Reel In Stock</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row4 of salesOrder_BFGSMSize; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
+                  <td>{{row4.weight}}</td>
+                  <td>{{row4.reel| number: '1.0-0'}}</td>
+                  <td>{{row4.reelInStock| number: '1.0-0'}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-lg-8" *ngIf="modifyPlanReports">
-      <h5>Add - All Sales Orders</h5>
-      <table class="table table-responsive table-hover table-sm table-striped table-bordered">
-        <thead class="bg-success">
-          <tr>
-            <th>No</th>
-            <th>Date</th>
-            <th>Order#</th>
-            <th>Name</th>
-            <th>Item</th>
-            <th>Size (Inch)</th>
-            <th>Size (Cm)</th>
-            <th>Weight (Tons)</th>
-            <th>Weight Plan</th>
-            <th>Reel</th>
-            <th>Reel In stock</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row1 of salesOrder | paginate: { itemsPerPage: 50, currentPage: p1 }; let i = index">
-            <td>{{i+1}}</td>
-            <td>{{row1.orderDate | date : 'dd-MM-yyyy'}}</td>
-            <td>{{row1.orderNumber}}</td>
-            <td>{{row1.company}}</td>
-            <td>{{row1.bf}} BF {{row1.gsm}} GSM</td>
-            <td>{{row1.size}}</td>
-            <td>{{(row1.size)*2.54 | number: '1.0-0'}}</td>
-            <td>{{row1.weight}}</td>
-            <td>
-              <input class="input-sm" #newWeight type="text" pattern="[0-9]" maxlength="4" style="width:45px;" [id]="i" [(ngModel)]="row1.newWeight"
-              />
-            </td>
-            <td>
-              <input class="input-sm" #reel type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [ngModel]="row1.reel | number: '1.0-0'"
-                (ngModelChange)="row1.reel=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57" />
-            </td>
-            <td>
-              <input class="input-sm" #reelInStock type="text" pattern="[0-9]" maxlength="3" style="width:45px;" [id]="i" [ngModel]="row1.reelInStock | number: '1.0-0'"
-                (ngModelChange)="row1.reelInStock=$event" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-              />
-              <!-- (ngModelChange)="row1.reelInStock=$event" (keyup)="stockReel(reelInStock.value,row2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"/> -->
-            </td>
 
-            <td>
-              <button type="button" class="btn btn-success btn-sm" (click)="onAddSalesOrder(row1,row1['id'],newWeight.value)">Add
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <pagination-controls (pageChange)="p1 = $event"></pagination-controls>
-    </div>
-  </ng-template>
-</div>
+    </ng-template>
+  </div>
