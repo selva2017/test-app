@@ -40,6 +40,8 @@ export class PlanComponent implements OnInit {
   showPlannedReports: boolean = false;
   modifyPlanReports: boolean = false;
   editPlannedReports: boolean = false;
+  showDeleteSalesOrder: boolean = false;
+  showRestoreSalesOrder: boolean = false;
   submittedPlans: Planned[] = [];
   planSubmitted: Planned[] = [];
   salesOrdersPlanned: SalesOrdersPlanned[] = [];
@@ -96,6 +98,7 @@ export class PlanComponent implements OnInit {
     this.showSelectedOrders = false;
     this.showConsolidatedReports = false;
     this.showPlannedReports = false;
+    this.showRestoreSalesOrder = false;
   }
   showSelected() {
     // this.showAllSalesOrders = false;
@@ -103,13 +106,16 @@ export class PlanComponent implements OnInit {
     this.showAllSalesOrders = false;
     this.showConsolidatedReports = false;
     this.showPlannedReports = false;
+    this.showRestoreSalesOrder = false;
   }
   showConsolidated() {
     this.showConsolidatedReports = true;
     this.showAllSalesOrders = false;
     this.showSelectedOrders = false;
     this.showPlannedReports = false;
-    // this.salesOrderUpdated = false;
+    this.modifyPlanReports = false;
+    this.editPlannedReports = false;
+    this.showRestoreSalesOrder = false;
   }
   confirmProduction() {
     // this.salesOrderUpdated = true;
@@ -117,6 +123,7 @@ export class PlanComponent implements OnInit {
     this.showConsolidatedReports = false;
     this.showSelectedOrders = false;
     this.showPlannedReports = false;
+    this.showRestoreSalesOrder = false;
 
     // Send the Completed orders
     // this.salesOrder_selected.forEach(element => {
@@ -161,6 +168,13 @@ export class PlanComponent implements OnInit {
     this.salesOrder_modified = [];
     this.refreshList();
     this.showAllSalesOrders = true;
+    this.showSelectedOrders = false;
+    this.showConsolidatedReports = false;
+    this.showPlannedReports = false;
+    this.modifyPlanReports = false;
+    this.editPlannedReports = false;
+    this.showDeleteSalesOrder=false;
+    this.showRestoreSalesOrder = false;
     // this.generateItemBFGSM();
     // this.extractModified();
     // //console.log(this.salesOrder_selected);
@@ -483,6 +497,7 @@ export class PlanComponent implements OnInit {
     this.showSelectedOrders = false;
     this.modifyPlanReports = false;
     this.editPlannedReports = false;
+    this.showRestoreSalesOrder = false;
     this.salesOrdersPlanned = [];
     this.subscription = this.serverService.getSalesOrdersPlanned().
       subscribe(list => {
@@ -497,6 +512,7 @@ export class PlanComponent implements OnInit {
     this.showSelectedOrders = false;
     this.showAllSalesOrders = false;
     this.showPlannedReports = false;
+    this.showRestoreSalesOrder = false;
     this.subscription = this.serverService.getSalesOrdersPlanned().
       subscribe(list => {
         this.salesOrdersPlanned = list;
@@ -513,6 +529,7 @@ export class PlanComponent implements OnInit {
     this.showSelectedOrders = false;
     this.showAllSalesOrders = false;
     this.showPlannedReports = false;
+    this.showRestoreSalesOrder = false;
     this.salesOrdersPlanned_row1 = [];
     this.salesOrdersPlanned_row1 = record1;
     // console.log(this.salesOrdersPlanned_row1);
@@ -548,11 +565,25 @@ export class PlanComponent implements OnInit {
   onDeletePlannedSalesOrder(id, reel) {
 
   }
-  onRestoreSalesReports(){
-
+  onRestoreSalesReports() {
+    this.showRestoreSalesOrder = true;
+    this.showDeleteSalesOrder = false;
+    this.showAllSalesOrders = false;
+    this.showPlannedReports = false;
+    this.showConsolidatedReports = false;
+    this.showSelectedOrders = false;
+    this.modifyPlanReports = false;
+    this.editPlannedReports = false;
   }
-  onDeleteSalesOrders(){
-    
+  onDeleteSalesOrders() {
+    this.showDeleteSalesOrder = true;
+    this.showAllSalesOrders = false;
+    this.showPlannedReports = false;
+    this.showConsolidatedReports = false;
+    this.showSelectedOrders = false;
+    this.modifyPlanReports = false;
+    this.editPlannedReports = false;
+    this.showRestoreSalesOrder = false;
   }
   onclick() {
     console.log("inside")
