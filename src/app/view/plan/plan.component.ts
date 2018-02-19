@@ -22,6 +22,7 @@ export class PlanComponent implements OnInit {
   test: String;
   subscription: Subscription;
   salesOrder: ProdPlan[];
+  salesOrderRestore: ProdPlan[];
   salesOrder_selected: ProdPlan[] = [];
   salesOrder_selected1: ProdPlan[] = [];
   salesOrder_row: ProdPlan[] = [];
@@ -37,9 +38,9 @@ export class PlanComponent implements OnInit {
   showSelectedOrders: boolean = false;
   showConsolidatedReports: boolean = false;
   // salesOrderUpdated: boolean = false;
-  showPlannedReports: boolean = false;
-  modifyPlanReports: boolean = false;
-  editPlannedReports: boolean = false;
+  showProductionPlans: boolean = false;
+  modifyProductionPlan: boolean = false;
+  showProductionPlansModify: boolean = false;
   showDeleteSalesOrder: boolean = false;
   showRestoreSalesOrder: boolean = false;
   submittedPlans: Planned[] = [];
@@ -51,6 +52,7 @@ export class PlanComponent implements OnInit {
   salesOrder_BFGSMSize1: SalesOrdersPlanned1[] = [];
   dispatchSalesOrders: DispatchReport[] = [];
   dispatchHeader: string;
+  batch_number = "";
 
   constructor(private serverService: ServerService) {
     this.showLoader = true;
@@ -79,7 +81,7 @@ export class PlanComponent implements OnInit {
 
   ngOnInit() {
     // this.showLoader=true;
-    this.refreshList();
+    this.refreshActiveList();
     this.getConsolidatedBFGSM();
     this.getConsolidatedBFGSMSize();
     // //console.log(this.salesOrder);
@@ -89,72 +91,9 @@ export class PlanComponent implements OnInit {
     return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(amount);
   }
 
-  onClickView(record) {
-    this.salesOrder_row = record;
-  }
-  showAll() {
-    // this.showAllSalesOrders = false;
-    this.showAllSalesOrders = true;
-    this.showSelectedOrders = false;
-    this.showConsolidatedReports = false;
-    this.showPlannedReports = false;
-    this.showRestoreSalesOrder = false;
-  }
-  showSelected() {
-    // this.showAllSalesOrders = false;
-    this.showSelectedOrders = true;
-    this.showAllSalesOrders = false;
-    this.showConsolidatedReports = false;
-    this.showPlannedReports = false;
-    this.showRestoreSalesOrder = false;
-  }
-  showConsolidated() {
-    this.showConsolidatedReports = true;
-    this.showAllSalesOrders = false;
-    this.showSelectedOrders = false;
-    this.showPlannedReports = false;
-    this.modifyPlanReports = false;
-    this.editPlannedReports = false;
-    this.showRestoreSalesOrder = false;
-  }
-  confirmProduction() {
-    // this.salesOrderUpdated = true;
-    this.showAllSalesOrders = true;
-    this.showConsolidatedReports = false;
-    this.showSelectedOrders = false;
-    this.showPlannedReports = false;
-    this.showRestoreSalesOrder = false;
-
-    // Send the Completed orders
-    // this.salesOrder_selected.forEach(element => {
-    // console.log(element);
-    // console.log(this.salesOrder_selected);
-    // console.log(this.salesOrder_BFGSMSize);
-    // this.salesOrder_selected['consBfGSMSize']=JSON.stringify(this.salesOrder_BFGSMSize);
-    // this.salesOrder_selected['consBfGSM']=JSON.stringify(this.salesOrder_BFGSM);
-    // this.salesOrder_selected['consBf']=JSON.stringify(this.salesOrder_BF);
-    // console.log(this.salesOrder_selected);
-    this.serverService.completedOrders(this.salesOrder_selected)
-      .subscribe(
-      (success) => {
-        console.log("success");
-        this.clearAll();
-      },
-      (error) => console.log(error)
-      );
-    // });
-
-    // Send the Incompleted orders
-    // this.salesOrder_modified;
-    // this.serverService.completedOrders(this.salesOrder_modified)
-    //   .subscribe(
-    //   (success) => {
-    //     console.log("success");
-    //   },
-    //   (error) => console.log(error)
-    //   );
-    // this.salesOrderUpdated = false;
-  }
+  // onClickView(record) {
+  //   this.salesOrder_row = record;
+  // }
   testKeyup(reel) {
     this.test = reel;
     // console.log(reel);
@@ -166,14 +105,14 @@ export class PlanComponent implements OnInit {
     this.salesOrder_BFGSM = [];
     this.salesOrder_BF = [];
     this.salesOrder_modified = [];
-    this.refreshList();
+    this.refreshActiveList();
     this.showAllSalesOrders = true;
     this.showSelectedOrders = false;
     this.showConsolidatedReports = false;
-    this.showPlannedReports = false;
-    this.modifyPlanReports = false;
-    this.editPlannedReports = false;
-    this.showDeleteSalesOrder=false;
+    this.showProductionPlans = false;
+    this.modifyProductionPlan = false;
+    this.showProductionPlansModify = false;
+    this.showDeleteSalesOrder = false;
     this.showRestoreSalesOrder = false;
     // this.generateItemBFGSM();
     // this.extractModified();
@@ -314,13 +253,13 @@ export class PlanComponent implements OnInit {
   }
   updatePlannedSalesOrder(id, reel) {
     // console.log(id,reel);
-    this.serverService.updatePlannedSalesOrderReel(id, reel)
+    this.serverService.updateProductionPlanItemReel(id, reel)
       .subscribe(
       // (res: Daybook) => console.log(res),
       (success) => {
         // console.log("success");
-        this.displayProdOrders();
-        // this.refreshList();
+        this.onViewProductionPlans();
+        // this.refreshActiveList();
       },
       (error) => console.log(error)
       );
@@ -375,7 +314,7 @@ export class PlanComponent implements OnInit {
     //   // (res: salesOrder) => //console.log(res),
     //   (success) => {
     //     //console.log("success");
-    //     this.refreshList();
+    //     this.refreshActiveList();
     //   },
     //   (error) => //console.log(error)
     //   );
@@ -403,17 +342,29 @@ export class PlanComponent implements OnInit {
     //console.log(this.salesOrder_selected.length);
     //console.log(this.salesOrder.length);
   }
-  refreshList() {
-    this.salesOrder = [];
+  refreshActiveList() {
+    // this.salesOrder = [];
     // this.showLoader = true;
-    this.subscription = this.serverService.getSalesOrder().
+    this.subscription = this.serverService.getActiveSalesOrders().
       subscribe(list => {
         this.salesOrder = list;
         // console.log(this.salesOrder);
-        // this.showLoader = false;
+        this.showLoader = false;
       })
-    this.showLoader = false;
+    // this.showLoader = false;
   }
+  refreshInActiveList() {
+    this.salesOrderRestore = [];
+    // this.showLoader = true;
+    this.subscription = this.serverService.getInActiveSalesOrders().
+      subscribe(list => {
+        this.salesOrderRestore = list;
+        // console.log(this.salesOrder);
+        this.showLoader = false;
+      })
+    // this.showLoader = false;
+  }
+
   getConsolidatedBFGSM() {
     this.subscription = this.serverService.getTotalBFGSM().
       subscribe(list => {
@@ -466,38 +417,115 @@ export class PlanComponent implements OnInit {
 
   deleteSalesOrder(id) {
     // this.showLoader=true;
-    this.serverService.updateSalesOrderStatus(id)
+    this.serverService.removeSalesOrderStatus(id)
       .subscribe(
       (success) => {
-        this.refreshList();
+        this.refreshActiveList();
+      },
+      (error) => console.log(error)
+      );
+  }
+  restoreSalesOrder(id) {
+    this.showLoader=true;
+    this.serverService.restoreSalesOrderStatus(id)
+      .subscribe(
+      (success) => {
+        this.refreshInActiveList();
       },
       (error) => console.log(error)
       );
   }
   productionPlan(record) {
     this.showAllSalesOrders = false;
-    this.showPlannedReports = true;
+    this.showProductionPlans = true;
     this.submittedPlans = record;
     // console.log(this.submittedPlans);    
 
   }
   dispatchInfo() {
   }
-  onViewDetails(record) {
-    // console.log(record);    
-
-  }
   dayBook: Daybook[];
   dayBook_row: Daybook[] = [];
 
-  displayProdOrders() {
-    this.showPlannedReports = true;
+  onViewShowAll() {
+    this.showAllSalesOrders = true;
+    this.showSelectedOrders = false;
+    this.showProductionPlans = false;
+    this.showProductionPlansModify = false;
+    this.modifyProductionPlan = false;
+    this.showDeleteSalesOrder = false;
+    this.showRestoreSalesOrder = false;
     this.showConsolidatedReports = false;
+  }
+  onViewShowSelected() {
+    this.showSelectedOrders = true;
+    this.showAllSalesOrders = false;
+    this.showProductionPlans = false;
+    this.showProductionPlansModify = false;
+    this.modifyProductionPlan = false;
+    this.showDeleteSalesOrder = false;
+    this.showRestoreSalesOrder = false;
+    this.showConsolidatedReports = false;
+  }
+  onViewConsolidatedReports() {
+    this.showConsolidatedReports = true;
     this.showAllSalesOrders = false;
     this.showSelectedOrders = false;
-    this.modifyPlanReports = false;
-    this.editPlannedReports = false;
+    this.showProductionPlans = false;
+    this.showProductionPlansModify = false;
+    this.modifyProductionPlan = false;
+    this.showDeleteSalesOrder = false;
     this.showRestoreSalesOrder = false;
+  }
+  confirmProduction() {
+    this.onViewShowAll();
+    // this.showAllSalesOrders = true;
+    // this.showConsolidatedReports = false;
+    // this.showSelectedOrders = false;
+    // this.showProductionPlans = false;
+    // this.showRestoreSalesOrder = false;
+    // this.showProductionPlansModify = false;
+
+    // Send the Completed orders
+    // this.salesOrder_selected.forEach(element => {
+    // console.log(element);
+    // console.log(this.salesOrder_selected);
+    // console.log(this.salesOrder_BFGSMSize);
+    // this.salesOrder_selected['consBfGSMSize']=JSON.stringify(this.salesOrder_BFGSMSize);
+    // this.salesOrder_selected['consBfGSM']=JSON.stringify(this.salesOrder_BFGSM);
+    // this.salesOrder_selected['consBf']=JSON.stringify(this.salesOrder_BF);
+    console.log(this.salesOrder_selected);
+    this.serverService.createProductionPlan(this.salesOrder_selected)
+      .subscribe(
+      (success) => {
+        console.log("success");
+        this.clearAll();
+      },
+      (error) => console.log(error)
+      );
+    // });
+
+    // Send the Incompleted orders
+    // this.salesOrder_modified;
+    // this.serverService.completedOrders(this.salesOrder_modified)
+    //   .subscribe(
+    //   (success) => {
+    //     console.log("success");
+    //   },
+    //   (error) => console.log(error)
+    //   );
+    // this.salesOrderUpdated = false;
+  }
+
+  onViewProductionPlans() {
+    this.showProductionPlans = true;
+    this.showAllSalesOrders = false;
+    this.showSelectedOrders = false;
+    this.showProductionPlansModify = false;
+    this.modifyProductionPlan = false;
+    this.showDeleteSalesOrder = false;
+    this.showRestoreSalesOrder = false;
+    this.showConsolidatedReports = false;
     this.salesOrdersPlanned = [];
     this.subscription = this.serverService.getSalesOrdersPlanned().
       subscribe(list => {
@@ -506,13 +534,17 @@ export class PlanComponent implements OnInit {
         // this.showLoader = false;
       })
   }
-  onEditPlannedReports() {
-    this.editPlannedReports = true;
-    this.showConsolidatedReports = false;
-    this.showSelectedOrders = false;
+  onEditProductionPlans() {
+    this.salesOrdersPlanned = [];
+    this.showProductionPlansModify = true;
     this.showAllSalesOrders = false;
-    this.showPlannedReports = false;
+    this.showSelectedOrders = false;
+    this.showProductionPlans = false;
+    this.modifyProductionPlan = false;
+    this.showDeleteSalesOrder = false;
     this.showRestoreSalesOrder = false;
+    this.showConsolidatedReports = false;
+
     this.subscription = this.serverService.getSalesOrdersPlanned().
       subscribe(list => {
         this.salesOrdersPlanned = list;
@@ -521,15 +553,18 @@ export class PlanComponent implements OnInit {
       })
   }
   onModifyPlannedReports(record1, record2, record3, record4, createdDate, batch_number) {
+    this.batch_number = batch_number;
     this.dispatchHeader = "Production Planned Date : " + createdDate + "     Batch No : " + batch_number;
 
-    this.modifyPlanReports = true;
-    this.editPlannedReports = false;
-    this.showConsolidatedReports = false;
-    this.showSelectedOrders = false;
+    this.modifyProductionPlan = true;
     this.showAllSalesOrders = false;
-    this.showPlannedReports = false;
+    this.showSelectedOrders = false;
+    this.showProductionPlans = false;
+    this.showProductionPlansModify = false;
+    this.showDeleteSalesOrder = false;
     this.showRestoreSalesOrder = false;
+    this.showConsolidatedReports = false;
+
     this.salesOrdersPlanned_row1 = [];
     this.salesOrdersPlanned_row1 = record1;
     // console.log(this.salesOrdersPlanned_row1);
@@ -542,7 +577,16 @@ export class PlanComponent implements OnInit {
     this.salesOrder_BFGSMSize = [];
     this.salesOrder_BFGSMSize = record4;
   }
-  onViewProductionReport(record1, record2, record3, record4) {
+  onViewProductionReportModel(record1, record2, record3, record4) {
+    // this.modifyProductionPlan = true;
+    // this.showAllSalesOrders = false;
+    // this.showSelectedOrders = false;
+    // this.showProductionPlans = false;
+    // this.showProductionPlansModify = false;
+    // this.showDeleteSalesOrder= false;
+    // this.showRestoreSalesOrder = false;
+    // this.showConsolidatedReports = false;
+
     // console.log("record");
     // console.log(record1);
     this.salesOrdersPlanned_row1 = [];
@@ -562,38 +606,98 @@ export class PlanComponent implements OnInit {
     // this.generateItemBFGMSSize1();
     // this.generateItemBF();
   }
-  onDeletePlannedSalesOrder(id, reel) {
+  onDeleteProductionPlanItem(row) {
+    this.showProductionPlansModify = true;
+    this.showAllSalesOrders = false;
+    this.showSelectedOrders = false;
+    this.showProductionPlans = false;
+    this.modifyProductionPlan = false;
+    this.showDeleteSalesOrder = false;
+    this.showRestoreSalesOrder = false;
+    this.showConsolidatedReports = false;
+
+    this.serverService.deleteProductionPlanItem(row.id, row.salesOrderPlannedId, row.altered, row.weight)
+      .subscribe(
+      (success) => {
+        this.refreshActiveList();
+        this.onEditProductionPlans();
+      },
+      (error) => console.log(error)
+      );
 
   }
   onRestoreSalesReports() {
     this.showRestoreSalesOrder = true;
-    this.showDeleteSalesOrder = false;
     this.showAllSalesOrders = false;
-    this.showPlannedReports = false;
-    this.showConsolidatedReports = false;
     this.showSelectedOrders = false;
-    this.modifyPlanReports = false;
-    this.editPlannedReports = false;
+    this.showProductionPlans = false;
+    this.showProductionPlansModify = false;
+    this.modifyProductionPlan = false;
+    this.showDeleteSalesOrder = false;
+    this.showConsolidatedReports = false;
+
+    this.salesOrderRestore = [];
+    // this.showLoader = true;
+    this.subscription = this.serverService.getInActiveSalesOrders().
+      subscribe(list => {
+        this.salesOrderRestore = list;
+        // console.log(this.salesOrder);
+        // this.showLoader = false;
+      })
   }
   onDeleteSalesOrders() {
+    this.refreshActiveList();
     this.showDeleteSalesOrder = true;
     this.showAllSalesOrders = false;
-    this.showPlannedReports = false;
-    this.showConsolidatedReports = false;
     this.showSelectedOrders = false;
-    this.modifyPlanReports = false;
-    this.editPlannedReports = false;
+    this.showProductionPlans = false;
+    this.showProductionPlansModify = false;
+    this.modifyProductionPlan = false;
     this.showRestoreSalesOrder = false;
+    this.showConsolidatedReports = false;
   }
   onclick() {
     console.log("inside")
   }
-  onAddSalesOrder(a, b, c) {
-    console.log(a);
+  onAddItemToExistingProductionPlan(key, voucherKey, newWeight) {
+    console.log(key, voucherKey, newWeight);
+    console.log(this.batch_number);
+    // this.showConsolidatedReports = false;
+    key["altered"] = 0;
+    if (newWeight > 0) {
+      var wt = Number(key["weight"]) - Number(newWeight);
+      key.weight = Number(newWeight);
+      key["altered"] = 1;
+      key["newWeight"] = wt;
+      key['reel'] = this.reel(newWeight, key['size']);
+      this.salesOrder_modified.push(key);
+    }
+    this.salesOrder_selected.push(key);
+    for (var i = 0; i < this.salesOrder.length; i++) {
+      if (this.salesOrder[i].id === voucherKey) {
+        this.salesOrder.splice(i, 1);
+        break;
+      }
+    }
+    // this.generateItemBFGSM();
+    // this.generateItemBFGMSSize();
+    // this.generateItemBF();
+
+    this.serverService.addItemToExistingProductionPlan(this.salesOrder_selected, this.batch_number)
+      .subscribe(
+      (success) => {
+        console.log("success");
+        this.refreshActiveList();
+        this.onEditProductionPlans();
+      },
+      (error) => console.log(error)
+      );
+    // this.clearAll();
   }
-  onViewDispatch(batch_number, createdDate) {
+  onViewDispatchModel(batch_number, createdDate) {
+    this.batch_number = batch_number;
     this.dispatchHeader = "Production Planned Date : " + createdDate + "     Batch No : " + batch_number;
-    this.showConsolidatedReports = true;
+    // this.showConsolidatedReports = true;
     this.subscription = this.serverService.getSalesOrdersDispatch(batch_number).
       subscribe(list => {
         this.dispatchSalesOrders = list;

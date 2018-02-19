@@ -1,8 +1,9 @@
 export interface Planned {
-             plannedDate: string;
+    plannedDate: string;
     batchNumber: string;
     items: [
         {
+            salesOrderPlannedId: string;
             id: string;
             orderNumber: string;
             voucherKey: string;
@@ -15,6 +16,6 @@ export interface Planned {
             newWeight: string;
             reel: string;
             orderStatus: string;
-altered: string;
+            altered: string;
         }];
 }
