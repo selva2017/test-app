@@ -46,6 +46,8 @@ import { PublishComponent } from './view/publish/publish.component';
 import { SignupComponent } from './login/signup/signup.component';
 import { PlanComponent } from './view/plan/plan.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { ReceiptsComponent } from './view/receipts/receipts.component';
+import { SalesDetailsComponent } from './view/sales-details/sales-details.component';
 export function highchartsFactory() {
   const hc = require('highcharts/highstock');
   const dd = require('highcharts/modules/exporting');
@@ -82,7 +84,9 @@ declare var require: any;
     PublishComponent,
     SignupComponent,
     PlanComponent,
-    QrcodeComponent
+    QrcodeComponent,
+    ReceiptsComponent,
+    SalesDetailsComponent
   ],
   imports: [
     BrowserModule,

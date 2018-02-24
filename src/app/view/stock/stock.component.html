@@ -38,11 +38,11 @@
     <tbody>
     <!-- <tr *ngFor="let row of stock_list; let i = index"> -->
     <!-- <tr *ngFor="let row of stock_list; let i = index"> -->
-    <tr *ngFor="let row of stock_list | paginate: { itemsPerPage: 10, currentPage: p }; let i = index">
+    <tr *ngFor="let row of stock_list | paginate: { itemsPerPage: 150, currentPage: p }; let i = index">
             
       <td>{{i+1}}</td>
       <!-- <td>{{row.stockItemDetailsId}}</td> -->
-      <td>{{row.voucherEffectiveDate | date : 'dd-MM-yy'}}</td>
+      <td>{{row.voucherEffectiveDate}}</td>
       <td>{{row.voucherNumber}}</td>
       <td>{{row.batchName}}</td>
       <td>{{row.stockItemName}}</td>

@@ -1,0 +1,45 @@
+<div *ngIf="showLoader" align="center">
+    <br>
+    <br>
+    <img src="./assets/loading-2.gif">
+  </div>
+  <div *ngIf="!showLoader">
+    <br>
+    <h3>Sales Information</h3>
+    <table class="table table-responsive table-hover table-sm table-striped table-bordered">
+      <thead class="thead-inverse" class="bg-success">
+        <tr>
+          <th>No</th>
+          <!-- <th>ID</th> -->
+          <th>Cust ID</th>
+          <th>Receipt ID</th>
+          <th>Voucher Number</th>
+          <th>Party Ledger Name</th>
+          <th>Date</th>
+          <th>Eff Date</th>
+          <th>Voucher Type</th>
+          <th>Voucher Key</th>
+          <th>Ledger Name</th>
+          <th>Amount</th>
+          <th>Company Id</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of receipts  | paginate: { itemsPerPage: 150, currentPage: p }; let i = index">
+        <td>{{i+1}}</td>
+        <!-- <td>{{row.id}}</td> -->
+        <td>{{row.custId}}</td>
+        <td>{{row.receiptId}}</td>
+        <td>{{row.voucherNumber}}</td>
+        <td>{{row.partyLedgerName}}</td>
+        <td>{{row.date}}</td>
+        <td>{{row.effectiveDate}}</td>
+        <td>{{row.voucherType}}</td>
+        <td>{{row.voucherKey}}</td>
+        <td>{{row.ledgerName}}</td>
+        <td>{{row.amount}}</td>
+        <td>{{row.companyId}}</td>
+  </tbody>
+    </table>
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>

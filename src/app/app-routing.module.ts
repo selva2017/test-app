@@ -1,3 +1,4 @@
+import { SalesDetailsComponent } from './view/sales-details/sales-details.component';
 import { QrcodeComponent } from './view/qrcode/qrcode.component';
 import { PlanComponent } from './view/plan/plan.component';
 import { PublishComponent } from './view/publish/publish.component';
@@ -28,6 +29,7 @@ import { GsmComponent } from './charts/gsm/gsm.component';
 import { StockComponent } from './view/stock/stock.component';
 import { GraphsComponent } from './view/graphs/graphs.component';
 import { SignupComponent } from 'app/login/signup/signup.component';
+import { ReceiptsComponent } from 'app/view/receipts/receipts.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -60,6 +62,10 @@ const appRoutes: Routes = [
   { path: 'publish', component: PublishComponent, canActivate: [AuthGuard] },
   { path: 'plan', component: PlanComponent, canActivate: [AuthGuard]  },
   // { path: 'plan', component: PlanComponent },
+  // { path: 'sales', component: SalesDetailsComponent },
+  { path: 'sales', component: SalesDetailsComponent , canActivate: [AuthGuard]  },
+  // { path: 'receipts', component: ReceiptsComponent },
+  { path: 'receipts', component: ReceiptsComponent , canActivate: [AuthGuard]  },
   // { path: 'qrcode', component: QrcodeComponent , canActivate: [AuthGuard]  },
   // { path: 'qrcode', component: QrcodeComponent },
   // { path: 'publish', component: PublishComponent },
