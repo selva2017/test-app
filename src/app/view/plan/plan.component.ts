@@ -218,7 +218,7 @@ export class PlanComponent implements OnInit {
   }
   stockReel(reelInStock, row) {
     // console.log(reelInStock);
-    var newReel = row.reel - reelInStock;
+    var newReel = Number(row.reel) - Number(reelInStock);
     for (var j = 0; j < this.salesOrder_BFGSMSize.length; j++) {
       if (this.salesOrder_BFGSMSize[j].id === row.id) {
         // this.salesOrder_BFGSMSize[j].reel;
@@ -494,7 +494,7 @@ export class PlanComponent implements OnInit {
     // this.salesOrder_selected['consBfGSMSize']=JSON.stringify(this.salesOrder_BFGSMSize);
     // this.salesOrder_selected['consBfGSM']=JSON.stringify(this.salesOrder_BFGSM);
     // this.salesOrder_selected['consBf']=JSON.stringify(this.salesOrder_BF);
-    console.log(this.salesOrder_selected);
+    // console.log(this.salesOrder_selected);
     this.serverService.createProductionPlan(this.salesOrder_selected)
       .subscribe(
       (success) => {
@@ -706,8 +706,30 @@ export class PlanComponent implements OnInit {
         // this.showLoader = false;
       })
   }
-  onClickPrint() {
-    window.print();
+  onClickPrint(printSectionId: string) {
+    // window.print();
+    // let popupWinindow;
+    // let innerContents = document.getElementById(printSectionId).innerHTML;
+    // popupWinindow = window.open('', '_blank', 'width=600,height=700,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+    // popupWinindow.document.open();
+    // popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
+    // popupWinindow.document.close();
+    let printContents, popupWin;
+    printContents = document.getElementById('print_dispatch_report').innerHTML;
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+          <title>Print tab</title>
+          <style>
+          //........Customized style.......
+          </style>
+        </head>
+    <body onload="window.print();window.close()">${printContents}</body>
+      </html>`
+    );
+    popupWin.document.close();
   }
   generateItemBFGMSSize1() {
     // console.log("in");
