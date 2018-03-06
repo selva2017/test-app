@@ -534,9 +534,9 @@
                       <div class="modal-content" style="position:absolute;width:auto;height:auto" id="print_dispatch_report">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLongTitle5">Dispatch Report</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
-                          </button>
+                          </button> -->
                         </div>
                         <div>
                           <h6 align="center">{{dispatchHeader}}</h6>
@@ -762,7 +762,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let row3 of salesOrder_BF; let i = index">
+                <tr *ngFor="let row3 of salesOrder_BF_Prod; let i = index">
                   <td>{{i+1}}</td>
                   <td>{{row3.bf}}</td>
                   <td>{{row3.weight}}</td>
@@ -780,7 +780,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let row5 of salesOrder_BFGSM; let i = index">
+                <tr *ngFor="let row5 of salesOrder_BFGSM_Prod; let i = index">
                   <td>{{i+1}}</td>
                   <td>{{row5.bf}} BF {{row5.gsm}} GSM</td>
                   <td>{{row5.weight}}</td>
@@ -801,7 +801,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let row4 of salesOrder_BFGSMSize; let i = index">
+                <tr *ngFor="let row4 of salesOrder_BFGSMSize_Prod; let i = index">
                   <td>{{i+1}}</td>
                   <td>{{row4.bf}} BF {{row4.gsm}} GSM - {{row4.size}}</td>
                   <td>{{row4.weight}}</td>

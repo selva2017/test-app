@@ -22,6 +22,7 @@ export class PlanComponent implements OnInit {
   test: String;
   subscription: Subscription;
   salesOrder: ProdPlan[];
+  salesOrderSource: ProdPlan[] = [];
   salesOrderRestore: ProdPlan[];
   salesOrder_selected: ProdPlan[] = [];
   salesOrder_selected1: ProdPlan[] = [];
@@ -29,10 +30,13 @@ export class PlanComponent implements OnInit {
   salesOrder_modified: ProdPlan[] = [];
   showLoader: boolean;
   salesOrder_BFGSM: ProdPlan[] = [];
+  salesOrder_BFGSM_Prod: ProdPlan[] = [];
   consolidatedBFGSM: ProdPlan[] = [];
   salesOrder_BFGSMSize: ProdPlan[] = [];
+  salesOrder_BFGSMSize_Prod: ProdPlan[] = [];
   consolidatedBFGSMSize: ProdPlan[] = [];
   salesOrder_BF: ProdPlan[] = [];
+  salesOrder_BF_Prod: ProdPlan[] = [];
   // salesOrder_BFGSM =[{item:String,reel:Number}];
   showAllSalesOrders: boolean = true;
   showSelectedOrders: boolean = false;
@@ -104,6 +108,9 @@ export class PlanComponent implements OnInit {
     this.salesOrder_BFGSMSize = [];
     this.salesOrder_BFGSM = [];
     this.salesOrder_BF = [];
+    this.salesOrder_BFGSMSize_Prod = [];
+    this.salesOrder_BFGSM_Prod = [];
+    this.salesOrder_BF_Prod = [];
     this.salesOrder_modified = [];
     this.refreshActiveList();
     this.showAllSalesOrders = true;
@@ -321,9 +328,21 @@ export class PlanComponent implements OnInit {
   }
   selectFromSelected(key, voucherKey) {
     this.showConsolidatedReports = false;
-    //console.log("key..." + key.voucherKey)
+    // console.log("key..." + key.voucherKey)
     //console.log("voucher number..." + voucherKey)
     // this.salesOrder_row = key;
+    // this.salesOrder.push(key);
+    // this.salesOrderSource = this.salesOrderSource.slice();
+    // this.salesOrderSource = this.salesOrderSource.map(x => Object.assign({}, x));
+
+    for (var i = 0; i < this.salesOrderSource.length; i++) {
+      // alert(i);
+      if (this.salesOrderSource[i].id === voucherKey) {
+        // alert(this.salesOrder_selected[i]);
+        key = this.salesOrderSource[i];
+        break;
+      }
+    }
     this.salesOrder.push(key);
     // //console.log(this.salesOrder);
     //console.log(this.salesOrder_selected.length);
@@ -343,12 +362,13 @@ export class PlanComponent implements OnInit {
     //console.log(this.salesOrder.length);
   }
   refreshActiveList() {
-    // this.salesOrder = [];
+    this.salesOrder = [];
+    this.salesOrderSource = [];
     // this.showLoader = true;
     this.subscription = this.serverService.getActiveSalesOrders().
       subscribe(list => {
         this.salesOrder = list;
-        // console.log(this.salesOrder);
+        this.salesOrderSource = this.salesOrder.map(x => Object.assign({}, x));
         this.showLoader = false;
       })
     // this.showLoader = false;
@@ -426,7 +446,7 @@ export class PlanComponent implements OnInit {
       );
   }
   restoreSalesOrder(id) {
-    this.showLoader=true;
+    this.showLoader = true;
     this.serverService.restoreSalesOrderStatus(id)
       .subscribe(
       (success) => {
@@ -568,14 +588,14 @@ export class PlanComponent implements OnInit {
     this.salesOrdersPlanned_row1 = [];
     this.salesOrdersPlanned_row1 = record1;
     // console.log(this.salesOrdersPlanned_row1);
-    this.salesOrder_BF = [];
-    this.salesOrder_BF = record2;
+    this.salesOrder_BF_Prod = [];
+    this.salesOrder_BF_Prod = record2;
     // console.log(this.salesOrder_BF);
-    this.salesOrder_BFGSM = [];
-    this.salesOrder_BFGSM = record3;
+    this.salesOrder_BFGSM_Prod = [];
+    this.salesOrder_BFGSM_Prod = record3;
     // console.log(this.salesOrder_BFGSM);
-    this.salesOrder_BFGSMSize = [];
-    this.salesOrder_BFGSMSize = record4;
+    this.salesOrder_BFGSMSize_Prod = [];
+    this.salesOrder_BFGSMSize_Prod = record4;
   }
   onViewProductionReportModel(record1, record2, record3, record4) {
     // this.modifyProductionPlan = true;
@@ -657,11 +677,11 @@ export class PlanComponent implements OnInit {
     this.showConsolidatedReports = false;
   }
   onclick() {
-    console.log("inside")
+    // console.log("inside")
   }
   onAddItemToExistingProductionPlan(key, voucherKey, newWeight) {
-    console.log(key, voucherKey, newWeight);
-    console.log(this.batch_number);
+    // console.log(key, voucherKey, newWeight);
+    // console.log(this.batch_number);
     // this.showConsolidatedReports = false;
     key["altered"] = 0;
     if (newWeight > 0) {
@@ -715,18 +735,22 @@ export class PlanComponent implements OnInit {
     // popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
     // popupWinindow.document.close();
     let printContents, popupWin;
-    printContents = document.getElementById('print_dispatch_report').innerHTML;
+    printContents = document.getElementById(printSectionId).innerHTML;
+    // printContents = document.getElementById('print_dispatch_report').innerHTML;
     popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
     popupWin.document.open();
     popupWin.document.write(`
       <html>
         <head>
-          <title>Print tab</title>
+          <title>Dispatch Report</title>
           <style>
+          table, th, td {
+            border: 1px solid black;
+        }
           //........Customized style.......
           </style>
         </head>
-    <body onload="window.print();window.close()">${printContents}</body>
+    <body onload="window.print();window.close()"> <center> ${printContents}</center></body>
       </html>`
     );
     popupWin.document.close();
