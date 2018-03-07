@@ -32,15 +32,16 @@
           <!-- <select type="number" [(ngModel)]="index" name="index" class="form-group col-lg-12" class="form-control">
             <option *ngFor="let role of userList.roles" [ngValue]="role.roleId">{{userList.roleName}}</option>
             </select> -->
-            <form action="">
+          <form action="">
             <div *ngFor="let role of userList.roles;let i = index">
-                <input type="radio" [name]="row.userName" [value]="role.roleId"  [checked]="row.role === role.roleId" (change)="setRole(role.roleId)">{{role.roleName}}<br>
-                <!-- <input type="radio" [name]="row.userName" [value]="role.roleId"  [checked]="row.role === 'role.roleId'" (change)="setRole('role.roleId')">{{role.roleName}}<br> -->
-                <!-- <input type="radio" [name]="row.userName" value="1"  [checked]="row.role === '1'" (change)="setRole('1')">Admin<br>
+              <input type="radio" [name]="row.userName" [value]="role.roleId" [checked]="row.role === role.roleId" (change)="setRole(row,role.roleId)">{{role.roleName}}
+              <br>
+              <!-- <input type="radio" [name]="row.userName" [value]="role.roleId"  [checked]="row.role === 'role.roleId'" (change)="setRole('role.roleId')">{{role.roleName}}<br> -->
+              <!-- <input type="radio" [name]="row.userName" value="1"  [checked]="row.role === '1'" (change)="setRole('1')">Admin<br>
                 <input type="radio" [name]="row.userName" value="2"  [checked]="row.role === '2'" (change)="setRole('2')">Director<br>
                 <input type="radio" [name]="row.userName" value="3"  [checked]="row.role === '3'" (change)="setRole('3')">Shareholder -->
-              </div>
-              </form>
+            </div>
+          </form>
 
           <!-- <div id="">
             <label>
@@ -60,10 +61,13 @@
         <td>{{row.createdDate}}</td>
         <!-- <td>{{row.userStatus}}</td> -->
         <td>
-            <form action="">
-                <input type="radio" [name]="row.userName" value="active"  [checked]="row.userStatus === 'active'" (change)="setStatus('active')">Active<br>
-                <input type="radio" [name]="row.userName" value="inactive"  [checked]="row.userStatus === 'inactive'" (change)="setStatus('inactive')">Inactive
-              </form>
+          <form action="">
+            <!-- <input type="radio" [name]="row.userName" value="active"  [checked]="row.userStatus === 'active'" (change)="setStatus('active')">Active<br> -->
+            <!-- <input type="radio" [name]="row.userName" value="inactive"  [checked]="row.userStatus === 'inactive'" (change)="setStatus('inactive')">Inactive -->
+            <input type="radio" [name]="row.userName" value="active" [checked]="row.userStatus === 'active'" (change)="setStatus(row,'active')">Active
+            <br>
+            <input type="radio" [name]="row.userName" value="inactive" [checked]="row.userStatus === 'inactive'" (change)="setStatus(row,'inactive')">Inactive
+          </form>
           <!-- <div>
             {{row.userStatus}}
             <label>
@@ -76,7 +80,9 @@
         </td>
         <td>
           <!-- Button trigger update  -->
-          <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row)" [disabled]="disableUpdate">Update
+          <!-- <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row)" [disabled]="disableUpdate">Update -->
+          <!-- </button> -->
+          <button type="button" class="btn btn-warning btn-sm" (click)="onClickReviewed(row)" [disabled]="!row.authenticate">Update
           </button>
         </td>
       </tr>

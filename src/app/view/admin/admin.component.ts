@@ -10,29 +10,30 @@ import { UserList } from 'app/shared/user-list';
 })
 export class AdminComponent implements OnInit {
   subscription: Subscription;
-  userList: UserList[];
+  userList: UserList[] = [];
   status: string;
   role: string;
   disableUpdate: boolean = true;
-check = false;
+  check = false;
   constructor(private serverService: ServerService) {
   }
-  setStatus(value: string) {
-    // console.log(value);
+  setStatus(row, value: string) {
     this.status = value;
     this.disableUpdate = false;
+    row.authenticate = 1;
   }
-  setRole(value: string) {
+  setRole(row, value: string) {
     // console.log(value);
     this.role = value;
     this.disableUpdate = false;
+    row.authenticate = 1;
   }
   onClickReviewed(key) {
     // console.log("Modal clicked..." + key)
     // key.userStatus = this.status;
-    this.status? key.userStatus = this.status : '';
+    this.status ? key.userStatus = this.status : '';
     // key.role = this.role;
-    this.role? key.role = this.role : '';
+    this.role ? key.role = this.role : '';
     // console.log("After ..." + key)
     // console.log(JSON.stringify(key));
 
@@ -42,6 +43,7 @@ check = false;
       (success) => {
         // console.log("success");
         this.disableUpdate = true;
+        key.authenticate = 0;
         // this.refreshList();
       },
       (error) => console.log(error.status)
@@ -57,7 +59,5 @@ check = false;
       error => {
       }
       );
-
   }
-
 }
