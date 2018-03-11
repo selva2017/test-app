@@ -49,7 +49,7 @@
           <td>{{row.inventoryEntryVOs[0].billedQuantity}}</td>
         </ng-template>
         <ng-template [ngIf]="row.voucherType ==='Sales GST' || row.voucherType ==='Sales Order' || row.voucherType ==='Bank Payment' || row.voucherType ==='Contra' || row.voucherType ==='Receipt'|| row.voucherType ==='Purchase Order' || row.voucherType ==='Journal'
-        || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General'">
+        || row.voucherType ==='GRN-Raw Material'|| row.voucherType ==='Purchase-Raw Material' || row.voucherType ==='Petty Cash' || row.voucherType ==='GRN-General' || row.voucherType ==='GRN-Firewood'">
           <td>{{row.ledgerEntryVOs[0].ledgerName}}</td>
           <td>{{row.voucherType}}</td>
           <td>{{row.voucherNumber}}</td>
